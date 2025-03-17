@@ -251,11 +251,43 @@ onUnmounted(() => {
 });
 
 useHead({
-  title: "Главная страница - Abu Express",
+  title: "Доставка товаров из США, Турции и Китая – Abu Express",
   meta: [
-    { name: "description", content: "Узнай тарифы на доставку по всему миру" },
-  ],
+    // Описание для SEO (максимально информативное)
+    { 
+      name: "description", 
+      content: "Заказывайте товары из США, Турции и Китая с быстрой и надежной доставкой. Выгодные тарифы, удобные способы оплаты и гарантированная безопасность. Доставляем одежду, электронику, аксессуары и многое другое!" 
+    },
+
+    // Ключевые слова для поисковых систем (Google уже не учитывает, но Яндекс может)
+    { 
+      name: "keywords", 
+      content: "доставка товаров из США, доставка из Турции, доставка из Китая, купить из США, купить из Турции, заказать из Китая, международная доставка, шоппинг за границей" 
+    },
+
+    // Open Graph (Facebook, Telegram, WhatsApp)
+    { property: "og:title", content: "Доставка товаров из США, Турции и Китая – Abu Express" },
+    { property: "og:description", content: "Быстрая и безопасная доставка товаров из США, Турции и Китая по выгодным тарифам. Легко заказывайте одежду, электронику и другие товары с надежной доставкой в ваш город!" },
+    { property: "og:image", content: "https://abuexpressgroup.com/_nuxt/logo.Dk0MFiUH.png" }, // Замени ссылку на актуальный логотип
+    { property: "og:url", content: "https://abuexpressgroup.com" },
+    { property: "og:type", content: "website" },
+    { property: "og:site_name", content: "Abu Express" },
+    { property: "og:locale", content: "ru_RU" }, // Русский язык
+
+    // Twitter (X)
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "Доставка товаров из США, Турции и Китая – Abu Express" },
+    { name: "twitter:description", content: "Быстрая и безопасная доставка товаров из США, Турции и Китая. Экономьте на покупках за границей с лучшими условиями доставки!" },
+    { name: "twitter:image", content: "https://abuexpressgroup.com/_nuxt/logo.Dk0MFiUH.png" },
+
+    // Канонический URL (если страницы дублируются)
+    { rel: "canonical", href: "https://abuexpressgroup.com" },
+
+    // Favicon
+    { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+  ]
 });
+
 </script>
 
 <style>
