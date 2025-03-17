@@ -1,0 +1,140 @@
+
+.contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    padding: 20px;
+}
+
+.tabs{
+    display: flex;
+    padding: 10px;
+    border-radius: 20px;
+    background: #0A0A0A;
+    width: max-content;
+}
+.tabs button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 30px;
+}
+.tabs button:hover {
+    background-color: #FFEE00;
+    color: #000;
+}
+.tabs button.active {
+    background-color: #FFEE00;
+    color: #000;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.left-col {
+    width: 50%;
+}
+.contacts-block{
+    background: #0A0A0A;
+    padding: 20px;
+    border-radius: 20px;
+}
+.feedback-form{
+    background: #0A0A0A;
+    padding: 20px;
+    border-radius: 20px;
+    gap: 15px;
+
+}
+.feedback-form label {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+.feedback-form label input {
+    width: 49%;
+}
+.feedback-form textarea{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    height: 100px;
+}
+
+.contacts-block p {
+    margin: 5px 0;
+}
+.feedback-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.feedback-form input,
+.feedback-form textarea {
+    margin-top: 5px;
+    padding: 8px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 1px solid #BAAFAF;
+    color: #fff;
+}
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    border: 1px solid #FFEE00!important;
+    outline: none;
+}
+.feedback-form button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.feedback-form button:hover {
+    background-color: #555;
+}
+
+.right-col {
+    width: 50%;
+    min-height: 559px;
+}
+.feedback-form button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+    background: transparent;
+    border: 1px solid #FFEE00;
+
+}
+.feedback-form h3{
+    font-size: 26px;
+    width: 100%;
+}
+@media (max-width: 769px) {
+    .content{
+        flex-direction: column;
+    }
+    .contacts-block{
+        width: 100%;
+    }
+    .right-col{
+        width: 100%;
+    }
+    .feedback-form{
+        width: 100%;
+    }
+    .left-col{
+        width: 100%;
+    }
+}

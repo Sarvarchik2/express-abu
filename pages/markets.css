@@ -1,0 +1,127 @@
+
+.markets {
+    background: #000;
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+.markets-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.markets-top select,
+.markets-top input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.markets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.markets-list-item {
+    display: flex;
+    background: #0A0A0A;
+    padding: 30px;
+    border-radius: 10px;
+    align-items: center;
+    gap: 40px;
+}
+
+.market-logo {
+    width: 160px;
+    height: 160px;
+    margin-right: 15px;
+}
+
+.market-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.rating-wrapper{
+    display: flex;
+    gap: 20px;
+}
+.rating,
+.user-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-star {
+    cursor: pointer;
+    color: gray;
+    font-size: 20px;
+}
+
+.user-star.active {
+    color: gold;
+}
+.market-top-left{
+    width: 20%;
+    background: #0A0A0A;
+    color: white;
+
+}
+.market-top-right {
+    width: 20%;
+    background: #0A0A0A;
+    color: white;
+
+
+}
+.market-top-center {
+    width: 56%;
+    background: #0A0A0A;
+    color: white;
+    position: relative;
+}
+.market-top-center img{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translate(0%, -50%);
+    width: 25px;
+    height: 25px;
+    z-index: 99;
+}
+.market-top-center input{
+    padding-left: 35px;
+    width: 100%;
+}
+@media (max-width: 769px) {
+    .rating-wrapper{
+        flex-direction: column;
+    }
+
+
+}
+@media (max-width: 600px) {
+    .markets-list-item{
+        flex-direction: column;
+        padding: 0;
+    }
+    .market-top-center, .market-top-left, .market-top-right {
+        width: 100%;
+    }
+
+    .markets-top{
+        flex-direction: column;
+        gap: 15px;
+    }
+    .markets-list {
+        gap: 40px;
+    }
+
+    }

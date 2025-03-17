@@ -1,0 +1,54 @@
+.services{
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+}
+.services-item{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: url("../assets/tarif/servicebh.png") no-repeat center center;
+    background-size: cover;
+    border-radius: 20px;
+    padding: 30px;
+    gap: 30px;
+}
+.services-item h2{
+    font-size: 28px;
+
+}
+.services-item p{
+    font-size: 20px;
+    width: 60%;
+}
+.services-item a{
+    border: 1px solid #FFEE00;
+    border-radius: 40px;
+    padding: 15px 40px;
+    width: max-content;
+    background: transparent;
+    color: white;
+
+    font-size: 20px;
+    line-height: 18px;
+    margin-top: 20px;
+}
+@media (max-width: 600px) {
+    .services-item h2{
+        font-size: 24px;
+    }
+    .services-item p{
+        font-size: 16px;
+        width: 100%;
+    }
+    .services-item a{
+        text-align: center;
+        width: 100%;
+    }
+    .services-item {
+        padding: 0;
+    }
+
+
+}

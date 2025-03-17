@@ -1,0 +1,458 @@
+.product-component {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 80px;
+}
+
+.product-component-search {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 56px;
+    position: relative;
+    border: 1px solid #fff;
+    border-radius: 30px;
+}
+
+.product-component-search input {
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    width: 100%;
+    padding: 15px;
+}
+
+.product-component-search img {
+    position: absolute;
+    right: 5px;
+    height: 70%;
+    background: white;
+    padding: 7px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.product-component-search-out {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-component-search-out-top {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.product-component-search-out-center {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: start;
+}
+
+.product-component-search-out-top-item {
+    width: 20%;
+    gap: 15px;
+}
+
+.product-component-search-out-top-item img {
+    width: 46px;
+    height: 46px;
+}
+
+.product-component-search-out-top-item h2 {
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.product-component-search-out-top-item p {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.product-component-search-out-center-item {
+    width: 20%;
+    gap: 15px;
+}
+
+.product-component-search-out-center-item img {
+    width: 26px;
+    height: 26px;
+}
+
+.product-component-search-out-center-item h2 {
+    font-size: 12px;
+    color: #BAAFAF;
+    line-height: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.product-component-search-out-top span {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 80%;
+    height: 2px;
+    z-index: -1;
+    background: #fff;
+}
+
+.product-component-search-out-center span {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 60%;
+    height: 2px;
+    z-index: -1;
+    background: #fff;
+}
+
+.abu-express-help {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 60px;
+}
+.abu-express-help-about{
+    flex-direction: row-reverse;
+}
+
+.abu-express-help-img {
+    width: 50%;
+    height: 420px;
+    overflow: hidden;
+    border-radius: 40px;
+}
+
+.abu-express-help-text {
+    width: 50%;
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 30px;
+    background: #0A0A0A;
+    border-radius: 30px;
+}
+
+.abu-express-help-text h2 {
+    font-size: 24px;
+}
+
+.abu-express-help-text p {
+    font-size: 20px;
+    line-height: 26px;
+    color: #BAAFAF;
+}
+
+.abu-express-help-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.abu-express-help-text button {
+    font-size: 20px;
+    border: 1px solid #FFEE00;
+    border-radius: 30px;
+    width: max-content;
+    color: #fff;
+    outline: none;
+    padding: 14px 50px;
+    background: transparent;
+}
+
+.abu-express-facility {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.abu-express-facility h4 {
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    display: block;
+    margin: 48px 0;
+}
+
+.abu-express-facility-item {
+    width: 23%;
+    border-radius: 20px;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(25deg, rgba(255, 238, 0, 0) 0%, rgba(255, 238, 0, 1) 330%, rgba(255, 238, 0, 1) 230%);
+    padding: 38px 20px;
+    height: 348px;
+
+}
+
+.abu-express-facility-item img {
+    margin-bottom: 70px;
+    width: 55px;
+    height: 55px;
+}
+
+.abu-express-facility-item h2 {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.abu-express-facility-item p {
+    font-size: 18px;
+    color: #BFBFBF;
+    line-height: 27px;
+    font-weight: 400;
+}
+
+.abu-express-stars {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.abu-express-star {
+    font-size: 23px;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.2s;
+}
+
+.abu-express-star.filled {
+    color: gold;
+}
+
+.product-component-search-out-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-component-search-out-bottom-item {
+    width: 30%;
+    border-radius: 30px;
+    border: 1px solid #FFEE00;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 242px;
+}
+.product-component-search-out-bottom-item textarea{
+    width: 100%;
+    height: 60%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+}
+.product-component-search-out-bottom-item textarea::placeholder {
+    color: #fff;
+}
+.product-component-search-out-bottom-item h3{
+    font-size: 16px;
+    text-align: start;
+    line-height: 20px;
+}
+
+.product-component-search-out-bottom-item-last-top {
+    padding: 20px;
+    border: 1px solid #FFEE00;
+    border-radius: 30px;
+height: 148px;
+    width: 100%;
+
+}
+
+.product-component-search-out-bottom-item-last-bottom {
+    padding: 20px;
+    border: 1px solid #FFEE00;
+    border-radius: 30px;
+    width: 100%;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-component-search-out-bottom-item-last {
+    width: 30%;
+    border-radius: 30px;
+    height: 242px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.product-component-search-out-bottom-item-last-bottom a{
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;gap: 10px;
+}
+.product-component-search-out-bottom-item-last-top h4{
+    font-size: 16px;
+}
+.product-component-search-out-bottom-item-last-top h4 p{
+    font-size: 14px;
+    color: #BFBFBF;
+    margin-bottom: 5px;
+}
+.product-component-search-out-bottom-item-last-top span{
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    margin: 10px 0;
+    display: block;
+}
+@media (max-width: 1025px) {
+    .abu-express-facility-item {
+        width: 30%;
+    }
+}
+
+@media (max-width: 769px) {
+    .abu-express-facility-item {
+        width: 48%;
+    }
+
+    .product-component-search {
+        width: 70%;
+    }
+
+    .product-component-search-out-top span {
+        top: 10px;
+    }
+
+    .product-component-search-out-top-item img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .product-component-search-out-top-item h2 {
+        font-size: 10px;
+        line-height: 12px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .product-component-search-out-top-item p {
+        font-size: 8px;
+        line-height: 12px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .product-component-search-out-center-item span {
+        top: 10px;
+    }
+
+    .product-component-search-out-center-item img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .product-component-search-out-center-item h2 {
+        font-size: 10px;
+        line-height: 12px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .product-component-search-out-center-item p {
+        font-size: 8px;
+        line-height: 12px;
+        margin: 0;
+        padding: 0;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .product-component-search-out-bottom {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .abu-express-help-text button{
+        width: 100%;
+    }
+    .product-component-search-out-bottom-item-last, .product-component-search-out-bottom-item {
+        width: 100%;
+    }
+
+    .abu-express-help-text {
+        padding: 0;
+    }
+
+    .abu-express-facility-item {
+        width: 100%;
+    }
+
+    .abu-express-help {
+        flex-direction: column;
+    }
+
+    .abu-express-help-img {
+        width: 100%;
+    }
+
+    .abu-express-help-text {
+        width: 100%;
+    }
+
+    .product-component-search {
+        width: 100%;
+    }
+
+    .product-component-search-out-top-item img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .product-component-search-out-center-item img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .product-component-search-out-center-item h2 {
+        font-size: 7px;
+        line-height: 12px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .product-component-search-out-top-item h2 {
+        font-size: 8px;
+        line-height: 12px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+}
+

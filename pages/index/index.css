@@ -1,0 +1,340 @@
+.slide-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%!important;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.abu-express{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    z-index: 1;
+    padding: 0 24px;
+}
+.abu-express-swiper{
+    width: 100%;
+    border-radius: 40px;
+    height: 70vh;
+}
+.abu-express-swiper-slide{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 40px;
+    gap: 40px;
+    justify-content: center;
+    z-index: 1;
+}
+.abu-express-swiper-slide h2,h3{
+    color: white;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 43px;
+    width: 40%;
+}
+.abu-express-swiper-slide a{
+    text-decoration: none;
+    border: none;
+    color: #000;
+    background: white;
+    outline: none;
+    border-radius: 30px;
+    padding: 15px 40px;
+    cursor: pointer;
+}
+.abu-express-swiper-slide h2,h3,a{
+    z-index: 2;
+    position: relative;
+}
+.abu-express-help-text a{
+    border: 1px solid #FFEE00;
+    border-radius: 40px;
+    padding: 10px 20px;
+    width: max-content;
+    background: transparent;
+    margin-top: 5px;
+    color: white;
+    text-decoration: none;
+
+    font-size: 20px;
+    line-height: 18px;
+}
+.abu-express-how-works{
+    width: 100%;
+    margin-top: 50px;
+}
+.abu-express-how-works-main{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.abu-express-how-works h2{
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+}
+.abu-express-how-works-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.abu-express-how-works-left{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    height: 320px;
+    gap: 40px;
+    border-radius: 30px;
+    box-sizing: border-box;
+    padding: 30px;
+    overflow: hidden;
+    background: url("../../assets/howbg.png") no-repeat center center  ;
+    background-size: cover;
+
+}
+.abu-express-how-works-left button{
+    border: 1px solid #FFEE00;
+    border-radius: 40px;
+    padding: 15px 40px;
+    width: max-content;
+    background: transparent;
+    color: white;
+
+    font-size: 20px;
+    line-height: 18px;
+}
+.abu-express-how-works-right{
+    width: 40%;
+    height: 320px;
+    border-radius: 30px;
+    overflow: hidden;
+
+
+}
+.abu-express-how-works-right iframe{
+    width: 100%;
+    height: 100%;
+
+
+}
+.abu-express-how-works-left ul{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 25px;
+}
+.abu-express-how-works-left ul li{
+    list-style: none;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.abu-express-statistic{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    gap: 20px;
+    justify-content: space-between;
+}
+.abu-express-statistic h2{
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-bottom: 130px;
+
+}
+.abu-express-statistic-item{
+    width: 24%;
+    display: flex;
+    flex-direction: column;
+    height: 366px;
+    border-radius: 20px;
+    padding: 37px 34px;
+    background: url("../../assets/s1.png") no-repeat center center;
+    background-size: cover;
+    justify-content: space-between;
+
+}
+.abu-express-statistic-item:nth-of-type(2){
+    background: url("../../assets/s2.png") no-repeat center center ;
+    background-size: cover;
+
+}
+.abu-express-statistic-item h3{
+    margin-top: 150px;
+    font-size: 28px;
+    text-align: start;
+}
+.abu-express-statistic-item p{
+    font-size: 20px;
+}
+.abu-express-statistic-item:nth-of-type(3){
+    background: url("../../assets/s3.png") no-repeat center center ;
+    background-size: cover;
+
+}
+.abu-express-statistic-item:nth-of-type(4){
+    background: url("../../assets/s4.png") no-repeat center center ;
+    background-size: cover;
+
+}
+.abu-express-statistic-item img{
+    width: 62px;
+    height: 62px;
+}
+.abu-express-time{
+
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+}
+.abu-express-time-swiper{
+    width: 100%;
+    background: url("../../assets/timebg.png") no-repeat center center;
+    background-size: cover;
+    border-radius: 30px;
+    padding: 50px;
+box-sizing: border-box;
+}
+.abu-express-time-slide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.abu-express-time-slide h3{
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+.abu-express-time-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+.abu-express-time-item h5{
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.abu-express-time-item h5:after{
+    position: absolute;
+    top: 0;
+    right: -24px;
+    height: 100%;
+    width: 2px;
+    background: #FFEE00;
+    content: '';
+}
+.abu-express-time-item h5:last-child:after{
+   display: none;
+}
+.abu-express-time-item h5 span{
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.abu-express-time-slide a{
+    margin-top: 70px;
+    text-decoration: none;
+    border: 1px solid #FFEE00;
+    border-radius: 40px;
+    padding: 15px 40px;
+    width: max-content;
+    background: transparent;
+    color: white;
+
+    font-size: 20px;
+    line-height: 18px;
+
+}
+.abu-express-time-title{
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+}
+.abu-express-time-text{
+    text-align: center;
+    font-size: 18px;
+color: #BAAFAF;
+    margin-bottom: 30px;
+}
+@media (max-width: 1025px) {
+    .abu-express-swiper-slide h2, h3{
+        font-size: 26px;
+        line-height: 32px;
+    }
+    .abu-express-how-works-wrapper{
+        gap: 25px;
+    }
+    .abu-express-statistic-item{
+        width: 31%;
+    }
+}
+@media (max-width: 769px) {
+    .abu-express-statistic-item{
+        width: 48%;
+    }
+    .abu-express-swiper-slide h2, h3{
+        width: 100%;
+        text-align: center;
+    }
+    .abu-express-swiper-slide {
+        align-items: center;
+        justify-content: end;
+
+    }
+    .abu-express-how-works-wrapper{
+        flex-direction: column;
+    }
+    .abu-express-how-works-left,.abu-express-how-works-right{
+        width: 100%;
+    }
+    .abu-express{
+        padding: 0 15px;
+    }
+}
+@media (max-width: 600px) {
+    .abu-express-statistic-item{
+        width: 100%;
+    }
+    .abu-express-time-item h5 span{
+        font-size: 14px;
+    }
+    .abu-express-time-item h5 {
+        font-size: 25px;
+    }
+    .abu-express-time-title{
+        font-size: 26px;
+    }
+    .abu-express-time-text{
+        text-align: center;
+        font-size: 16px;
+        color: #BAAFAF;
+        margin-bottom: 30px;
+    }
+}

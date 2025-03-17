@@ -1,0 +1,1 @@
+import{_ as n,c as o,a as t,o as r}from"./CijH8veO.js";const a={};function s(c,e){return r(),o("div",null,e[0]||(e[0]=[t("h1",null,'Страница "О нас"',-1),t("p",null,"Это пример страницы в Nuxt 3.",-1)]))}const u=n(a,[["render",s]]);export{u as default};
