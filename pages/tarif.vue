@@ -13,7 +13,7 @@
             <h2>{{ $t("tarif_title") }}</h2>
             <img :src="Exit" alt="exit" @click="closeModal(index)">
           </div>
-          <p>{{ tarif.description }}</p>
+          <p>{{ $t("tarif_description") }}</p>
         </div>
       </div>
 
@@ -31,9 +31,6 @@
             <img :src="Arrow" alt="more">
           </button>
 
-<!--          <button>-->
-<!--            {{ $t("tarif_registration") }}-->
-<!--          </button>-->
         </div>
       </div>
 
@@ -63,7 +60,7 @@ export default {
         { name: "keywords", content: "тарифы, доставка, экспресс-доставка, стоимость доставки, грузоперевозки" },
         { property: "og:title", content: "Тарифы — Abu Express" },
         { property: "og:description", content: "Тарифы на экспресс-доставку: минимальный вес 5 кг, доставка 3-5 дней, бесплатная консолидация." },
-        { property: "og:image", content: "/assets/logo.png" },
+        { property: "og:image", content: "public/logo.png" },
       ]
     });
 
