@@ -313,6 +313,20 @@ color: #BAAFAF;
     }
     .abu-express-how-works-left,.abu-express-how-works-right{
         width: 100%;
+        height: max-content;
+    }
+    .abu-express-how-works-left button{
+        width: 100%;
+        height: 60px;
+        font-size: 15px;
+        padding: 0;
+    }
+    .abu-express-help-text p{
+        font-size: 14px;
+    }
+    .abu-express-help-text a{
+        width: 100%;
+        text-align: center;
     }
     .abu-express{
         padding: 0 15px;

@@ -46,7 +46,7 @@
           <NuxtLink>
             <img :src="Facebook" alt="ad">
           </NuxtLink>
-          <NuxtLink>
+          <NuxtLink to="https://www.instagram.com/abu_express_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">
             <img :src="Instagram" alt="ad">
           </NuxtLink>
 

@@ -268,7 +268,7 @@ useHead({
     // Open Graph (Facebook, Telegram, WhatsApp)
     { property: "og:title", content: "Доставка товаров из США, Турции и Китая – Abu Express" },
     { property: "og:description", content: "Быстрая и безопасная доставка товаров из США, Турции и Китая по выгодным тарифам. Легко заказывайте одежду, электронику и другие товары с надежной доставкой в ваш город!" },
-    { property: "og:image", content: "https://abuexpressgroup.com/_nuxt/logo.Dk0MFiUH.png" }, // Замени ссылку на актуальный логотип
+    { property: "og:image", content: "https://abuexpressgroup.com/logo2.png" },
     { property: "og:url", content: "https://abuexpressgroup.com" },
     { property: "og:type", content: "website" },
     { property: "og:site_name", content: "Abu Express" },
@@ -278,7 +278,7 @@ useHead({
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Доставка товаров из США, Турции и Китая – Abu Express" },
     { name: "twitter:description", content: "Быстрая и безопасная доставка товаров из США, Турции и Китая. Экономьте на покупках за границей с лучшими условиями доставки!" },
-    { name: "twitter:image", content: "https://abuexpressgroup.com/_nuxt/logo.Dk0MFiUH.png" },
+    { name: "twitter:image", content: "https://abuexpressgroup.com/logo2.png" },
 
     // Канонический URL (если страницы дублируются)
     { rel: "canonical", href: "https://abuexpressgroup.com" },
