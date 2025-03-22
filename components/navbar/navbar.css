@@ -267,9 +267,9 @@
     .navbar {
         padding: 15px 15px 35px 15px;
     }
-    .navbar-right button {
-        display: none;
-    }
+    /*.navbar-right button {*/
+    /*    display: none;*/
+    /*}*/
     .nav-menu-btn{
         width: 30px;
         display: flex;

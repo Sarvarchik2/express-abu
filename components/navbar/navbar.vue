@@ -36,6 +36,7 @@
     </div>
 
     <div class="navbar-mobile" :class="{ 'navbar-mobile-active': isMenuOpen }">
+
       <img class="navbar-mobile-img" :src="Exit" alt="exit" @click="closeMenu">
       <ul>
         <li><NuxtLink @click="closeMenu"  to="/">{{ $t("main") }}</NuxtLink></li>
@@ -48,8 +49,8 @@
         <li><NuxtLink @click="closeMenu" to="/help">{{ $t("help") }}</NuxtLink></li>
       </ul>
       <div class="navbar-link">
-        <NuxtLink>{{ $t("tarif_registration") }}</NuxtLink>
-        <NuxtLink>{{ $t("tarif_login") }}</NuxtLink>
+        <NuxtLink to="/registration">{{ $t("tarif_registration") }}</NuxtLink>
+        <NuxtLink to="/login">{{ $t("tarif_login") }}</NuxtLink>
       </div>
     </div>
 
