@@ -1,3 +1,4 @@
+
 <template>
   <div class="parcels-page">
     <div class="tabs">
@@ -13,98 +14,59 @@
 
     <div class="divider"></div>
 
+    <div v-if="addresses.length === 0" class="empty-state">
+      <img :src="empty" alt="Нет заказов" class="empty-image" />
+      <p class="empty-text">
+        Здесь пока нет ни одного получателя :( <br>
+        Пожалуйста укажите адреса получателей ваших посылок
+      </p>
+      <button @click="openAddForm">+ Новый адрес</button>
+    </div>
 
-<!--    <div v-if="orders.length === 0" class="empty-state">-->
-<!--      <img :src="empty" alt="Нет заказов" class="empty-image" />-->
-<!--      <p class="empty-text">Здесь пока нет ни одного получателя :( <br> Пожалуйста укажите адреса получателей ваших посылок</p>-->
-<!--      <button @click="showPopup = true">+ Новый адрес</button>-->
-<!--    </div>-->
-
-    <div v-if="orders.length === 0" class="empty-state">
-      <div v-if="recipientAdded" class="recipient-card">
+    <div v-else class="recipient-list">
+      <div v-for="addr in addresses" :key="addr.id" class="recipient-card">
         <div class="recipient-info">
-          <h3>{{ recipient.name }} {{ recipient.surname }}</h3>
-          <p>Регион: {{ recipient.address }}</p>
-          <p>Район: {{ recipient.phone }}</p>
-          <p>Улица: {{ recipient.address }}</p>
-          <p>Паспорт: {{ recipient.address }}</p>
-          <p>Номер: {{ recipient.address }}</p>
-          <p>Дом: {{ recipient.address }}</p>
-          <p>Квартира: {{ recipient.address }}</p>
-          <p>ZIP-код: {{ recipient.address }}</p>
+          <h3> <span> {{ addr.first_name }} {{ addr.last_name }}</span></h3>
+          <p>Паспорт: <span>{{ addr.passport_number }}</span> </p>
+          <p>Номер: <span> {{ addr.phone_number }} </span></p>
+          <p>Email:  <span>{{ addr.email }} </span></p>
+          <p>Адрес:  <span> {{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>
+          <p>ZIP-код:  <span> {{ addr.postal_code }}</span></p>
+          <button @click="editRecipient(addr)">Изменить</button>
+          <button @click="deleteRecipient(addr.id)">Удалить</button>
         </div>
 
       </div>
-      <img :src="empty" alt="Нет заказов" class="empty-image" />
-      <p class="empty-text">Здесь пока нет ни одного получателя :( <br> Пожалуйста укажите адреса получателей ваших посылок</p>
-      <button @click="showPopup = true">+ Новый адрес</button>
+      <button class="recipient-list-btn" @click="openAddForm">+ Добавить ещё</button>
     </div>
-
-
-
 
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
-        <h2>Добавить получателя</h2>
-        <form @submit.prevent="addRecipient">
+        <h2>{{ isEditing ? 'Изменить' : 'Добавить' }} получателя</h2>
+        <form @submit.prevent="isEditing ? updateRecipient() : addRecipient()">
           <div class="popup-overlay-item-wrapper">
             <div class="popup-overlay-item">
               <h4>Данные</h4>
-
-              <div class="form-group">
-                <input type="text" placeholder="Имя" v-model="recipient.name" required />
-              </div>
-              <div class="form-group">
-                <input type="text" placeholder="Фамилия" v-model="recipient.surname" required />
-              </div>
-              <div class="form-group">
-                <input type="text" placeholder="Серия и номер паспорта" v-model="recipient.passport" required />
-              </div>
-              <div class="form-group">
-                <input type="number" v-model="recipient.phone" placeholder="+998" />
-              </div>
-              <div class="form-group">
-                <input type="number" v-model="recipient.phone_second" placeholder="+998" />
-              </div>
-              <div class="form-group">
-                <input type="email" placeholder="E-mail" v-model="recipient.email" />
-              </div>
-
-              <h5>Передняя часть паспорта</h5>
-              <img :src="photo" alt="photo">
-
+              <input type="text" placeholder="Имя" v-model="form.name" required />
+              <input type="text" placeholder="Фамилия" v-model="form.surname" required />
+              <input type="text" placeholder="Паспорт" v-model="form.passport" required />
+              <input type="text" placeholder="Телефон" v-model="form.phone" required />
+              <input type="text" placeholder="Доп. Телефон" v-model="form.phone_second" />
+              <input type="email" placeholder="Email" v-model="form.email" required />
             </div>
             <div class="popup-overlay-item">
               <h4>Адрес</h4>
-              <div class="form-group">
-                <input type="text" placeholder="Адрес" v-model="recipient.address" required />
-              </div>
-              <div class="form-group">
-                <input type="text" placeholder="Апартамент" v-model="recipient.apartament" required />
-              </div>
-              <div class="form-group">
-                  <input type="text" placeholder="Регион" v-model="recipient.region" required />
-              </div>
-              <div class="form-group">
-                <input type="text" v-model="recipient.city" placeholder="Город / Район" />
-              </div>
-              <div class="form-group">
-                <input type="text" v-model="recipient.ofice" placeholder="Квартира / Офис " />
-              </div>
-              <div class="form-group">
-                <input type="number" placeholder="ZIP-код" v-model="recipient.zip" />
-              </div>
-
-              <h5>Задняя часть паспорта</h5>
-              <img :src="photo" alt="photo">
+              <input type="text" placeholder="Адрес" v-model="form.address" required />
+              <input type="text" placeholder="Апартамент" v-model="form.apartament" required />
+              <input type="text" placeholder="Регион" v-model="form.region" required />
+              <input type="text" placeholder="Город" v-model="form.city" required />
+              <input type="text" placeholder="Офис" v-model="form.ofice" />
+              <input type="text" placeholder="ZIP-код" v-model="form.zip" required />
             </div>
-
-
           </div>
-
           <div class="popup-actions">
-            <button type="button" @click="showPopup = false">Отменить</button>
-            <button type="submit">Продолжить</button>
+            <button type="button" @click="closePopup">Отменить</button>
+            <button type="submit">Сохранить</button>
           </div>
         </form>
       </div>
@@ -113,67 +75,176 @@
 </template>
 
 <script setup>
-import empty from "@/assets/profile/empty2.png";
-import photo from "@/assets/profile/photo.png"
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import empty from '@/assets/profile/empty2.png';
 
+const addresses = ref([]);
+const showPopup = ref(false);
+const selectedTab = ref('parcels');
+const isEditing = ref(false);
+const editingId = ref(null);
 
-const recipientAdded = ref(false);
-const recipient = ref({
-  name: "",
-  surname: "",
-  passport: "",
-  phone: "",
-  phone_second: "",
-  email: "",
-  address: "",
-  zip: "",
-  apartament: "",
-  ofice: "",
-  city: "",
+const form = ref({
+  name: '',
+  surname: '',
+  passport: '',
+  phone: '',
+  phone_second: '',
+  email: '',
+  address: '',
+  apartament: '',
+  region: '',
+  city: '',
+  ofice: '',
+  zip: ''
 });
 
-const addRecipient = () => {
-  recipientAdded.value = true;
-  localStorage.setItem("recipient", JSON.stringify(recipient.value));
-  localStorage.setItem("recipientAdded", "true");
+const tabs = ref([
+  { key: 'parcels', label: 'Получатель' },
+]);
+
+const fetchAddresses = async () => {
+  try {
+    const token = localStorage.getItem('access_token');
+    const res = await axios.get('https://abuexpresslogisticscargo.com/api/addresses/', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    addresses.value = res.data;
+  } catch (err) {
+    console.error('Ошибка получения адресов', err);
+  }
+};
+
+const openAddForm = () => {
+  resetForm();
+  isEditing.value = false;
+  showPopup.value = true;
+};
+
+const closePopup = () => {
   showPopup.value = false;
 };
 
-onMounted(() => {
-  const savedRecipient = localStorage.getItem("recipient");
-  if (savedRecipient) {
-    recipient.value = JSON.parse(savedRecipient);
-    recipientAdded.value = localStorage.getItem("recipientAdded") === "true";
+const resetForm = () => {
+  form.value = {
+    name: '',
+    surname: '',
+    passport: '',
+    phone: '',
+    phone_second: '',
+    email: '',
+    address: '',
+    apartament: '',
+    region: '',
+    city: '',
+    ofice: '',
+    zip: ''
+  };
+};
+
+const addRecipient = async () => {
+  try {
+    const payload = buildPayload();
+    const token = localStorage.getItem('access_token');
+    await axios.post('https://abuexpresslogisticscargo.com/api/addresses/', payload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    showPopup.value = false;
+    await fetchAddresses();
+  } catch (err) {
+    console.error('Ошибка создания адреса', err);
+    alert('Ошибка при создании адреса');
   }
+};
+
+const editRecipient = (addr) => {
+  form.value = {
+    name: addr.first_name,
+    surname: addr.last_name,
+    passport: addr.passport_number,
+    phone: addr.phone_number,
+    phone_second: addr.phone_number2,
+    email: addr.email,
+    address: addr.address,
+    apartament: addr.apartment,
+    region: addr.district,
+    city: addr.city,
+    ofice: addr.office_number,
+    zip: addr.postal_code
+  };
+  editingId.value = addr.id;
+  isEditing.value = true;
+  showPopup.value = true;
+};
+
+const updateRecipient = async () => {
+  try {
+    const payload = buildPayload();
+    const token = localStorage.getItem('access_token');
+    await axios.patch(`https://abuexpresslogisticscargo.com/api/addresses/${editingId.value}/`, payload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    showPopup.value = false;
+    await fetchAddresses();
+  } catch (err) {
+    console.error('Ошибка обновления адреса', err);
+    alert('Ошибка при обновлении адреса');
+  }
+};
+
+const deleteRecipient = async (id) => {
+  try {
+    const token = localStorage.getItem('access_token');
+    await axios.delete(`https://abuexpresslogisticscargo.com/api/addresses/${id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    await fetchAddresses();
+  } catch (err) {
+    console.error('Ошибка удаления адреса', err);
+    alert('Не удалось удалить адрес');
+  }
+};
+
+const buildPayload = () => ({
+  first_name: form.value.name,
+  last_name: form.value.surname,
+  passport_number: form.value.passport,
+  phone_number: form.value.phone,
+  phone_number2: form.value.phone_second || null,
+  email: form.value.email,
+  apartment: form.value.apartament,
+  address: form.value.address,
+  country: 'Uzbekistan',
+  city: form.value.city,
+  district: form.value.region,
+  office_number: form.value.ofice || null,
+  postal_code: form.value.zip
 });
 
-
-const tabs = ref([
-  { key: "parcels", label: "Получатель", filters: ["В процессе", "Доставленные", "Ожидание оплаты"] },
-  { key: "purchase_help", label: "Отправитель", filters: ["В процессе", "Приобретенные покупки", "Подтвержденные покупки", "Одобренные товары"] },
-]);
-
-const selectedTab = ref("parcels");
-const selectedFilter = ref("");
-
-const currentFilters = computed(() => {
-  const tab = tabs.value.find(t => t.key === selectedTab.value);
-  return tab ? tab.filters : [];
-});
-
-const orders = computed(() => {
-  return [];
-});
-const showPopup = ref(false);
-
-// const addRecipient = () => {
-//   console.log("Добавлен получатель: ", recipient.value);
-//   showPopup.value = false;
-// };
+onMounted(fetchAddresses);
 </script>
 
 <style scoped>
+.recipient-list-btn {
+   padding: 10px 20px;
+   border-radius: 25px;
+   color: #fff;
+   background: transparent;
+   transition: all 0.3s;
+   z-index: 1;
+   border: 1px solid #FFD700;
+  margin-top: 20px;
+ }
+.recipient-list-btn:hover {
+  background: #FFD700;
+  cursor: pointer;
+  color: #000;
+}
 .parcels-page {
   display: flex;
   flex-direction: column;
@@ -344,7 +415,17 @@ const showPopup = ref(false);
   height: 67px;
 
 }
+.popup-overlay-item input{
+  background: transparent;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  color: #fff;
+}
+.popup-overlay-item input:focus{
+  outline: 1px solid #FFEE00;
 
+}
 .popup-actions button:first-child {
   background: transparent;
   border: 1px solid #FFEE00;
@@ -362,7 +443,36 @@ const showPopup = ref(false);
   display: flex;
   flex-direction: column;
   border: 3px solid #FFEE00;
+  gap: 20px;
   border-radius: 30px;
+
+}
+.recipient-info p{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #BAAFAF;
+  font-size: 20px;
+}
+.recipient-info p span{
+  color: #fff;
+}
+.recipient-info button{
+  background: transparent;
+  border: 1px solid #FFD700;
+  border-radius: 30px;
+  width: 100%;
+  color: #fff;
+  height: 40px;
+  transition: all 300ms;
+}
+.recipient-info button:hover{
+  background: #FFD700;
+  cursor: pointer;
+  color: #000;
+}
+.recipient-card h3{
+    width: 100%;
 }
 @media(max-width: 600px) {
   .tabs button {
@@ -372,6 +482,18 @@ const showPopup = ref(false);
   .tabs {
     width: 100%;
     justify-content: space-between;
+  }
+  .recipient-card{
+    width: 100%;
+  }
+  .recipient-list{
+    width: 100%;
+  }
+  .recipient-info{
+    width: 100%;
+  }
+  .recipient-info p{
+    font-size: 16px;
   }
 }
 @media(max-width: 375px) {

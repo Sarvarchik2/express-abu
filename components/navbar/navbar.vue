@@ -29,9 +29,9 @@
           <li @click="changeLanguage('en')"><img :src="En" alt=""> </li>
         </ul>
       </div>
-      <NuxtLink to="/login" class="navbar-lang-btn">
+      <button class="navbar-lang-btn" @click="goToProfileOrRegister">
         <img :src="Profile" alt="profile">
-      </NuxtLink>
+      </button>
       <img class="nav-menu-btn" :src="Menu" alt="menu" @click="toggleMenu">
     </div>
 
@@ -131,6 +131,21 @@ import Profile from '../../assets/profile-user.png';
 import En from '../../assets/flag/united-states.png';
 import Uz from '../../assets/flag/uzbekistan.png';
 import Ru from '../../assets/flag/russia.png';
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const goToProfileOrRegister = () => {
+  if (process.client) {
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      router.push('/profile')
+    } else {
+      router.push('/registration')
+    }
+  }
+}
+
 
 const showCalculator = ref(false);
 const isMenuOpen = ref(false);

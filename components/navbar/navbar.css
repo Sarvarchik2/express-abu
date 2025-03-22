@@ -50,7 +50,18 @@
 .navbar-calck-btn, .navbar-lang-btn {
     width: 30px;
     position: relative;
+    background: transparent;
 
+}
+.navbar-right .navbar-lang-btn{
+
+    background: transparent;
+    padding: 0;
+}
+.navbar-right .navbar-lang-btn img{
+
+    width: 30px;
+    height: 30px;
 }
 .navbar-lang-btn-wrapper{
     position: absolute;
