@@ -5,16 +5,17 @@
     flex-direction: column;
 }
 
-.profile-top{
+.profile-top {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     background: #0A0A0A;
-    padding:5px;
+    padding: 5px;
     border-radius: 30px;
 }
-.profile-top button{
+
+.profile-top button {
     background: transparent;
     border-radius: 30px;
     height: 50px;
@@ -25,35 +26,37 @@
     color: #fff;
     transition: 0.3s;
 }
-.profile-top button:hover{
-    color: #000!important;
 
-    background: #FFEE00!important;
-}
-.profile-button-active{
+.profile-top button:hover {
     color: #000!important;
-
     background: #FFEE00!important;
 }
 
-.profile-bottom{
+.profile-button-active {
+    color: #000!important;
+    background: #FFEE00!important;
+}
+
+.profile-bottom {
     width: 100%;
     display: flex;
     flex-direction: column;
     background: #0A0A0A;
+    border-radius: 30px;
     margin-top: 30px;
     padding: 20px;
     gap: 20px;
 }
-.profile-bottom-title{
-    width: 100%;
 
+.profile-bottom-title {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 20px;
 }
-.profile-bottom-title h2{
+
+.profile-bottom-title h2 {
     color: #fff;
     font-size: 20px;
     display: flex;
@@ -61,26 +64,28 @@
     gap: 5px;
     font-weight: bold;
 }
-.profile-bottom-title h2 p{
+
+.profile-bottom-title h2 p {
     font-size: 16px;
     font-weight: 500;
     color: #BAAFAF;
 }
-.profile-bottom-span{
+
+.profile-bottom-span {
     width: 100%;
     height: 1px;
-
     background: #fff;
-
 }
-.profile-bottom-name{
+
+.profile-bottom-name {
     width: 100%;
     display: flex;
     align-items: start;
     justify-content: start;
     gap: 20px;
 }
-.profile-bottom-name h2{
+
+.profile-bottom-name h2 {
     color: #fff;
     font-size: 20px;
     display: flex;
@@ -88,28 +93,29 @@
     font-weight: bold;
     gap: 5px;
 }
-.profile-bottom-name h2 p{
+
+.profile-bottom-name h2 p {
     font-size: 16px;
     font-weight: 500;
     color: #BFBFBF;
-
 }
 
-.profile-bottom-name button{
+.profile-bottom-name button {
     background: transparent;
     border: none;
     cursor: pointer;
 }
-.profile-bottom-address{
-    width: 100%;
 
+.profile-bottom-address {
+    width: 100%;
     display: flex;
     align-items: start;
     justify-content: start;
     gap: 20px;
     flex-direction: column;
 }
-.profile-bottom-address ul{
+
+.profile-bottom-address ul {
     width: 100%;
     display: flex;
     margin: 0;
@@ -117,71 +123,80 @@
     flex-direction: column;
     gap: 20px;
 }
-.profile-bottom-address ul li{
+
+.profile-bottom-address ul li {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 20px;
 }
-.profile-bottom-address ul li h2{
+
+.profile-bottom-address ul li h2 {
     display: flex;
     align-items: center;
     justify-content: start;
     width: 70px;
     font-size: 16px;
 }
-.profile-bottom-address ul li p{
+
+.profile-bottom-address ul li p {
     display: flex;
     align-items: center;
     justify-content: start;
     width: 200px;
 }
-.profile-bottom-address ul li button{
+
+.profile-bottom-address ul li button {
     display: flex;
     align-items: center;
     justify-content: start;
     background: transparent;
     border: none;
     cursor: pointer;
-
 }
-.profile-bottom-chart{
+
+.profile-bottom-chart {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 20px;
 }
-.profile-bottom-chart h2{
+
+.profile-bottom-chart h2 {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
 }
-.profile-bottom-chart h3{
+
+.profile-bottom-chart h3 {
     display: flex;
     flex-direction: column;
     width: max-content;
     gap: 10px;
-
 }
-.profile-bottom-chart h3 p{
+
+.profile-bottom-chart h3 p {
     color: #BAAFAF;
     font-size: 16px;
     margin: 0;
     text-align: start;
     line-height: 14px;
 }
-.profile-bottom-title-logo{
+
+.profile-bottom-title-logo {
     width: 60px;
     height: 60px;
     border-radius: 50%;
 }
-.profile-bottom-title-logo img{
+
+.profile-bottom-title-logo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .accordion-container {
     background: black;
     color: white;
@@ -191,9 +206,11 @@
     display: flex;
     flex-direction: column;
 }
+
 .accordion-item {
     border-bottom: 1px solid #444;
 }
+
 .accordion-title {
     background: none;
     color: white;
@@ -207,41 +224,47 @@
     display: flex;
     justify-content: space-between;
 }
+
 .plus-icon {
     color: yellow;
     font-size: 20px;
     font-weight: bold;
 }
+
 .accordion-content {
     padding: 10px;
     font-size: 16px;
     color: white;
     width: 100%;
 }
+
 @media (max-width: 769px) {
-    .profile-bottom-title h2 p{
+    .profile-bottom-title h2 p {
         font-size: 13px;
     }
     .profile-bottom-title h2 {
         font-size: 16px;
         width: 70%;
     }
-    .profile-bottom-name h2, .profile-bottom-chart h2{
+    .profile-bottom-name h2,
+    .profile-bottom-chart h2 {
         font-size: 16px;
     }
-    .profile-bottom-name h2 p,.profile-bottom-chart h3 p{
+    .profile-bottom-name h2 p,
+    .profile-bottom-chart h3 p {
         font-size: 14px;
     }
 }
+
 @media (max-width: 600px) {
-    .profile-page{
+    .profile-page {
         padding: 0;
     }
-    .profile-bottom-chart{
+    .profile-bottom-chart {
         flex-direction: column;
         align-items: start;
     }
-    .profile-bottom-chart h3 p{
+    .profile-bottom-chart h3 p {
         text-align: start;
     }
 }

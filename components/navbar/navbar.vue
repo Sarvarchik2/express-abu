@@ -35,7 +35,7 @@
       <img class="nav-menu-btn" :src="Menu" alt="menu" @click="toggleMenu">
     </div>
 
-    <div class="navbar-mobile" :class="{ 'navbar-mobile-active': isMenuOpen }">
+<div class="navbar-mobile" :class="{ 'navbar-mobile-active': isMenuOpen }">
 
       <img class="navbar-mobile-img" :src="Exit" alt="exit" @click="closeMenu">
       <ul>
@@ -52,7 +52,7 @@
         <NuxtLink to="/registration">{{ $t("tarif_registration") }}</NuxtLink>
         <NuxtLink to="/login">{{ $t("tarif_login") }}</NuxtLink>
       </div>
-    </div>
+    </div> 
 
     <div class="calculator" v-if="showCalculator">
       <div class="calculator-wrapper">

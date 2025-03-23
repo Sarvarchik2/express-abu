@@ -20,9 +20,9 @@ router.beforeEach((to, from, next) => {
     const isAuthenticated = localStorage.getItem('access_token');
 
     if (to.meta.requiresAuth && !isAuthenticated) {
-        next('/login'); // Перенаправление на страницу логина
+        next('/login');
     } else if ((to.path === '/login' || to.path === '/register') && isAuthenticated) {
-        next('/profile'); // Если уже авторизован, отправляем в профиль
+        next('/profile');
     } else {
         next();
     }

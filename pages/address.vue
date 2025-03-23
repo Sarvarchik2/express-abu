@@ -474,6 +474,11 @@ onMounted(fetchAddresses);
 .recipient-card h3{
     width: 100%;
 }
+@media (max-width:769px) {
+  .recipient-info{
+    width: 500px;
+  }
+}
 @media(max-width: 600px) {
   .tabs button {
     padding: 10px 10px;
