@@ -17,13 +17,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = !!localStorage.getItem('access_token')
+    const isAuthenticated = localStorage.getItem('access_token');
 
     if (to.meta.requiresAuth && !isAuthenticated) {
-        next('/register') // или `/login`, если есть логин
+        next('/login'); // Перенаправление на страницу логина
+    } else if ((to.path === '/login' || to.path === '/register') && isAuthenticated) {
+        next('/profile'); // Если уже авторизован, отправляем в профиль
     } else {
-        next()
+        next();
     }
-})
+});
 
 export default router
