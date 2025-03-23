@@ -1,17 +1,14 @@
-
+<!-- 
 <template>
   <div class="product-component">
     <div class="product-component-search">
-      <!-- Привязываем значение к переменной searchQuery -->
       <input
           type="text"
           placeholder="Введите свой номер товара"
           v-model="searchQuery"
       />
-      <!-- При клике на изображение вызываем handleSearch -->
       <img :src="Search" alt="search" @click="handleSearch" />
     </div>
-    <!-- Отображаем блок только если showSearchOut === true -->
     <div class="product-component-search-out" v-if="showSearchOut">
       <div class="product-component-search-out-top">
         <span></span>
@@ -129,7 +126,6 @@ export default {
     };
 
     const handleSearch = () => {
-      // Если введено ровно 4 цифры, показываем блок
       if (/^\d{4}$/.test(searchQuery.value)) {
         showSearchOut.value = true;
       } else {
@@ -161,4 +157,94 @@ export default {
 
 <style>
 @import "./product.css";
+</style> -->
+
+
+<template>
+  <div class="product-component">
+    <div class="product-component-search">
+      <input type="text" placeholder="Введите номер товара" v-model="searchQuery" />
+      <img :src="Search" alt="search" @click="handleSearch" />
+    </div>
+
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+    
+    <div class="product-component-search-out" v-if="shipment">
+      <div class="product-component-search-out-top">
+        <div v-for="(status, index) in statuses" :key="index" class="product-component-search-out-top-item status-item" :class="{ active: shipment.status === status.key }">
+          <img :src="status.icon" alt="status.icon" />
+          <h2>{{ status.title }}</h2>
+          <p>{{ status.description }}</p>
+        </div>
+        <span></span>
+      </div>
+      
+      <div class="product-component-search-out-center">
+        <span></span>
+        <div class="product-component-search-out-center-item">
+          <img :src="Circle" alt="circle" />
+          <h2>Дата отправки: {{ shipment.departure_time }}</h2>
+        </div>
+     
+        <div class="product-component-search-out-center-item">
+          <img :src="Circle" alt="circle" />
+          <h2>Дата доставки: {{ shipment.arrival_time }}</h2>
+        </div>
+        
+        <div class="product-component-search-out-center-item">
+          <img :src="Circle" alt="done" />
+          <h2>Дата получения:  2025-03-25</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import Search from "@/assets/searchb.png";
+import Circle from "@/assets/circle.png";
+import Arrow from "@/assets/arrow.png";
+import Done from "@/assets/done.png";
+
+export default {
+  setup() {
+    const searchQuery = ref("");
+    const shipment = ref(null);
+    const errorMessage = ref("");
+
+    const statuses = [
+      { key: "waiting", title: "В ожидании", description: "В США", icon: Arrow },
+      { key: "sent", title: "Отправлено", description: "Отправлено из США", icon: Arrow },
+      { key: "customs", title: "На таможенном складе", description: "На проверке в УЗБ", icon: Arrow },
+      { key: "arrived", title: "Прибыл", description: "Посылка прибыла в УЗБ", icon: Arrow },
+      { key: "delivered", title: "Доставлен", description: "Доставлен получателю", icon: Done }
+    ];
+
+    const handleSearch = async () => {
+      if (!searchQuery.value) return;
+
+      try {
+        const response = await fetch(`https://abuexpresslogisticscargo.com/api/shipment/${searchQuery.value}/`);
+        if (!response.ok) throw new Error("Товар не найден");
+        shipment.value = await response.json();
+        errorMessage.value = "";
+      } catch (error) {
+        shipment.value = null;
+        errorMessage.value = error.message;
+      }
+    };
+
+    return { Search, Circle, searchQuery, shipment, errorMessage, statuses, handleSearch };
+  }
+};
+</script>
+
+<style>
+@import "./product.css";
+
+
+
+
+
 </style>

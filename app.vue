@@ -104,6 +104,7 @@ body{
 @media (max-width: 600px) {
   .abu-express-wrapper{
     flex-direction: column;
+    padding: 10px;
   }
 }
 </style>
