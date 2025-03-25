@@ -1,27 +1,25 @@
-
-
- <template>
+<template>
   <div class="parcels-page">
     <div class="tabs">
-      <button 
-        v-for="(tab, index) in tabs" 
-        :key="index" 
-        :class="{ active: selectedTab === tab.key }" 
-        @click="selectedTab = tab.key"
+      <button
+          v-for="(tab, index) in tabs"
+          :key="index"
+          :class="{ active: selectedTab === tab.key }"
+          @click="selectedTab = tab.key"
       >
         {{ tab.label }}
       </button>
     </div>
-    
+
     <div class="divider"></div>
-    
+
     <div class="sub-tabs">
-      <button 
-        v-for="(filter, index) in currentFilters" 
-        :key="index" 
-        class="sub-tab" 
-        :class="{ active: selectedFilter === filter }" 
-        @click="selectedFilter = filter"
+      <button
+          v-for="(filter, index) in currentFilters"
+          :key="index"
+          class="sub-tab"
+          :class="{ active: selectedFilter === filter }"
+          @click="selectedFilter = filter"
       >
         {{ filter }} <span class="count">{{ getFilterCount(filter) }}</span>
       </button>
@@ -73,12 +71,12 @@
         </div>
 
         <div class="parcels-add-progress">
-          <!-- <div class="parcels-add-progress-left">
-            <h3 v-for="n in 3" :key="n" :class="{ active: currentStep >= n }">{{ n }}</h3>
+          <div class="parcels-add-progress-left">
+            <h3 class="active">1</h3>
+            <h3 :class="{ active: currentStep >= 2 }">2</h3>
+            <h3 :class="{ active: currentStep >= 3 }">3</h3>
             <span></span>
-
-          </div> -->
-          <div  class="parcels-add-progress-left"><h3  class="active">1</h3><h3 class="active">2</h3><h3 class="active">3</h3><span ></span></div>
+          </div>
 
           <div class="parcels-add-progress-right">
             <img v-if="currentStep > 1" :src="left" alt="left" @click="prevStep">
@@ -92,11 +90,11 @@
             <h2>Товары для покупки</h2>
             <p>Введите данные товаров, которые хотите купить.</p>
           </div>
-          
-          <div 
-            v-for="(parcel, index) in parcels" 
-            :key="index" 
-            class="parcels-add-progress-declaration-wrapper"
+
+          <div
+              v-for="(parcel, index) in parcels"
+              :key="index"
+              class="parcels-add-progress-declaration-wrapper"
           >
             <h4>Декларация {{ index + 1 }}</h4>
             <input type="text" v-model="parcel.link" placeholder="Ссылка на товар*" required>
@@ -114,9 +112,9 @@
 
           <div class="parcels-add-progress-declaration-total">
             <h2>Итого: {{ totalPrice }}$</h2>
-            <!-- <button @click="addParcel">+ Добавить товар</button> -->
+            <button @click="addParcel">+ Добавить товар</button>
           </div>
-          
+
           <div class="parcels-add-btn-wrapper">
             <button class="parcels-add-btn" @click="nextStep">Продолжить</button>
           </div>
@@ -128,22 +126,22 @@
             <h2>Выбор получателя</h2>
             <p>Выберите сохраненный адрес или добавьте новый.</p>
           </div>
-          
+
           <div class="parcels-add-address-content">
             <h2>Список адресов</h2>
-            
+
             <div v-if="addresses.length === 0" class="empty-address">
               <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>
               <button @click="navigateToAddresses">+ Добавить адрес</button>
             </div>
 
             <div v-else class="parcel-address-list">
-              <div 
-                v-for="addr in addresses" 
-                :key="addr.id" 
-                class="parcel-address-list-item"
-                :class="{ selected: selectedAddress === addr.id }"
-                @click="selectAddress(addr.id)"
+              <div
+                  v-for="addr in addresses"
+                  :key="addr.id"
+                  class="parcel-address-list-item"
+                  :class="{ selected: selectedAddress === addr.id }"
+                  @click="selectAddress(addr.id)"
               >
                 <div class="parcel-address-list-item-left">
                   <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
@@ -155,15 +153,14 @@
                 </div>
               </div>
               <button @click="navigateToAddresses">+ Добавить адрес</button>
-
             </div>
           </div>
-          
+
           <div class="parcels-add-btn-wrapper">
-            <button 
-              class="parcels-add-btn" 
-              @click="nextStep" 
-              :disabled="!selectedAddress"
+            <button
+                class="parcels-add-btn"
+                @click="nextStep"
+                :disabled="!selectedAddress"
             >
               Продолжить
             </button>
@@ -176,7 +173,7 @@
             <h2>Подтверждение заказа</h2>
             <p>Проверьте все данные перед отправкой.</p>
           </div>
-          
+
           <div class="confirmation-content">
             <div v-for="(parcel, index) in parcels" :key="index" class="confirmation-item">
               <h3>Товар {{ index + 1 }}</h3>
@@ -187,19 +184,19 @@
               <p>Цвет: {{ parcel.color }}</p>
               <p>Размер: {{ parcel.size }}</p>
             </div>
-            
+
             <div v-if="selectedAddress" class="selected-address">
               <h3>Адрес доставки:</h3>
               <p>{{ getSelectedAddress().first_name }} {{ getSelectedAddress().last_name }}</p>
               <p>{{ getSelectedAddress().address }}, {{ getSelectedAddress().city }}</p>
             </div>
           </div>
-          
+
           <div class="parcels-add-btn-wrapper">
-            <button 
-              class="parcels-add-btn" 
-              @click="submitOrder"
-              :disabled="isLoading"
+            <button
+                class="parcels-add-btn"
+                @click="submitOrder"
+                :disabled="isLoading"
             >
               {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}
             </button>
@@ -221,7 +218,7 @@ import right from "@/assets/right.png";
 
 const router = useRouter();
 
-// Состояния
+// States
 const isPopupOpen = ref(false);
 const currentStep = ref(1);
 const selectedTab = ref("parcels");
@@ -229,19 +226,34 @@ const selectedFilter = ref("");
 const selectedAddress = ref(null);
 const isLoading = ref(false);
 
-// Данные
-const parcels = ref([{ 
-  link: '', 
-  name: '', 
-  price: '', 
-  quantity: '', 
-  color: '', 
-  size: '', 
-  comment: '' 
+// Data
+const parcels = ref([{
+  link: '',
+  name: '',
+  price: '',
+  quantity: '',
+  color: '',
+  size: '',
+  comment: ''
 }]);
 
 const addresses = ref([]);
 const orders = ref([]);
+
+const tabs = ref([
+  {
+    key: "parcels",
+    label: "Посылки",
+    filters: ["Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
+  },
+  {
+    key: "purchase_help",
+    label: "Помощь в покупке",
+    filters: ["В обработке", "Завершенные"]
+  },
+]);
+
+// Computed properties
 const currentFilters = computed(() => {
   return tabs.value.find(tab => tab.key === selectedTab.value)?.filters || [];
 });
@@ -252,26 +264,10 @@ const totalPrice = computed(() => {
   }, 0);
 });
 
-
-const tabs = ref([
-  { 
-    key: "parcels", 
-    label: "Посылки", 
-    filters: ["Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"] 
-  },
-  { 
-    key: "purchase_help", 
-    label: "Помощь в покупке", 
-    filters: ["В обработке", "Завершенные"] 
-  },
-]);
-// Вычисляемые свойства
-
-
 const filteredOrders = computed(() => {
   return orders.value.filter(order => {
     if (!selectedFilter.value) return true;
-    
+
     switch(selectedFilter.value.toLowerCase()) {
       case 'принятые': return order.is_accepted;
       case 'отклоненные': return order.is_rejected;
@@ -285,7 +281,7 @@ const filteredOrders = computed(() => {
   });
 });
 
-// Методы
+// Methods
 const getPopupTitle = () => {
   return ['Добавить заказ', 'Выбор получателя', 'Подтверждение заказа'][currentStep.value - 1];
 };
@@ -307,6 +303,7 @@ const getStatusText = (order) => {
   if (order.is_rejected) return 'Отклонен';
   return 'На рассмотрении';
 };
+
 const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('ru-RU', {
     day: 'numeric',
@@ -329,47 +326,84 @@ const getFilterCount = (filter) => {
     }
   }).length;
 };
+
 const getSelectedAddress = () => {
-  return addresses.value.find(addr => addr.id === selectedAddress.value) || {};
+  const address = addresses.value.find(addr => addr.id === selectedAddress.value);
+  if (!address) {
+    console.error('Selected address not found');
+    return {
+      first_name: 'Not selected',
+      last_name: '',
+      address: '',
+      city: ''
+    };
+  }
+  return address;
 };
 
-// Действия с заказами
+// Order actions
 const fetchOrders = async () => {
   try {
     isLoading.value = true;
     const token = localStorage.getItem('access_token');
+
+    if (!token) {
+      throw new Error('Authentication token not found');
+    }
+
     const response = await axios.get(
-      'https://abuexpresslogisticscargo.com/api/order/',
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
+        'https://abuexpresslogisticscargo.com/api/order/',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept': 'application/json'
+          },
+          timeout: 10000
+        }
     );
-    orders.value = response.data;
+
+    if (response.data && Array.isArray(response.data)) {
+      orders.value = response.data;
+    } else {
+      throw new Error('Invalid response format from server');
+    }
   } catch (error) {
-    console.error('Ошибка загрузки заказов:', error);
-    alert('Не удалось загрузить список заказов');
+    console.error('Order loading error:', {
+      message: error.message,
+      response: error.response?.data,
+      config: error.config
+    });
+
+    let errorMessage = 'Failed to load orders';
+    if (error.response) {
+      if (error.response.status === 401) {
+        errorMessage = 'Authentication failed. Please login again.';
+        router.push('/login');
+      } else if (error.response.data?.detail) {
+        errorMessage = error.response.data.detail;
+      }
+    } else if (error.request) {
+      errorMessage = 'No response from server. Check your connection.';
+    }
+
+    alert(errorMessage);
   } finally {
     isLoading.value = false;
   }
 };
 
-const validateParcel = (parcel) => {
-  const requiredFields = ['link', 'name', 'price', 'quantity', 'color', 'size'];
-  return requiredFields.every(field => !!parcel[field]);
-};
-
 const submitOrder = async () => {
   try {
     isLoading.value = true;
-    
-    // Проверка заполнения всех обязательных полей
+
+    // Validate all required fields
     const isValid = parcels.value.every(parcel => {
-      return parcel.link?.trim() && 
-             parcel.name?.trim() && 
-             !isNaN(parcel.price) &&
-             !isNaN(parcel.quantity) &&
-             parcel.color?.trim() &&
-             parcel.size?.trim();
+      return parcel.link?.trim() &&
+          parcel.name?.trim() &&
+          !isNaN(parcel.price) &&
+          !isNaN(parcel.quantity) &&
+          parcel.color?.trim() &&
+          parcel.size?.trim();
     });
 
     if (!isValid) {
@@ -377,73 +411,101 @@ const submitOrder = async () => {
       return;
     }
 
-    const token = localStorage.getItem('access_token');
-    
-    // Создаем заказы для каждого товара
-    const results = await Promise.all(
-      parcels.value.map(async (parcel) => {
-        // Формируем данные в соответствии с требованиями API
-        const postData = {
-          url_product: parcel.link.trim(),
-          product_name: parcel.name.trim(),
-          product_price: Number(parcel.price),
-          product_quantity: Number(parcel.quantity),
-          product_color: parcel.color.trim(),
-          product_size: parcel.size.trim(),
-          is_accepted: false,
-          is_rejected: false,
-          is_shipped: false,
-          is_arrived: false,
-          is_delivered: false
-        };
+    if (!selectedAddress.value) {
+      alert('Пожалуйста, выберите адрес получателя');
+      return;
+    }
 
-        const response = await axios.post(
-          'https://abuexpresslogisticscargo.com/api/order/',
-          postData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      throw new Error('Authentication token not found');
+    }
+
+    // Verify the selected address exists
+    const address = addresses.value.find(addr => addr.id === selectedAddress.value);
+    if (!address) {
+      throw new Error('Selected address not found');
+    }
+
+    // Create orders for each product
+    const results = await Promise.all(
+        parcels.value.map(async (parcel) => {
+          const postData = {
+            url_product: parcel.link.trim(),
+            product_name: parcel.name.trim(),
+            product_price: Number(parcel.price),
+            product_quantity: Number(parcel.quantity),
+            product_color: parcel.color.trim(),
+            product_size: parcel.size.trim(),
+            is_accepted: false,
+            is_rejected: false,
+            is_shipped: false,
+            is_arrived: false,
+            is_delivered: false,
+            receiver_address: address.id, // Use the verified address ID
+            product_weight: 0,
+            invoice_id: null
+          };
+
+          if (parcel.comment?.trim()) {
+            postData.comment = parcel.comment.trim();
           }
-        );
-        
-        return response.data;
-      })
+
+          const response = await axios.post(
+              'https://abuexpresslogisticscargo.com/api/order/',
+              postData,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+          );
+          return response.data;
+        })
     );
 
-    // Обновляем список заказов и закрываем попап
-    await fetchOrders();
+    await fetchOrders(); // Refresh the orders list
     closePopup();
     alert(`Успешно создано ${results.length} заказ(ов)!`);
 
   } catch (error) {
-    console.error('Детали ошибки:', {
+    console.error('Order submission error:', {
       request: error.config?.data,
       response: error.response?.data
     });
-    
-    const errorMessage = error.response?.data?.detail 
-      || Object.values(error.response?.data || {}).flat().join(', ') 
-      || 'Ошибка при создании заказа';
-      
+
+    let errorMessage = 'Ошибка при создании заказа';
+    if (error.response?.data) {
+      if (error.response.data.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (typeof error.response.data === 'object') {
+        errorMessage = Object.entries(error.response.data)
+            .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
+            .join('; ');
+      }
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
     alert(errorMessage);
   } finally {
     isLoading.value = false;
   }
 };
-// Работа с попапом
+
+// Popup actions
 const openPopup = () => {
   isPopupOpen.value = true;
   currentStep.value = 1;
-  parcels.value = [{ 
-    link: '', 
-    name: '', 
-    price: '', 
-    quantity: '', 
-    color: '', 
-    size: '', 
-    comment: '' 
+  parcels.value = [{
+    link: '',
+    name: '',
+    price: '',
+    quantity: '',
+    color: '',
+    size: '',
+    comment: ''
   }];
   selectedAddress.value = null;
 };
@@ -453,14 +515,14 @@ const closePopup = () => {
 };
 
 const addParcel = () => {
-  parcels.value.push({ 
-    link: '', 
-    name: '', 
-    price: '', 
-    quantity: '', 
-    color: '', 
-    size: '', 
-    comment: '' 
+  parcels.value.push({
+    link: '',
+    name: '',
+    price: '',
+    quantity: '',
+    color: '',
+    size: '',
+    comment: ''
   });
 };
 
@@ -473,29 +535,42 @@ const nextStep = () => {
   currentStep.value < 3 && currentStep.value++;
 };
 
-// Работа с адресами
+// Address actions
 const fetchAddresses = async () => {
   try {
     const token = localStorage.getItem('access_token');
     const res = await axios.get(
-      'https://abuexpresslogisticscargo.com/api/addresses/',
-      { headers: { Authorization: `Bearer ${token}` } }
+        'https://abuexpresslogisticscargo.com/api/addresses/',
+        { headers: { Authorization: `Bearer ${token}` } }
     );
     addresses.value = res.data;
+    console.log('Addresses loaded:', addresses.value);
   } catch (err) {
     console.error('Ошибка загрузки адресов:', err);
   }
 };
 
-const selectAddress = (id) => selectedAddress.value = id;
+const selectAddress = (id) => {
+  const addressExists = addresses.value.some(addr => addr.id === id);
+  if (addressExists) {
+    selectedAddress.value = id;
+  } else {
+    console.error('Attempted to select non-existent address ID:', id);
+  }
+};
+
 const navigateToAddresses = () => {
   router.push('/address');
   closePopup();
 };
 
-// Хуки жизненного цикла
+// Lifecycle hooks
 onMounted(async () => {
-  await Promise.all([fetchAddresses(), fetchOrders()]);
+  try {
+    await Promise.all([fetchAddresses(), fetchOrders()]);
+  } catch (error) {
+    console.error('Initialization error:', error);
+  }
 });
 </script>
 
