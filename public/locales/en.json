@@ -101,7 +101,40 @@
   "main": "Main",
   "services_air_sea_title": "Air and Sea Freight",
   "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo.",
-
+  "profile": {
+    "countries": {
+      "usa": "USA",
+      "turkey": "Turkey",
+      "china": "China"
+    },
+    "flag_alt": "Flag",
+    "copy_alt": "Copy",
+    "your_address_in": "Your address in",
+    "address_instructions": "Specify your address in",
+    "recipient": "Recipient",
+    "no_name": "Name not specified",
+    "work_schedule": "Working hours",
+    "weekdays_schedule": "09:00 - 17:00 | Monday - Friday",
+    "saturday_schedule": "09:00 - 14:00 | Saturday",
+    "copied_message": "Copied: {text}",
+    "address_fields": {
+      "address1": "Address 1",
+      "address2": "Address 2",
+      "city": "City",
+      "state": "State",
+      "zip": "ZIP code",
+      "country": "Country",
+      "phone": "Phone number"
+    },
+    "faq": {
+      "create_account": "How to create an account?",
+      "create_account_answer": "Register on the website and confirm your email.",
+      "register_order": "How to register an online order?",
+      "register_order_answer": "Select products and proceed to checkout.",
+      "tax_free_state": "Will there be a warehouse in a tax-free state?",
+      "tax_free_state_answer": "Yes, there is a warehouse in the tax-free state of Delaware (DE)."
+    }
+  },
   "parcels": {
     "title": "Parcels",
     "add_order": "Add order (purchase)",

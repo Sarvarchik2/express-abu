@@ -993,21 +993,27 @@ const submitOrder = async () => {
       throw new Error('Please select an address');
     }
 
+    // Transform the parcels data to match API expectations
     const orderData = {
-      parcels: parcels.value.map(parcel => ({
-        link: parcel.link,
-        name: parcel.name,
-        price: Number(parcel.price),
-        quantity: Number(parcel.quantity),
-        color: parcel.color,
-        size: parcel.size,
-        weight: Number(parcel.weight),
-        comment: parcel.comment
-      })),
+      url_product: parcels.value[0].link, // Assuming single product for now
+      product_name: parcels.value[0].name,
+      product_price: Number(parcels.value[0].price),
+      product_quantity: Number(parcels.value[0].quantity),
+      product_color: parcels.value[0].color,
+      product_size: parcels.value[0].size,
+      product_weight: Number(parcels.value[0].weight),
+      comment: parcels.value[0].comment,
       receiver_address: selectedAddress.value
     };
 
-    await axios.post(
+    // Remove empty fields
+    Object.keys(orderData).forEach(key => {
+      if (orderData[key] === null || orderData[key] === undefined || orderData[key] === '') {
+        delete orderData[key];
+      }
+    });
+
+    const response = await axios.post(
         'https://abuexpresslogisticscargo.com/api/order/',
         orderData,
         {
@@ -1020,21 +1026,34 @@ const submitOrder = async () => {
 
     await fetchOrders();
     closePopup();
-    showNotificationMessage('Ваш заказ успешно отправлен!');
+    showNotificationMessage(t('parcels.notifications.order_success'), 'success');
+
   } catch (error) {
     console.error('Order submission error:', error);
-    let errorMessage = 'Ошибка при создании заказа';
+    let errorMessage = t('parcels.notifications.order_error');
+
     if (error.response?.data) {
-      errorMessage = Object.entries(error.response.data)
-          .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
-          .join('; ');
+      // Handle validation errors
+      if (typeof error.response.data === 'object') {
+        errorMessage = Object.entries(error.response.data)
+            .map(([field, errors]) => {
+              // Handle both array errors and single error strings
+              const errorText = Array.isArray(errors) ? errors.join(', ') : errors;
+              return `${field}: ${errorText}`;
+            })
+            .join('; ');
+      } else {
+        errorMessage = error.response.data;
+      }
+    } else if (error.message) {
+      errorMessage = error.message;
     }
+
     showNotificationMessage(errorMessage, 'error');
   } finally {
     isLoading.value = false;
   }
 };
-
 const submitOrderOwn = async () => {
   try {
     isLoading.value = true;

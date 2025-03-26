@@ -101,7 +101,40 @@
   "main": "Bosh sahifa",
   "services_air_sea_title": "Havo va dengiz yuk tashish xizmati",
   "services_air_sea_desc": "Abuexpress kompaniyasi mijozlar va biznes uchun maxsus mo'ljallangan ishonchli havo va dengiz yuk tashish xizmatlarini taklif qiladi. Havo transporti orqali yetkazib berish muddati 7-10 kun bo'lib, O'zbekistonga tezkor posilka jo'natishni istagan mijozlar uchun eng yaxshi variant hisoblanadi. Shu bilan birga, dengiz yuk tashish 45 kungacha davom etishi mumkin, lekin bu yirik va og'ir tijorat yuklarini yetkazib berish uchun iqtisodiy jihatdan samarali yechim hisoblanadi.",
-
+  "profile": {
+    "countries": {
+      "usa": "AQSH",
+      "turkey": "Turkiya",
+      "china": "Xitoy"
+    },
+    "flag_alt": "Bayroq",
+    "copy_alt": "Nusxa olish",
+    "your_address_in": "Sizning manzilingiz",
+    "address_instructions": "Onlayn xarid qilishda yetkazib berish manzili sifatida",
+    "recipient": "Qabul qiluvchi",
+    "no_name": "Ism ko'rsatilmagan",
+    "work_schedule": "Ish jadvali",
+    "weekdays_schedule": "09:00 - 17:00 | Dushanba - Juma",
+    "saturday_schedule": "09:00 - 14:00 | Shanba",
+    "copied_message": "Nusxa olindi: {text}",
+    "address_fields": {
+      "address1": "Manzil 1",
+      "address2": "Manzil 2",
+      "city": "Shahar",
+      "state": "Shtat",
+      "zip": "Pochta indeksi",
+      "country": "Mamlakat",
+      "phone": "Telefon raqami"
+    },
+    "faq": {
+      "create_account": "Shaxsiy kabinet qanday yaratiladi?",
+      "create_account_answer": "Saytda ro'yxatdan o'ting va elektron pochtangizni tasdiqlang.",
+      "register_order": "Internet buyurtmani qanday ro'yxatdan o'tkazish kerak?",
+      "register_order_answer": "Mahsulotlarni tanlang va buyurtma berish bo'limiga o'ting.",
+      "tax_free_state": "Soliqsiz shtatda ombor bo'ladimi?",
+      "tax_free_state_answer": "Ha, Delaver (DE) soliqsiz shtatida ombor mavjud."
+    }
+  },
   "parcels": {
     "title": "Posilkalar",
     "add_order": "Buyurtma qo'shish (sotib olish)",
@@ -182,6 +215,15 @@
       "product_color": "Rang*",
       "product_size": "O'lcham*",
       "comment": "Izoh"
+    },
+    "errors": {
+      "create": "Manzil yaratishda xatolik",
+      "update": "Manzilni yangilashda xatolik",
+      "delete": "Manzilni o'chirib bo'lmadi"
+    },
+    "notifications": {
+      "order_success": "Buyurtma yuborildi!",
+      "order_own_success": "Buyurtma yuborildi!"
     }
 
   },
@@ -242,5 +284,6 @@
       "update": "Manzilni yangilashda xatolik",
       "delete": "Manzilni o'chirib bo'lmadi"
     }
+
   }
 }
