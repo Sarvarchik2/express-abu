@@ -26,10 +26,10 @@
   "how_step1": "1. Sign up and receive our address",
   "how_step2": "2. Place an order at any store, using our address.",
   "how_step3": "3. Receive your parcel within 7-10 days quickly and hassle-free!",
-  "how_button": "Shop, and we’ll deliver! 🚀",
+  "how_button": "Shop, and we'll deliver! 🚀",
 
   "help_title": "Need help?",
-  "help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe’ll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we’ll ensure fast and reliable delivery of your purchases across Uzbekistan.\nAbu Express — your reliable delivery partner in Uzbekistan!",
+  "help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe'll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we'll ensure fast and reliable delivery of your purchases across Uzbekistan.\nAbu Express — your reliable delivery partner in Uzbekistan!",
   "help_btn": "Go to Help",
 
   "why_title": "Why Abu Express?",
@@ -47,7 +47,7 @@
   "security_desc3": "We ensure secure packaging and careful transportation, guaranteeing the safety of your items.",
 
   "about_title": "About Us",
-  "about_desc": "Abu Express – Reliable and free delivery across Uzbekistan!\nFor 5 years, we have been helping you receive parcels quickly, safely, and hassle-free. Thanks to our experience and trusted partners, we offer convenient and cost-effective delivery solutions across Uzbekistan.\n🔹 Air and ground delivery\n🔹 Door-to-door shipping\n🔹 Optimal delivery times and rates\nChoose Abu Express – and we’ll deliver your order with ease!",
+  "about_desc": "Abu Express – Reliable and free delivery across Uzbekistan!\nFor 5 years, we have been helping you receive parcels quickly, safely, and hassle-free. Thanks to our experience and trusted partners, we offer convenient and cost-effective delivery solutions across Uzbekistan.\n🔹 Air and ground delivery\n🔹 Door-to-door shipping\n🔹 Optimal delivery times and rates\nChoose Abu Express – and we'll deliver your order with ease!",
   "about_btn": "Learn more",
 
   "statistic_title": "Statistics",
@@ -61,7 +61,7 @@
   "stat4_text": "Branches",
 
   "final_help_title": "Need help shopping?",
-  "final_help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe’ll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we’ll ensure fast and reliable delivery of your purchases across Uzbekistan.\nShop without borders with Abu Express!",
+  "final_help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe'll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we'll ensure fast and reliable delivery of your purchases across Uzbekistan.\nShop without borders with Abu Express!",
   "final_help_btn": "Learn more about the service",
   "contact_contact": "Contacts",
   "contact_link": "Feedback",
@@ -73,7 +73,7 @@
   "tarif_smth": "Consolidation – free",
   "tarif_data": "Delivery within 3-5 business days",
   "tarif_delivery": "Free delivery across Uzbekistan",
-  "tarif_delivery2": " Free delivery across Uzbekistan (from 3 kg)",
+  "tarif_delivery2": "Free delivery across Uzbekistan (from 3 kg)",
   "tarif_more": "More details",
   "tarif_registration": "Sign up",
   "tarif_usa": "USA",
@@ -88,7 +88,6 @@
   "footer_reviews": "Customer reviews",
   "footer_for_customers": "For customers",
   "footer_useful": "Useful",
-
   "tarif_login": "Login",
   "tarif_calculator": "Calculator",
   "calculator_from": "From",
@@ -101,5 +100,106 @@
   "calculator_total": "Total:",
   "main": "Main",
   "services_air_sea_title": "Air and Sea Freight",
-  "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo."
+  "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo.",
+
+  "parcels": {
+    "title": "Parcels",
+    "add_order": "Add order (purchase)",
+    "add_own_order": "Add your own order",
+    "loading": "Loading data...",
+    "no_orders": "No orders found",
+    "product_info": "Product information",
+    "select_recipient": "Select recipient",
+    "order_confirmation": "Order confirmation",
+    "tabs": {
+      "parcels": "Parcels (purchase)",
+      "purchase_help": "Parcels"
+    },
+    "filters": {
+      "all": "All",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "shipped": "Shipped",
+      "arrived": "Arrived",
+      "delivered": "Delivered"
+    },
+    "status": {
+      "delivered": "Delivered",
+      "arrived": "Arrived",
+      "shipped": "Shipped",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "pending": "Pending"
+    },
+    "product_details": {
+      "price": "Price",
+      "quantity": "Quantity",
+      "weight": "Weight",
+      "color": "Color",
+      "size": "Size",
+      "product_link": "Product link",
+      "creation_date": "Creation date",
+      "pcs": "pcs"
+    },
+    "steps": {
+      "product_info": "Product information",
+      "recipient_selection": "Recipient selection",
+      "confirmation": "Confirmation"
+    },
+    "form": {
+      "product_link": "Product link*",
+      "product_name": "Product name*",
+      "price": "Price per unit $*",
+      "quantity": "Quantity* pcs",
+      "color": "Color*",
+      "size": "Size*",
+      "weight": "Weight (kg)*",
+      "comment": "Comment for operator",
+      "add_product": "+ Add product",
+      "total": "Total",
+      "continue": "Continue",
+      "submit_order": "Submit order",
+      "submitting": "Submitting...",
+      "declaration": "Declaration",
+      "product": "Product"
+    },
+    "address": {
+      "title": "Address list",
+      "no_address": "No saved addresses. Please add recipient address.",
+      "add_address": "+ Add address",
+      "passport": "Passport",
+      "delivery_address": "Delivery address"
+    },
+    "own_order": {
+      "title": "Add your own order",
+      "track_number": "Track number*",
+      "market_name": "Store name*",
+      "product_link": "Product link",
+      "product_name": "Product name*",
+      "product_price": "Price $*",
+      "product_quantity": "Quantity*",
+      "product_weight": "Weight (kg)*",
+      "product_color": "Color*",
+      "product_size": "Size*",
+      "comment": "Comment"
+    },
+    "errors": {
+      "fill_required_fields": "Please fill in all required fields (marked with *) with valid values",
+      "order_submission": "Error submitting order",
+      "address_selection": "Please select an address"
+    },
+    "notifications": {
+      "order_success": "Your order has been successfully submitted!",
+      "order_own_success": "Your own order has been successfully added!"
+    }
+
+  },
+  "sidebar": {
+    "mobile_menu": "Profile navigation",
+    "profile": "Profile",
+    "parcels": "Parcels",
+    "addresses": "Addresses",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
 }

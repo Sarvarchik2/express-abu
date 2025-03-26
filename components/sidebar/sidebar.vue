@@ -1,65 +1,54 @@
 
 <template>
   <div>
-    <!-- Гамбургер-меню для мобильных -->
-    <button 
-      class="hamburger" 
-      @click="toggleMenu"
-      :class="{ 'active': isOpen }"
-      v-if="isMobile"
+    <!-- Hamburger menu for mobile -->
+    <button
+        class="hamburger"
+        @click="toggleMenu"
+        :class="{ 'active': isOpen }"
+        v-if="isMobile"
     >
-      <!-- <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span> -->
-      Навигация по профилю
+      {{ $t('sidebar.mobile_menu') }}
     </button>
 
-    <!-- Сайдбар -->
     <div class="sidebar" :class="{ 'mobile-open': isOpen }">
-      <!-- Верхняя секция меню -->
       <ul class="menu">
         <li>
           <NuxtLink to="/profile" active-class="active" @click="handleMobileClick">
             <User class="icon" />
-            Профиль
+            {{ $t('sidebar.profile') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
         <li>
           <NuxtLink to="/parcels" active-class="active" @click="handleMobileClick">
             <Package class="icon" />
-            Посылки
+            {{ $t('sidebar.parcels') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
         <li>
           <NuxtLink to="/address" active-class="active" @click="handleMobileClick">
             <MapPin class="icon" />
-            Адреса
+            {{ $t('sidebar.addresses') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
-        <!-- <li>
-          <NuxtLink to="/claims" active-class="active" @click="handleMobileClick">
-            <AlertCircle class="icon" />
-            Претензии
-          </NuxtLink>
-        </li> -->
       </ul>
 
-      <!-- Нижняя секция меню -->
+      <!-- Bottom menu section -->
       <ul class="menu">
         <li>
-          <NuxtLink to="/profile" active-class="active" @click="handleMobileClick">
+          <NuxtLink to="/" active-class="active" @click="handleMobileClick">
             <Settings class="icon" />
-            Настройки
+            {{ $t('sidebar.settings') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
         <li>
           <button class="logout-btn" @click="logout">
             <LogOut class="icon" />
-            Выйти
+            {{ $t('sidebar.logout') }}
           </button>
         </li>
       </ul>
@@ -70,30 +59,30 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { User, Package, MapPin, AlertCircle, Settings, LogOut } from 'lucide-vue-next'
+import { User, Package, MapPin, Settings, LogOut } from 'lucide-vue-next'
 
 const router = useRouter()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
-// Проверка мобильного устройства
+// Mobile device check
 const checkMobile = () => {
   isMobile.value = window.innerWidth <= 600
 }
 
-// Переключение меню
+// Toggle menu
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
 }
 
-// Закрытие меню на мобильных
+// Close menu on mobile
 const handleMobileClick = () => {
   if (isMobile.value) {
     isOpen.value = false
   }
 }
 
-// Выход из системы
+// Logout
 const logout = () => {
   if (process.client) {
     localStorage.removeItem('access_token')
@@ -104,7 +93,7 @@ const logout = () => {
   router.push('/registration')
 }
 
-// Обработчики изменения размера
+// Resize handlers
 onMounted(() => {
   checkMobile()
   window.addEventListener('resize', checkMobile)
@@ -114,7 +103,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkMobile)
 })
 </script>
-
 <style scoped>
 /* Базовые стили */
 .sidebar {

@@ -1,13 +1,341 @@
 
 
+<!--<template>-->
+<!--  &lt;!&ndash; Notification Component &ndash;&gt;-->
+<!--  <div class="notification-container" :class="{ 'show': showNotification }">-->
+<!--    <div class="notification" :class="notificationType">-->
+<!--      <span>{{ notificationMessage }}</span>-->
+<!--      <button @click="hideNotification">&times;</button>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="parcels-page">-->
+<!--    <div class="tabs">-->
+<!--      <button-->
+<!--          v-for="(tab, index) in tabs"-->
+<!--          :key="index"-->
+<!--          :class="{ active: selectedTab === tab.key }"-->
+<!--          @click="selectedTab = tab.key"-->
+<!--      >-->
+<!--        {{ tab.label }}-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    <div class="divider"></div>-->
+
+<!--    <div class="sub-tabs">-->
+<!--      <button-->
+<!--          v-for="(filter, index) in currentFilters"-->
+<!--          :key="index"-->
+<!--          class="sub-tab"-->
+<!--          :class="{ active: selectedFilter === filter }"-->
+<!--          @click="selectedFilter = filter"-->
+<!--      >-->
+<!--        {{ filter }} <span class="count">{{ getFilterCount(filter) }}</span>-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    <div class="parcels-btn">-->
+<!--      <button @click="openPopup">+ Добавить заказ (выкуп)</button>-->
+<!--      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ Добавить свой заказ</button>-->
+<!--    </div>-->
+
+<!--    <div v-if="isLoading" class="loading-indicator">-->
+<!--      Загрузка данных...-->
+<!--    </div>-->
+
+<!--    <div class="parcel-page-wrapper" v-else>-->
+<!--      <div v-if="filteredOrders.length === 0" class="empty-state">-->
+<!--        <img :src="empty" alt="Нет заказов" class="empty-image" />-->
+<!--        <p class="empty-text">Заказов не найдено</p>-->
+<!--      </div>-->
+
+<!--      <div v-else class="orders-list">-->
+<!--        <div v-for="order in filteredOrders" :key="order.id" class="order-item">-->
+<!--          <div class="order-header">-->
+<!--            <h3>{{ order.product_name || order.name }}</h3>-->
+<!--            <span class="order-status" :class="getStatusClass(order)">-->
+<!--              {{ getStatusText(order) }}-->
+<!--            </span>-->
+<!--          </div>-->
+<!--          <div class="order-details">-->
+<!--            <p>Цена: ${{ order.product_price || order.price }}</p>-->
+<!--            <p>Количество: {{ order.product_quantity || order.quantity }} шт</p>-->
+<!--            <p v-if="order.product_weight || order.weight">Вес: {{ order.product_weight || order.weight }} кг</p>-->
+<!--            <p v-if="order.product_color || order.color">Цвет: {{ order.product_color || order.color }}</p>-->
+<!--            <p v-if="order.product_size || order.size">Размер: {{ order.product_size || order.size }}</p>-->
+<!--            <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">-->
+<!--              Ссылка на товар-->
+<!--            </a>-->
+<!--          </div>-->
+<!--          <div class="order-footer">-->
+<!--            <small>Дата создания: {{ formatDate(order.created_at) }}</small>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Popup for purchase help &ndash;&gt;-->
+<!--    <div v-if="isPopupOpen" class="parcels-add">-->
+<!--      <div class="parcels-add-wrapper">-->
+<!--        <div class="parcels-add-title">-->
+<!--          <h2>{{ getPopupTitle() }}</h2>-->
+<!--          <img :src="close" alt="close" @click="closePopup">-->
+<!--        </div>-->
+
+<!--        <div class="parcels-add-progress">-->
+<!--          <div class="parcels-add-progress-left">-->
+<!--            <h3 class="active">1</h3>-->
+<!--            <h3 :class="{ active: currentStep >= 2 }">2</h3>-->
+<!--            <h3 :class="{ active: currentStep >= 3 }">3</h3>-->
+<!--            <span></span>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-progress-right">-->
+<!--            <img v-if="currentStep > 1" :src="left" alt="left" @click="prevStep">-->
+<!--            <img v-if="currentStep < 3" :src="right" alt="right" @click="nextStep">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Step 1: Product information &ndash;&gt;-->
+<!--        <div v-if="currentStep === 1" class="parcels-add-progress-declaration">-->
+<!--          <div class="parcels-add-text">-->
+<!--            <h2>Товары для покупки</h2>-->
+<!--            <p>Введите данные товаров, которые хотите купить.</p>-->
+<!--          </div>-->
+
+<!--          <div-->
+<!--              v-for="(parcel, index) in parcels"-->
+<!--              :key="index"-->
+<!--              class="parcels-add-progress-declaration-wrapper"-->
+<!--          >-->
+<!--            <h4>Декларация {{ index + 1 }}</h4>-->
+<!--            <input type="text" v-model="parcel.link" placeholder="Ссылка на товар*" required>-->
+<!--            <div class="input-group">-->
+<!--              <input type="text" v-model="parcel.name" placeholder="Название товара*" required>-->
+<!--              <input type="number" v-model="parcel.price" placeholder="Цена за ед $*" required>-->
+<!--              <input type="number" v-model="parcel.quantity" placeholder="Количество* шт" required>-->
+<!--            </div>-->
+<!--            <div class="input-group">-->
+<!--              <input type="text" v-model="parcel.color" placeholder="Цвет*" required>-->
+<!--              <input type="text" v-model="parcel.size" placeholder="Размер*" required>-->
+<!--              <input type="number" v-model="parcel.weight" placeholder="Вес (кг)*" required step="0.01">-->
+<!--            </div>-->
+<!--            <textarea v-model="parcel.comment" placeholder="Комментарий для оператора"></textarea>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-progress-declaration-total">-->
+<!--            <h2>Итого: {{ totalPrice }}$</h2>-->
+<!--            <button @click="addParcel">+ Добавить товар</button>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-btn-wrapper">-->
+<!--            <button class="parcels-add-btn" @click="nextStep">Продолжить</button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Step 2: Address selection &ndash;&gt;-->
+<!--        <div v-if="currentStep === 2" class="parcels-add-address">-->
+<!--          <div class="parcels-add-text">-->
+<!--            <h2>Выбор получателя</h2>-->
+<!--            <p>Выберите сохраненный адрес или добавьте новый.</p>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-address-content">-->
+<!--            <h2>Список адресов</h2>-->
+
+<!--            <div v-if="addresses.length === 0" class="empty-address">-->
+<!--              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>-->
+<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
+<!--            </div>-->
+
+<!--            <div v-else class="parcel-address-list">-->
+<!--              <div-->
+<!--                  v-for="addr in addresses"-->
+<!--                  :key="addr.id"-->
+<!--                  class="parcel-address-list-item"-->
+<!--                  :class="{ selected: selectedAddress === addr.id }"-->
+<!--                  @click="selectAddress(addr.id)"-->
+<!--              >-->
+<!--                <div class="parcel-address-list-item-left">-->
+<!--                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>-->
+<!--                  <h3>{{ addr.address }}, {{ addr.city }}</h3>-->
+<!--                </div>-->
+<!--                <div class="parcel-address-list-item-right">-->
+<!--                  <h2>{{ addr.phone_number }}</h2>-->
+<!--                  <h3>Паспорт: {{ addr.passport_number }}</h3>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-btn-wrapper">-->
+<!--            <button-->
+<!--                class="parcels-add-btn"-->
+<!--                @click="nextStep"-->
+<!--                :disabled="!selectedAddress"-->
+<!--            >-->
+<!--              Продолжить-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Step 3: Confirmation &ndash;&gt;-->
+<!--        <div v-if="currentStep === 3" class="parcels-add-confirmation">-->
+<!--          <div class="parcels-add-text">-->
+<!--            <h2>Подтверждение заказа</h2>-->
+<!--            <p>Проверьте все данные перед отправкой.</p>-->
+<!--          </div>-->
+
+<!--          <div class="confirmation-content">-->
+<!--            <div v-for="(parcel, index) in parcels" :key="index" class="confirmation-item">-->
+<!--              <h3>Товар {{ index + 1 }}</h3>-->
+<!--              <p>Ссылка: {{ parcel.link }}</p>-->
+<!--              <p>Название: {{ parcel.name }}</p>-->
+<!--              <p>Цена: {{ parcel.price }}$</p>-->
+<!--              <p>Количество: {{ parcel.quantity }} шт</p>-->
+<!--              <p>Вес: {{ parcel.weight }} кг</p>-->
+<!--              <p>Цвет: {{ parcel.color }}</p>-->
+<!--              <p>Размер: {{ parcel.size }}</p>-->
+<!--            </div>-->
+
+<!--            <div v-if="selectedAddress" class="selected-address">-->
+<!--              <h3>Адрес доставки:</h3>-->
+<!--              <p>{{ getSelectedAddress().first_name }} {{ getSelectedAddress().last_name }}</p>-->
+<!--              <p>{{ getSelectedAddress().address }}, {{ getSelectedAddress().city }}</p>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-btn-wrapper">-->
+<!--            <button-->
+<!--                class="parcels-add-btn"-->
+<!--                @click="submitOrder"-->
+<!--                :disabled="isLoading"-->
+<!--            >-->
+<!--              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Popup for adding own order &ndash;&gt;-->
+<!--    <div v-if="isOrderOwnPopupOpen" class="parcels-add">-->
+<!--      <div class="parcels-add-wrapper">-->
+<!--        <div class="parcels-add-title">-->
+<!--          <h2>Добавить свой заказ</h2>-->
+<!--          <img :src="close" alt="close" @click="closeOrderOwnPopup">-->
+<!--        </div>-->
+
+<!--        <div class="parcels-add-progress">-->
+<!--          <div class="parcels-add-progress-left">-->
+<!--            <h3 class="active">1</h3>-->
+<!--            <h3 :class="{ active: currentOrderOwnStep >= 2 }">2</h3>-->
+<!--            <span></span>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-progress-right">-->
+<!--            <img v-if="currentOrderOwnStep > 1" :src="left" alt="left" @click="prevOrderOwnStep">-->
+<!--            <img v-if="currentOrderOwnStep < 2" :src="right" alt="right" @click="nextOrderOwnStep">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Step 1: Order information &ndash;&gt;-->
+<!--        <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">-->
+<!--          <div class="parcels-add-text">-->
+<!--            <h2>Информация о заказе</h2>-->
+<!--            <p>Введите данные о вашем заказе.</p>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-progress-declaration-wrapper">-->
+<!--            <input type="text" v-model="orderOwn.track_number" placeholder="Трек-номер*" required>-->
+<!--            <input type="text" v-model="orderOwn.market_name" placeholder="Название магазина*" required>-->
+<!--            <input type="text" v-model="orderOwn.url_product" placeholder="Ссылка на товар">-->
+
+<!--            <div class="input-group">-->
+<!--              <input type="text" v-model="orderOwn.product_name" placeholder="Название товара*" required>-->
+<!--              <input type="number" v-model="orderOwn.product_price" placeholder="Цена $*" required>-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--              <input type="number" v-model="orderOwn.product_quantity" placeholder="Количество*" required>-->
+<!--              <input type="number" v-model="orderOwn.product_weight" placeholder="Вес (кг)*" required step="0.01">-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--              <input type="text" v-model="orderOwn.product_color" placeholder="Цвет*" required>-->
+<!--              <input type="text" v-model="orderOwn.product_size" placeholder="Размер*" required>-->
+<!--            </div>-->
+
+<!--            <textarea v-model="orderOwn.comment" placeholder="Комментарий"></textarea>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-btn-wrapper">-->
+<!--            <button class="parcels-add-btn" @click="nextOrderOwnStep">Продолжить</button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Step 2: Address selection &ndash;&gt;-->
+<!--        <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">-->
+<!--          <div class="parcels-add-text">-->
+<!--            <h2>Выбор получателя</h2>-->
+<!--            <p>Выберите сохраненный адрес доставки.</p>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-address-content">-->
+<!--            <h2>Список адресов</h2>-->
+
+<!--            <div v-if="addresses.length === 0" class="empty-address">-->
+<!--              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>-->
+<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
+<!--            </div>-->
+
+<!--            <div v-else class="parcel-address-list">-->
+<!--              <div-->
+<!--                  v-for="addr in addresses"-->
+<!--                  :key="addr.id"-->
+<!--                  class="parcel-address-list-item"-->
+<!--                  :class="{ selected: selectedAddress === addr.id }"-->
+<!--                  @click="selectAddress(addr.id)"-->
+<!--              >-->
+<!--                <div class="parcel-address-list-item-left">-->
+<!--                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>-->
+<!--                  <h3>{{ addr.address }}, {{ addr.city }}</h3>-->
+<!--                </div>-->
+<!--                <div class="parcel-address-list-item-right">-->
+<!--                  <h2>{{ addr.phone_number }}</h2>-->
+<!--                  <h3>Паспорт: {{ addr.passport_number }}</h3>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="parcels-add-btn-wrapper">-->
+<!--            <button-->
+<!--                class="parcels-add-btn"-->
+<!--                @click="submitOrderOwn"-->
+<!--                :disabled="!selectedAddress || isLoading"-->
+<!--            >-->
+<!--              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</template>-->
+
 <template>
-  <!-- Notification Component -->
   <div class="notification-container" :class="{ 'show': showNotification }">
     <div class="notification" :class="notificationType">
       <span>{{ notificationMessage }}</span>
       <button @click="hideNotification">&times;</button>
     </div>
   </div>
+
+  <!-- Language Switcher -->
 
   <div class="parcels-page">
     <div class="tabs">
@@ -17,7 +345,7 @@
           :class="{ active: selectedTab === tab.key }"
           @click="selectedTab = tab.key"
       >
-        {{ tab.label }}
+        {{ $t(`parcels.tabs.${tab.key}`) }}
       </button>
     </div>
 
@@ -31,23 +359,23 @@
           :class="{ active: selectedFilter === filter }"
           @click="selectedFilter = filter"
       >
-        {{ filter }} <span class="count">{{ getFilterCount(filter) }}</span>
+        {{ $t(`parcels.filters.${filter}`) }} <span class="count">{{ getFilterCount(filter) }}</span>
       </button>
     </div>
 
     <div class="parcels-btn">
-      <button @click="openPopup">+ Добавить заказ (выкуп)</button>
-      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ Добавить свой заказ</button>
+      <button @click="openPopup">+ {{ $t('parcels.add_order') }}</button>
+      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ {{ $t('parcels.add_own_order') }}</button>
     </div>
 
     <div v-if="isLoading" class="loading-indicator">
-      Загрузка данных...
+      {{ $t('parcels.loading') }}
     </div>
 
     <div class="parcel-page-wrapper" v-else>
       <div v-if="filteredOrders.length === 0" class="empty-state">
-        <img :src="empty" alt="Нет заказов" class="empty-image" />
-        <p class="empty-text">Заказов не найдено</p>
+        <img :src="empty" :alt="$t('parcels.no_orders')" class="empty-image" />
+        <p class="empty-text">{{ $t('parcels.no_orders') }}</p>
       </div>
 
       <div v-else class="orders-list">
@@ -59,17 +387,17 @@
             </span>
           </div>
           <div class="order-details">
-            <p>Цена: ${{ order.product_price || order.price }}</p>
-            <p>Количество: {{ order.product_quantity || order.quantity }} шт</p>
-            <p v-if="order.product_weight || order.weight">Вес: {{ order.product_weight || order.weight }} кг</p>
-            <p v-if="order.product_color || order.color">Цвет: {{ order.product_color || order.color }}</p>
-            <p v-if="order.product_size || order.size">Размер: {{ order.product_size || order.size }}</p>
+            <p>{{ $t('parcels.product_details.price') }}: ${{ order.product_price || order.price }}</p>
+            <p>{{ $t('parcels.product_details.quantity') }}: {{ order.product_quantity || order.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
+            <p v-if="order.product_weight || order.weight">{{ $t('parcels.product_details.weight') }}: {{ order.product_weight || order.weight }} kg</p>
+            <p v-if="order.product_color || order.color">{{ $t('parcels.product_details.color') }}: {{ order.product_color || order.color }}</p>
+            <p v-if="order.product_size || order.size">{{ $t('parcels.product_details.size') }}: {{ order.product_size || order.size }}</p>
             <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">
-              Ссылка на товар
+              {{ $t('parcels.product_details.product_link') }}
             </a>
           </div>
           <div class="order-footer">
-            <small>Дата создания: {{ formatDate(order.created_at) }}</small>
+            <small>{{ $t('parcels.product_details.creation_date') }}: {{ formatDate(order.created_at) }}</small>
           </div>
         </div>
       </div>
@@ -100,8 +428,8 @@
         <!-- Step 1: Product information -->
         <div v-if="currentStep === 1" class="parcels-add-progress-declaration">
           <div class="parcels-add-text">
-            <h2>Товары для покупки</h2>
-            <p>Введите данные товаров, которые хотите купить.</p>
+            <h2>{{ $t('parcels.steps.product_info') }}</h2>
+            <p>{{ $t('parcels.product_info') }}</p>
           </div>
 
           <div
@@ -109,44 +437,44 @@
               :key="index"
               class="parcels-add-progress-declaration-wrapper"
           >
-            <h4>Декларация {{ index + 1 }}</h4>
-            <input type="text" v-model="parcel.link" placeholder="Ссылка на товар*" required>
+            <h4>{{ $t('parcels.form.declaration') }} {{ index + 1 }}</h4>
+            <input type="text" v-model="parcel.link" :placeholder="$t('parcels.form.product_link')" required>
             <div class="input-group">
-              <input type="text" v-model="parcel.name" placeholder="Название товара*" required>
-              <input type="number" v-model="parcel.price" placeholder="Цена за ед $*" required>
-              <input type="number" v-model="parcel.quantity" placeholder="Количество* шт" required>
+              <input type="text" v-model="parcel.name" :placeholder="$t('parcels.form.product_name')" required>
+              <input type="number" v-model="parcel.price" :placeholder="$t('parcels.form.price')" required>
+              <input type="number" v-model="parcel.quantity" :placeholder="$t('parcels.form.quantity')" required>
             </div>
             <div class="input-group">
-              <input type="text" v-model="parcel.color" placeholder="Цвет*" required>
-              <input type="text" v-model="parcel.size" placeholder="Размер*" required>
-              <input type="number" v-model="parcel.weight" placeholder="Вес (кг)*" required step="0.01">
+              <input type="text" v-model="parcel.color" :placeholder="$t('parcels.form.color')" required>
+              <input type="text" v-model="parcel.size" :placeholder="$t('parcels.form.size')" required>
+              <input type="number" v-model="parcel.weight" :placeholder="$t('parcels.form.weight')" required step="0.01">
             </div>
-            <textarea v-model="parcel.comment" placeholder="Комментарий для оператора"></textarea>
+            <textarea v-model="parcel.comment" :placeholder="$t('parcels.form.comment')"></textarea>
           </div>
 
           <div class="parcels-add-progress-declaration-total">
-            <h2>Итого: {{ totalPrice }}$</h2>
-            <button @click="addParcel">+ Добавить товар</button>
+            <h2>{{ $t('parcels.form.total') }}: {{ totalPrice }}$</h2>
+            <button @click="addParcel">{{ $t('parcels.form.add_product') }}</button>
           </div>
 
           <div class="parcels-add-btn-wrapper">
-            <button class="parcels-add-btn" @click="nextStep">Продолжить</button>
+            <button class="parcels-add-btn" @click="nextStep">{{ $t('parcels.form.continue') }}</button>
           </div>
         </div>
 
         <!-- Step 2: Address selection -->
         <div v-if="currentStep === 2" class="parcels-add-address">
           <div class="parcels-add-text">
-            <h2>Выбор получателя</h2>
-            <p>Выберите сохраненный адрес или добавьте новый.</p>
+            <h2>{{ $t('parcels.steps.recipient_selection') }}</h2>
+            <p>{{ $t('parcels.select_recipient') }}</p>
           </div>
 
           <div class="parcels-add-address-content">
-            <h2>Список адресов</h2>
+            <h2>{{ $t('parcels.address.title') }}</h2>
 
             <div v-if="addresses.length === 0" class="empty-address">
-              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>
-              <button @click="navigateToAddresses">+ Добавить адрес</button>
+              <p>{{ $t('parcels.address.no_address') }}</p>
+              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
             </div>
 
             <div v-else class="parcel-address-list">
@@ -163,10 +491,10 @@
                 </div>
                 <div class="parcel-address-list-item-right">
                   <h2>{{ addr.phone_number }}</h2>
-                  <h3>Паспорт: {{ addr.passport_number }}</h3>
+                  <h3>{{ $t('parcels.address.passport') }}: {{ addr.passport_number }}</h3>
                 </div>
               </div>
-              <button @click="navigateToAddresses">+ Добавить адрес</button>
+              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
             </div>
           </div>
 
@@ -176,7 +504,7 @@
                 @click="nextStep"
                 :disabled="!selectedAddress"
             >
-              Продолжить
+              {{ $t('parcels.form.continue') }}
             </button>
           </div>
         </div>
@@ -184,24 +512,24 @@
         <!-- Step 3: Confirmation -->
         <div v-if="currentStep === 3" class="parcels-add-confirmation">
           <div class="parcels-add-text">
-            <h2>Подтверждение заказа</h2>
-            <p>Проверьте все данные перед отправкой.</p>
+            <h2>{{ $t('parcels.steps.confirmation') }}</h2>
+            <p>{{ $t('parcels.order_confirmation') }}</p>
           </div>
 
           <div class="confirmation-content">
             <div v-for="(parcel, index) in parcels" :key="index" class="confirmation-item">
-              <h3>Товар {{ index + 1 }}</h3>
-              <p>Ссылка: {{ parcel.link }}</p>
-              <p>Название: {{ parcel.name }}</p>
-              <p>Цена: {{ parcel.price }}$</p>
-              <p>Количество: {{ parcel.quantity }} шт</p>
-              <p>Вес: {{ parcel.weight }} кг</p>
-              <p>Цвет: {{ parcel.color }}</p>
-              <p>Размер: {{ parcel.size }}</p>
+              <h3>{{ $t('parcels.form.product') }} {{ index + 1 }}</h3>
+              <p>{{ $t('parcels.form.product_link') }}: {{ parcel.link }}</p>
+              <p>{{ $t('parcels.form.product_name') }}: {{ parcel.name }}</p>
+              <p>{{ $t('parcels.form.price') }}: {{ parcel.price }}$</p>
+              <p>{{ $t('parcels.form.quantity') }}: {{ parcel.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
+              <p>{{ $t('parcels.product_details.weight') }}: {{ parcel.weight }} kg</p>
+              <p>{{ $t('parcels.product_details.color') }}: {{ parcel.color }}</p>
+              <p>{{ $t('parcels.product_details.size') }}: {{ parcel.size }}</p>
             </div>
 
             <div v-if="selectedAddress" class="selected-address">
-              <h3>Адрес доставки:</h3>
+              <h3>{{ $t('parcels.address.delivery_address') }}:</h3>
               <p>{{ getSelectedAddress().first_name }} {{ getSelectedAddress().last_name }}</p>
               <p>{{ getSelectedAddress().address }}, {{ getSelectedAddress().city }}</p>
             </div>
@@ -213,7 +541,7 @@
                 @click="submitOrder"
                 :disabled="isLoading"
             >
-              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}
+              {{ isLoading ? $t('parcels.form.submitting') : $t('parcels.form.submit_order') }}
             </button>
           </div>
         </div>
@@ -224,7 +552,7 @@
     <div v-if="isOrderOwnPopupOpen" class="parcels-add">
       <div class="parcels-add-wrapper">
         <div class="parcels-add-title">
-          <h2>Добавить свой заказ</h2>
+          <h2>{{ $t('parcels.own_order.title') }}</h2>
           <img :src="close" alt="close" @click="closeOrderOwnPopup">
         </div>
 
@@ -244,51 +572,51 @@
         <!-- Step 1: Order information -->
         <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">
           <div class="parcels-add-text">
-            <h2>Информация о заказе</h2>
-            <p>Введите данные о вашем заказе.</p>
+            <h2>{{ $t('parcels.steps.product_info') }}</h2>
+            <p>{{ $t('parcels.product_info') }}</p>
           </div>
 
           <div class="parcels-add-progress-declaration-wrapper">
-            <input type="text" v-model="orderOwn.track_number" placeholder="Трек-номер*" required>
-            <input type="text" v-model="orderOwn.market_name" placeholder="Название магазина*" required>
-            <input type="text" v-model="orderOwn.url_product" placeholder="Ссылка на товар">
+            <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required>
+            <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
+            <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
 
             <div class="input-group">
-              <input type="text" v-model="orderOwn.product_name" placeholder="Название товара*" required>
-              <input type="number" v-model="orderOwn.product_price" placeholder="Цена $*" required>
+              <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required>
+              <input type="number" v-model="orderOwn.product_price" :placeholder="$t('parcels.own_order.product_price')" required>
             </div>
 
             <div class="input-group">
-              <input type="number" v-model="orderOwn.product_quantity" placeholder="Количество*" required>
-              <input type="number" v-model="orderOwn.product_weight" placeholder="Вес (кг)*" required step="0.01">
+              <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required>
+              <input type="number" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" required step="0.01">
             </div>
 
             <div class="input-group">
-              <input type="text" v-model="orderOwn.product_color" placeholder="Цвет*" required>
-              <input type="text" v-model="orderOwn.product_size" placeholder="Размер*" required>
+              <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required>
+              <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')" required>
             </div>
 
-            <textarea v-model="orderOwn.comment" placeholder="Комментарий"></textarea>
+            <textarea v-model="orderOwn.comment" :placeholder="$t('parcels.own_order.comment')"></textarea>
           </div>
 
           <div class="parcels-add-btn-wrapper">
-            <button class="parcels-add-btn" @click="nextOrderOwnStep">Продолжить</button>
+            <button class="parcels-add-btn" @click="nextOrderOwnStep">{{ $t('parcels.form.continue') }}</button>
           </div>
         </div>
 
         <!-- Step 2: Address selection -->
         <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">
           <div class="parcels-add-text">
-            <h2>Выбор получателя</h2>
-            <p>Выберите сохраненный адрес доставки.</p>
+            <h2>{{ $t('parcels.steps.recipient_selection') }}</h2>
+            <p>{{ $t('parcels.select_recipient') }}</p>
           </div>
 
           <div class="parcels-add-address-content">
-            <h2>Список адресов</h2>
+            <h2>{{ $t('parcels.address.title') }}</h2>
 
             <div v-if="addresses.length === 0" class="empty-address">
-              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>
-              <button @click="navigateToAddresses">+ Добавить адрес</button>
+              <p>{{ $t('parcels.address.no_address') }}</p>
+              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
             </div>
 
             <div v-else class="parcel-address-list">
@@ -305,10 +633,10 @@
                 </div>
                 <div class="parcel-address-list-item-right">
                   <h2>{{ addr.phone_number }}</h2>
-                  <h3>Паспорт: {{ addr.passport_number }}</h3>
+                  <h3>{{ $t('parcels.address.passport') }}: {{ addr.passport_number }}</h3>
                 </div>
               </div>
-              <button @click="navigateToAddresses">+ Добавить адрес</button>
+              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
             </div>
           </div>
 
@@ -318,7 +646,7 @@
                 @click="submitOrderOwn"
                 :disabled="!selectedAddress || isLoading"
             >
-              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}
+              {{ isLoading ? $t('parcels.form.submitting') : $t('parcels.form.submit_order') }}
             </button>
           </div>
         </div>
@@ -326,7 +654,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import axios from 'axios';
 import { useRouter } from 'vue-router';
@@ -349,10 +676,36 @@ const isOrderOwnPopupOpen = ref(false);
 const currentStep = ref(1);
 const currentOrderOwnStep = ref(1);
 const selectedTab = ref("parcels");
-const selectedFilter = ref("Все");
+const selectedFilter = ref("all");
 const selectedAddress = ref(null);
 const isLoading = ref(false);
 
+
+const addresses = ref([]);
+const orders = ref([]);
+const ownOrders = ref([]);
+
+
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
+
+const getFilterCount = (filter) => {
+  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
+
+  if (filter === 'all') return currentOrders.length;
+
+  return currentOrders.filter(order => {
+    switch(filter) {
+      case 'accepted': return order.is_accepted;
+      case 'rejected': return order.is_rejected;
+      case 'shipped': return order.is_shipped;
+      case 'arrived': return order.is_arrived;
+      case 'delivered': return order.is_delivered;
+      default: return true;
+    }
+  }).length;
+};
 // Data
 const parcels = ref([{
   link: '',
@@ -379,22 +732,71 @@ const orderOwn = ref({
   receiver_address: null
 });
 
-const addresses = ref([]);
-const orders = ref([]);
-const ownOrders = ref([]);
 
 const tabs = ref([
   {
     key: "parcels",
-    label: "Посылки (выкуп)",
-    filters: ["Все", "Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
+    label: "parcels",
+    filters: ["all", "accepted", "rejected", "shipped", "arrived", "delivered"]
   },
   {
     key: "purchase_help",
-    label: "Посылки",
-    filters: ["Все", "Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
+    label: "purchase_help",
+    filters: ["all", "accepted", "rejected", "shipped", "arrived", "delivered"]
   },
 ]);
+
+// Methods
+
+const getPopupTitle = () => {
+  const titles = {
+    1: t('parcels.steps.product_info'),
+    2: t('parcels.steps.recipient_selection'),
+    3: t('parcels.steps.confirmation')
+  };
+  return titles[currentStep.value] || '';
+};
+
+const getStatusClass = (order) => {
+  if (order.is_delivered) return 'delivered';
+  if (order.is_arrived) return 'arrived';
+  if (order.is_shipped) return 'shipped';
+  if (order.is_accepted) return 'accepted';
+  if (order.is_rejected) return 'rejected';
+  return 'pending';
+};
+const filteredOrders = computed(() => {
+  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
+
+  if (!selectedFilter.value || selectedFilter.value === 'all') return currentOrders;
+
+  return currentOrders.filter(order => {
+    switch(selectedFilter.value) {
+      case 'accepted': return order.is_accepted;
+      case 'rejected': return order.is_rejected;
+      case 'shipped': return order.is_shipped;
+      case 'arrived': return order.is_arrived;
+      case 'delivered': return order.is_delivered;
+      default: return true;
+    }
+  });
+});
+const getStatusText = (order) => {
+  if (order.is_delivered) return t('parcels.status.delivered');
+  if (order.is_arrived) return t('parcels.status.arrived');
+  if (order.is_shipped) return t('parcels.status.shipped');
+  if (order.is_accepted) return t('parcels.status.accepted');
+  if (order.is_rejected) return t('parcels.status.rejected');
+  return t('parcels.status.pending');
+};
+
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString(locale.value, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+};
 
 // Notification methods
 const showNotificationMessage = (message, type = 'success') => {
@@ -422,74 +824,7 @@ const totalPrice = computed(() => {
   }, 0);
 });
 
-const filteredOrders = computed(() => {
-  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
 
-  if (!selectedFilter.value || selectedFilter.value === 'Все') return currentOrders;
-
-  return currentOrders.filter(order => {
-    switch(selectedFilter.value.toLowerCase()) {
-      case 'принятые': return order.is_accepted;
-      case 'отклоненные': return order.is_rejected;
-      case 'отправленные': return order.is_shipped;
-      case 'прибывшие': return order.is_arrived;
-      case 'доставленные': return order.is_delivered;
-      case 'в обработке': return !order.is_accepted && !order.is_rejected;
-      case 'завершенные': return order.is_delivered || order.is_rejected;
-      default: return true;
-    }
-  });
-});
-
-// Methods
-const getPopupTitle = () => {
-  return ['Добавить заказ', 'Выбор получателя', 'Подтверждение заказа'][currentStep.value - 1];
-};
-
-const getStatusClass = (order) => {
-  if (order.is_delivered) return 'delivered';
-  if (order.is_arrived) return 'arrived';
-  if (order.is_shipped) return 'shipped';
-  if (order.is_accepted) return 'accepted';
-  if (order.is_rejected) return 'rejected';
-  return 'pending';
-};
-
-const getStatusText = (order) => {
-  if (order.is_delivered) return 'Доставлен';
-  if (order.is_arrived) return 'Прибыл';
-  if (order.is_shipped) return 'Отправлен';
-  if (order.is_accepted) return 'Принят';
-  if (order.is_rejected) return 'Отклонен';
-  return 'На рассмотрении';
-};
-
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-};
-
-const getFilterCount = (filter) => {
-  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
-
-  if (filter === 'Все') return currentOrders.length;
-
-  return currentOrders.filter(order => {
-    switch(filter.toLowerCase()) {
-      case 'принятые': return order.is_accepted;
-      case 'отклоненные': return order.is_rejected;
-      case 'отправленные': return order.is_shipped;
-      case 'прибывшие': return order.is_arrived;
-      case 'доставленные': return order.is_delivered;
-      case 'в обработке': return !order.is_accepted && !order.is_rejected;
-      case 'завершенные': return order.is_delivered || order.is_rejected;
-      default: return true;
-    }
-  }).length;
-};
 
 const getSelectedAddress = () => {
   return addresses.value.find(addr => addr.id === selectedAddress.value) || {};
