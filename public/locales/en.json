@@ -135,6 +135,28 @@
       "tax_free_state_answer": "Yes, there is a warehouse in the tax-free state of Delaware (DE)."
     }
   },
+  "profileedit": {
+    "title": "Edit Profile",
+    "full_name": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "phone": "Phone",
+    "phone_placeholder": "Enter your phone number",
+    "card_number": "Card Number",
+    "card_placeholder": "Enter card number",
+    "personal_number": "Personal Number",
+    "personal_number_placeholder": "Enter personal number",
+    "password": "Password",
+    "password_placeholder": "Enter new password",
+    "save": "Save",
+    "saving": "Saving...",
+    "delete": "Delete Account",
+    "delete_confirmation": "Delete Confirmation",
+    "delete_warning": "Are you sure you want to delete your account? This action cannot be undone.",
+    "confirm_delete": "Yes, Delete",
+    "cancel": "Cancel"
+  },
   "parcels": {
     "title": "Parcels",
     "add_order": "Add order (purchase)",

@@ -137,6 +137,28 @@
       "tax_free_state_answer": "Да, склад есть в безналоговом штате Делавэр (DE)."
     }
   },
+  "profileedit": {
+    "title": "Редактирование профиля",
+    "full_name": "Полное имя",
+    "full_name_placeholder": "Введите ваше полное имя",
+    "email": "Email",
+    "email_placeholder": "Введите ваш email",
+    "phone": "Телефон",
+    "phone_placeholder": "Введите ваш телефон",
+    "card_number": "Номер карты",
+    "card_placeholder": "Введите номер карты",
+    "personal_number": "Персональный номер",
+    "personal_number_placeholder": "Введите персональный номер",
+    "password": "Пароль",
+    "password_placeholder": "Введите новый пароль",
+    "save": "Сохранить",
+    "saving": "Сохранение...",
+    "delete": "Удалить аккаунт",
+    "delete_confirmation": "Подтверждение удаления",
+    "delete_warning": "Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.",
+    "confirm_delete": "Да, удалить",
+    "cancel": "Отмена"
+  },
   "parcels": {
     "title": "Посылки",
     "add_order": "Добавить заказ (выкуп)",

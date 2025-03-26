@@ -39,7 +39,7 @@
       <!-- Bottom menu section -->
       <ul class="menu">
         <li>
-          <NuxtLink to="/" active-class="active" @click="handleMobileClick">
+          <NuxtLink to="/settings" active-class="active" @click="handleMobileClick">
             <Settings class="icon" />
             {{ $t('sidebar.settings') }}
           </NuxtLink>

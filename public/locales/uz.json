@@ -101,6 +101,29 @@
   "main": "Bosh sahifa",
   "services_air_sea_title": "Havo va dengiz yuk tashish xizmati",
   "services_air_sea_desc": "Abuexpress kompaniyasi mijozlar va biznes uchun maxsus mo'ljallangan ishonchli havo va dengiz yuk tashish xizmatlarini taklif qiladi. Havo transporti orqali yetkazib berish muddati 7-10 kun bo'lib, O'zbekistonga tezkor posilka jo'natishni istagan mijozlar uchun eng yaxshi variant hisoblanadi. Shu bilan birga, dengiz yuk tashish 45 kungacha davom etishi mumkin, lekin bu yirik va og'ir tijorat yuklarini yetkazib berish uchun iqtisodiy jihatdan samarali yechim hisoblanadi.",
+  "profileedit": {
+    "title": "Profilni tahrirlash",
+    "full_name": "To'liq ism",
+    "full_name_placeholder": "To'liq ismingizni kiriting",
+    "email": "Elektron pochta",
+    "email_placeholder": "Elektron pochtangizni kiriting",
+    "phone": "Telefon",
+    "phone_placeholder": "Telefon raqamingizni kiriting",
+    "card_number": "Karta raqami",
+    "card_placeholder": "Karta raqamini kiriting",
+    "personal_number": "Shaxsiy raqam",
+    "personal_number_placeholder": "Shaxsiy raqamingizni kiriting",
+    "password": "Parol",
+    "password_placeholder": "Yangi parol kiriting",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda...",
+    "delete": "Akkauntni o'chirish",
+    "delete_confirmation": "O'chirishni tasdiqlash",
+    "delete_warning": "Akkauntingizni o'chirishga ishonchingiz komilmi? Bu amalni bekor qilib bo'lmaydi.",
+    "confirm_delete": "Ha, o'chirish",
+    "cancel": "Bekor qilish"
+  },
+
   "profile": {
     "countries": {
       "usa": "AQSH",
@@ -135,6 +158,7 @@
       "tax_free_state_answer": "Ha, Delaver (DE) soliqsiz shtatida ombor mavjud."
     }
   },
+
   "parcels": {
     "title": "Posilkalar",
     "add_order": "Buyurtma qo'shish (sotib olish)",
