@@ -191,5 +191,55 @@
     "addresses": "Manzillar",
     "settings": "Sozlamalar",
     "logout": "Chiqish"
+  },
+  "address": {
+    "tabs": {
+      "recipient": "Qabul qiluvchi"
+    },
+    "empty": {
+      "alt": "Buyurtmalar yo'q",
+      "text1": "Hozircha bu yerda qabul qiluvchilar yo'q :(",
+      "text2": "Iltimos, posilkalaringizning qabul qiluvchi manzillarini ko'rsating",
+      "button": "+ Yangi manzil"
+    },
+    "recipient": {
+      "passport": "Pasport:",
+      "phone": "Telefon:",
+      "email": "Email:",
+      "address": "Manzil:",
+      "zip": "ZIP kod:"
+    },
+    "actions": {
+      "edit": "O'zgartirish",
+      "delete": "O'chirish",
+      "add_more": "+ Ko'proq qo'shish",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash"
+    },
+    "popup": {
+      "edit": "Qabul qiluvchini tahrirlash",
+      "add": "Qabul qiluvchi qo'shish",
+      "details": "Ma'lumotlar",
+      "address": "Manzil"
+    },
+    "form": {
+      "name": "Ism",
+      "surname": "Familiya",
+      "passport": "Pasport",
+      "phone": "Telefon",
+      "phone_second": "Qo'shimcha telefon",
+      "email": "Email",
+      "address": "Manzil",
+      "apartament": "Kvartira",
+      "region": "Hudud",
+      "city": "Shahar",
+      "ofice": "Ofis",
+      "zip": "ZIP kod"
+    },
+    "errors": {
+      "create": "Manzil yaratishda xatolik",
+      "update": "Manzilni yangilashda xatolik",
+      "delete": "Manzilni o'chirib bo'lmadi"
+    }
   }
 }

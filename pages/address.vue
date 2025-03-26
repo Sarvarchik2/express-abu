@@ -1,4 +1,79 @@
 
+<!--<template>-->
+<!--  <div class="parcels-page">-->
+<!--    <div class="tabs">-->
+<!--      <button-->
+<!--          v-for="(tab, index) in tabs"-->
+<!--          :key="index"-->
+<!--          :class="{ active: selectedTab === tab.key }"-->
+<!--          @click="selectedTab = tab.key"-->
+<!--      >-->
+<!--        {{ tab.label }}-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    <div class="divider"></div>-->
+
+<!--    <div v-if="addresses.length === 0" class="empty-state">-->
+<!--      <img :src="empty" alt="Нет заказов" class="empty-image" />-->
+<!--      <p class="empty-text">-->
+<!--        Здесь пока нет ни одного получателя :( <br>-->
+<!--        Пожалуйста укажите адреса получателей ваших посылок-->
+<!--      </p>-->
+<!--      <button @click="openAddForm">+ Новый адрес</button>-->
+<!--    </div>-->
+
+<!--    <div v-else class="recipient-list">-->
+<!--      <div v-for="addr in addresses" :key="addr.id" class="recipient-card">-->
+<!--        <div class="recipient-info">-->
+<!--          <h3> <span> {{ addr.first_name }} {{ addr.last_name }}</span></h3>-->
+<!--          <p>Паспорт: <span>{{ addr.passport_number }}</span> </p>-->
+<!--          <p>Номер: <span> {{ addr.phone_number }} </span></p>-->
+<!--          <p>Email:  <span>{{ addr.email }} </span></p>-->
+<!--          <p>Адрес:  <span> {{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>-->
+<!--          <p>ZIP-код:  <span> {{ addr.postal_code }}</span></p>-->
+<!--          <button @click="editRecipient(addr)">Изменить</button>-->
+<!--          <button @click="deleteRecipient(addr.id)">Удалить</button>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--      <button class="recipient-list-btn" @click="openAddForm">+ Добавить ещё</button>-->
+<!--    </div>-->
+
+<!--    <div v-if="showPopup" class="popup-overlay">-->
+<!--      <div class="popup">-->
+<!--        <h2>{{ isEditing ? 'Изменить' : 'Добавить' }} получателя</h2>-->
+<!--        <form @submit.prevent="isEditing ? updateRecipient() : addRecipient()">-->
+<!--          <div class="popup-overlay-item-wrapper">-->
+<!--            <div class="popup-overlay-item">-->
+<!--              <h4>Данные</h4>-->
+<!--              <input type="text" placeholder="Имя" v-model="form.name" required />-->
+<!--              <input type="text" placeholder="Фамилия" v-model="form.surname" required />-->
+<!--              <input type="text" placeholder="Паспорт" v-model="form.passport" required />-->
+<!--              <input type="text" placeholder="Телефон" v-model="form.phone" required />-->
+<!--              <input type="text" placeholder="Доп. Телефон" v-model="form.phone_second" />-->
+<!--              <input type="email" placeholder="Email" v-model="form.email" required />-->
+<!--            </div>-->
+<!--            <div class="popup-overlay-item">-->
+<!--              <h4>Адрес</h4>-->
+<!--              <input type="text" placeholder="Адрес" v-model="form.address" required />-->
+<!--              <input type="text" placeholder="Апартамент" v-model="form.apartament" required />-->
+<!--              <input type="text" placeholder="Регион" v-model="form.region" required />-->
+<!--              <input type="text" placeholder="Город" v-model="form.city" required />-->
+<!--              <input type="text" placeholder="Офис" v-model="form.ofice" />-->
+<!--              <input type="text" placeholder="ZIP-код" v-model="form.zip" required />-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="popup-actions">-->
+<!--            <button type="button" @click="closePopup">Отменить</button>-->
+<!--            <button type="submit">Сохранить</button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</template>-->
+
 <template>
   <div class="parcels-page">
     <div class="tabs">
@@ -8,72 +83,70 @@
           :class="{ active: selectedTab === tab.key }"
           @click="selectedTab = tab.key"
       >
-        {{ tab.label }}
+        {{ $t(tab.label) }}
       </button>
     </div>
 
     <div class="divider"></div>
 
     <div v-if="addresses.length === 0" class="empty-state">
-      <img :src="empty" alt="Нет заказов" class="empty-image" />
+      <img :src="empty" :alt="$t('address.empty.alt')" class="empty-image" />
       <p class="empty-text">
-        Здесь пока нет ни одного получателя :( <br>
-        Пожалуйста укажите адреса получателей ваших посылок
+        {{ $t('address.empty.text1') }}<br>
+        {{ $t('address.empty.text2') }}
       </p>
-      <button @click="openAddForm">+ Новый адрес</button>
+      <button @click="openAddForm">{{ $t('address.empty.button') }}</button>
     </div>
 
     <div v-else class="recipient-list">
       <div v-for="addr in addresses" :key="addr.id" class="recipient-card">
         <div class="recipient-info">
-          <h3> <span> {{ addr.first_name }} {{ addr.last_name }}</span></h3>
-          <p>Паспорт: <span>{{ addr.passport_number }}</span> </p>
-          <p>Номер: <span> {{ addr.phone_number }} </span></p>
-          <p>Email:  <span>{{ addr.email }} </span></p>
-          <p>Адрес:  <span> {{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>
-          <p>ZIP-код:  <span> {{ addr.postal_code }}</span></p>
-          <button @click="editRecipient(addr)">Изменить</button>
-          <button @click="deleteRecipient(addr.id)">Удалить</button>
+          <h3><span>{{ addr.first_name }} {{ addr.last_name }}</span></h3>
+          <p>{{ $t('address.recipient.passport') }} <span>{{ addr.passport_number }}</span></p>
+          <p>{{ $t('address.recipient.phone') }} <span>{{ addr.phone_number }}</span></p>
+          <p>{{ $t('address.recipient.email') }} <span>{{ addr.email }}</span></p>
+          <p>{{ $t('address.recipient.address') }} <span>{{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>
+          <p>{{ $t('address.recipient.zip') }} <span>{{ addr.postal_code }}</span></p>
+          <button @click="editRecipient(addr)">{{ $t('address.actions.edit') }}</button>
+          <button @click="deleteRecipient(addr.id)">{{ $t('address.actions.delete') }}</button>
         </div>
-
       </div>
-      <button class="recipient-list-btn" @click="openAddForm">+ Добавить ещё</button>
+      <button class="recipient-list-btn" @click="openAddForm">{{ $t('address.actions.add_more') }}</button>
     </div>
 
     <div v-if="showPopup" class="popup-overlay">
       <div class="popup">
-        <h2>{{ isEditing ? 'Изменить' : 'Добавить' }} получателя</h2>
+        <h2>{{ $t(isEditing ? 'address.popup.edit' : 'address.popup.add') }}</h2>
         <form @submit.prevent="isEditing ? updateRecipient() : addRecipient()">
           <div class="popup-overlay-item-wrapper">
             <div class="popup-overlay-item">
-              <h4>Данные</h4>
-              <input type="text" placeholder="Имя" v-model="form.name" required />
-              <input type="text" placeholder="Фамилия" v-model="form.surname" required />
-              <input type="text" placeholder="Паспорт" v-model="form.passport" required />
-              <input type="text" placeholder="Телефон" v-model="form.phone" required />
-              <input type="text" placeholder="Доп. Телефон" v-model="form.phone_second" />
-              <input type="email" placeholder="Email" v-model="form.email" required />
+              <h4>{{ $t('address.popup.details') }}</h4>
+              <input type="text" :placeholder="$t('address.form.name')" v-model="form.name" required />
+              <input type="text" :placeholder="$t('address.form.surname')" v-model="form.surname" required />
+              <input type="text" :placeholder="$t('address.form.passport')" v-model="form.passport" required />
+              <input type="text" :placeholder="$t('address.form.phone')" v-model="form.phone" required />
+              <input type="text" :placeholder="$t('address.form.phone_second')" v-model="form.phone_second" />
+              <input type="email" :placeholder="$t('address.form.email')" v-model="form.email" required />
             </div>
             <div class="popup-overlay-item">
-              <h4>Адрес</h4>
-              <input type="text" placeholder="Адрес" v-model="form.address" required />
-              <input type="text" placeholder="Апартамент" v-model="form.apartament" required />
-              <input type="text" placeholder="Регион" v-model="form.region" required />
-              <input type="text" placeholder="Город" v-model="form.city" required />
-              <input type="text" placeholder="Офис" v-model="form.ofice" />
-              <input type="text" placeholder="ZIP-код" v-model="form.zip" required />
+              <h4>{{ $t('address.popup.address') }}</h4>
+              <input type="text" :placeholder="$t('address.form.address')" v-model="form.address" required />
+              <input type="text" :placeholder="$t('address.form.apartament')" v-model="form.apartament" required />
+              <input type="text" :placeholder="$t('address.form.region')" v-model="form.region" required />
+              <input type="text" :placeholder="$t('address.form.city')" v-model="form.city" required />
+              <input type="text" :placeholder="$t('address.form.ofice')" v-model="form.ofice" />
+              <input type="text" :placeholder="$t('address.form.zip')" v-model="form.zip" required />
             </div>
           </div>
           <div class="popup-actions">
-            <button type="button" @click="closePopup">Отменить</button>
-            <button type="submit">Сохранить</button>
+            <button type="button" @click="closePopup">{{ $t('address.actions.cancel') }}</button>
+            <button type="submit">{{ $t('address.actions.save') }}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -84,7 +157,9 @@ const showPopup = ref(false);
 const selectedTab = ref('parcels');
 const isEditing = ref(false);
 const editingId = ref(null);
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const form = ref({
   name: '',
   surname: '',
@@ -101,7 +176,7 @@ const form = ref({
 });
 
 const tabs = ref([
-  { key: 'parcels', label: 'Получатель' },
+  { key: 'parcels', label: 'address.tabs.recipient' },
 ]);
 
 const fetchAddresses = async () => {

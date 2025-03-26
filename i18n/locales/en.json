@@ -200,5 +200,55 @@
     "addresses": "Addresses",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "address": {
+    "tabs": {
+      "recipient": "Recipient"
+    },
+    "empty": {
+      "alt": "No orders",
+      "text1": "There are no recipients here yet :(",
+      "text2": "Please specify the addresses of your parcel recipients",
+      "button": "+ New address"
+    },
+    "recipient": {
+      "passport": "Passport:",
+      "phone": "Phone:",
+      "email": "Email:",
+      "address": "Address:",
+      "zip": "ZIP code:"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "add_more": "+ Add more",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "popup": {
+      "edit": "Edit recipient",
+      "add": "Add recipient",
+      "details": "Details",
+      "address": "Address"
+    },
+    "form": {
+      "name": "Name",
+      "surname": "Surname",
+      "passport": "Passport",
+      "phone": "Phone",
+      "phone_second": "Additional Phone",
+      "email": "Email",
+      "address": "Address",
+      "apartament": "Apartment",
+      "region": "Region",
+      "city": "City",
+      "ofice": "Office",
+      "zip": "ZIP code"
+    },
+    "errors": {
+      "create": "Error creating address",
+      "update": "Error updating address",
+      "delete": "Failed to delete address"
+    }
   }
 }
