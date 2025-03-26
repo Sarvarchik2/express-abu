@@ -200,7 +200,7 @@ onUnmounted(() => {
   }
 
   .hamburger {
-    position: fixed;
+    position: absolute;
         top: 90px;
         left: 50%;
         transform: translateX(-50%);

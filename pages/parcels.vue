@@ -1,4 +1,14 @@
+
+
 <template>
+  <!-- Notification Component -->
+  <div class="notification-container" :class="{ 'show': showNotification }">
+    <div class="notification" :class="notificationType">
+      <span>{{ notificationMessage }}</span>
+      <button @click="hideNotification">&times;</button>
+    </div>
+  </div>
+
   <div class="parcels-page">
     <div class="tabs">
       <button
@@ -26,7 +36,8 @@
     </div>
 
     <div class="parcels-btn">
-      <button @click="openPopup">+ Новый заказ</button>
+      <button @click="openPopup">+ Добавить заказ (выкуп)</button>
+      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ Добавить свой заказ</button>
     </div>
 
     <div v-if="isLoading" class="loading-indicator">
@@ -42,17 +53,18 @@
       <div v-else class="orders-list">
         <div v-for="order in filteredOrders" :key="order.id" class="order-item">
           <div class="order-header">
-            <h3>{{ order.product_name }}</h3>
+            <h3>{{ order.product_name || order.name }}</h3>
             <span class="order-status" :class="getStatusClass(order)">
               {{ getStatusText(order) }}
             </span>
           </div>
           <div class="order-details">
-            <p>Цена: ${{ order.product_price }}</p>
-            <p>Количество: {{ order.product_quantity }} шт</p>
-            <p>Цвет: {{ order.product_color }}</p>
-            <p>Размер: {{ order.product_size }}</p>
-            <a :href="order.url_product" target="_blank" class="product-link">
+            <p>Цена: ${{ order.product_price || order.price }}</p>
+            <p>Количество: {{ order.product_quantity || order.quantity }} шт</p>
+            <p v-if="order.product_weight || order.weight">Вес: {{ order.product_weight || order.weight }} кг</p>
+            <p v-if="order.product_color || order.color">Цвет: {{ order.product_color || order.color }}</p>
+            <p v-if="order.product_size || order.size">Размер: {{ order.product_size || order.size }}</p>
+            <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">
               Ссылка на товар
             </a>
           </div>
@@ -63,6 +75,7 @@
       </div>
     </div>
 
+    <!-- Popup for purchase help -->
     <div v-if="isPopupOpen" class="parcels-add">
       <div class="parcels-add-wrapper">
         <div class="parcels-add-title">
@@ -84,7 +97,7 @@
           </div>
         </div>
 
-        <!-- Шаг 1: Добавление товаров -->
+        <!-- Step 1: Product information -->
         <div v-if="currentStep === 1" class="parcels-add-progress-declaration">
           <div class="parcels-add-text">
             <h2>Товары для покупки</h2>
@@ -106,6 +119,7 @@
             <div class="input-group">
               <input type="text" v-model="parcel.color" placeholder="Цвет*" required>
               <input type="text" v-model="parcel.size" placeholder="Размер*" required>
+              <input type="number" v-model="parcel.weight" placeholder="Вес (кг)*" required step="0.01">
             </div>
             <textarea v-model="parcel.comment" placeholder="Комментарий для оператора"></textarea>
           </div>
@@ -120,7 +134,7 @@
           </div>
         </div>
 
-        <!-- Шаг 2: Выбор адреса -->
+        <!-- Step 2: Address selection -->
         <div v-if="currentStep === 2" class="parcels-add-address">
           <div class="parcels-add-text">
             <h2>Выбор получателя</h2>
@@ -167,7 +181,7 @@
           </div>
         </div>
 
-        <!-- Шаг 3: Подтверждение -->
+        <!-- Step 3: Confirmation -->
         <div v-if="currentStep === 3" class="parcels-add-confirmation">
           <div class="parcels-add-text">
             <h2>Подтверждение заказа</h2>
@@ -181,6 +195,7 @@
               <p>Название: {{ parcel.name }}</p>
               <p>Цена: {{ parcel.price }}$</p>
               <p>Количество: {{ parcel.quantity }} шт</p>
+              <p>Вес: {{ parcel.weight }} кг</p>
               <p>Цвет: {{ parcel.color }}</p>
               <p>Размер: {{ parcel.size }}</p>
             </div>
@@ -204,6 +219,111 @@
         </div>
       </div>
     </div>
+
+    <!-- Popup for adding own order -->
+    <div v-if="isOrderOwnPopupOpen" class="parcels-add">
+      <div class="parcels-add-wrapper">
+        <div class="parcels-add-title">
+          <h2>Добавить свой заказ</h2>
+          <img :src="close" alt="close" @click="closeOrderOwnPopup">
+        </div>
+
+        <div class="parcels-add-progress">
+          <div class="parcels-add-progress-left">
+            <h3 class="active">1</h3>
+            <h3 :class="{ active: currentOrderOwnStep >= 2 }">2</h3>
+            <span></span>
+          </div>
+
+          <div class="parcels-add-progress-right">
+            <img v-if="currentOrderOwnStep > 1" :src="left" alt="left" @click="prevOrderOwnStep">
+            <img v-if="currentOrderOwnStep < 2" :src="right" alt="right" @click="nextOrderOwnStep">
+          </div>
+        </div>
+
+        <!-- Step 1: Order information -->
+        <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">
+          <div class="parcels-add-text">
+            <h2>Информация о заказе</h2>
+            <p>Введите данные о вашем заказе.</p>
+          </div>
+
+          <div class="parcels-add-progress-declaration-wrapper">
+            <input type="text" v-model="orderOwn.track_number" placeholder="Трек-номер*" required>
+            <input type="text" v-model="orderOwn.market_name" placeholder="Название магазина*" required>
+            <input type="text" v-model="orderOwn.url_product" placeholder="Ссылка на товар">
+
+            <div class="input-group">
+              <input type="text" v-model="orderOwn.product_name" placeholder="Название товара*" required>
+              <input type="number" v-model="orderOwn.product_price" placeholder="Цена $*" required>
+            </div>
+
+            <div class="input-group">
+              <input type="number" v-model="orderOwn.product_quantity" placeholder="Количество*" required>
+              <input type="number" v-model="orderOwn.product_weight" placeholder="Вес (кг)*" required step="0.01">
+            </div>
+
+            <div class="input-group">
+              <input type="text" v-model="orderOwn.product_color" placeholder="Цвет*" required>
+              <input type="text" v-model="orderOwn.product_size" placeholder="Размер*" required>
+            </div>
+
+            <textarea v-model="orderOwn.comment" placeholder="Комментарий"></textarea>
+          </div>
+
+          <div class="parcels-add-btn-wrapper">
+            <button class="parcels-add-btn" @click="nextOrderOwnStep">Продолжить</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Address selection -->
+        <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">
+          <div class="parcels-add-text">
+            <h2>Выбор получателя</h2>
+            <p>Выберите сохраненный адрес доставки.</p>
+          </div>
+
+          <div class="parcels-add-address-content">
+            <h2>Список адресов</h2>
+
+            <div v-if="addresses.length === 0" class="empty-address">
+              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>
+              <button @click="navigateToAddresses">+ Добавить адрес</button>
+            </div>
+
+            <div v-else class="parcel-address-list">
+              <div
+                  v-for="addr in addresses"
+                  :key="addr.id"
+                  class="parcel-address-list-item"
+                  :class="{ selected: selectedAddress === addr.id }"
+                  @click="selectAddress(addr.id)"
+              >
+                <div class="parcel-address-list-item-left">
+                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
+                  <h3>{{ addr.address }}, {{ addr.city }}</h3>
+                </div>
+                <div class="parcel-address-list-item-right">
+                  <h2>{{ addr.phone_number }}</h2>
+                  <h3>Паспорт: {{ addr.passport_number }}</h3>
+                </div>
+              </div>
+              <button @click="navigateToAddresses">+ Добавить адрес</button>
+            </div>
+          </div>
+
+          <div class="parcels-add-btn-wrapper">
+            <button
+                class="parcels-add-btn"
+                @click="submitOrderOwn"
+                :disabled="!selectedAddress || isLoading"
+            >
+              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -218,11 +338,18 @@ import right from "@/assets/right.png";
 
 const router = useRouter();
 
+// Notification state
+const showNotification = ref(false);
+const notificationMessage = ref('');
+const notificationType = ref('success');
+
 // States
 const isPopupOpen = ref(false);
+const isOrderOwnPopupOpen = ref(false);
 const currentStep = ref(1);
+const currentOrderOwnStep = ref(1);
 const selectedTab = ref("parcels");
-const selectedFilter = ref("");
+const selectedFilter = ref("Все");
 const selectedAddress = ref(null);
 const isLoading = ref(false);
 
@@ -234,24 +361,55 @@ const parcels = ref([{
   quantity: '',
   color: '',
   size: '',
+  weight: '',
   comment: ''
 }]);
 
+const orderOwn = ref({
+  track_number: '',
+  market_name: '',
+  url_product: '',
+  product_name: '',
+  product_price: '',
+  product_quantity: 1,
+  product_weight: null,
+  product_color: '',
+  product_size: '',
+  comment: '',
+  receiver_address: null
+});
+
 const addresses = ref([]);
 const orders = ref([]);
+const ownOrders = ref([]);
 
 const tabs = ref([
   {
     key: "parcels",
-    label: "Посылки",
-    filters: ["Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
+    label: "Посылки (выкуп)",
+    filters: ["Все", "Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
   },
   {
     key: "purchase_help",
-    label: "Помощь в покупке",
-    filters: ["В обработке", "Завершенные"]
+    label: "Посылки",
+    filters: ["Все", "Принятые", "Отклоненные", "Отправленные", "Прибывшие", "Доставленные"]
   },
 ]);
+
+// Notification methods
+const showNotificationMessage = (message, type = 'success') => {
+  notificationMessage.value = message;
+  notificationType.value = type;
+  showNotification.value = true;
+
+  setTimeout(() => {
+    hideNotification();
+  }, 5000);
+};
+
+const hideNotification = () => {
+  showNotification.value = false;
+};
 
 // Computed properties
 const currentFilters = computed(() => {
@@ -265,9 +423,11 @@ const totalPrice = computed(() => {
 });
 
 const filteredOrders = computed(() => {
-  return orders.value.filter(order => {
-    if (!selectedFilter.value) return true;
+  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
 
+  if (!selectedFilter.value || selectedFilter.value === 'Все') return currentOrders;
+
+  return currentOrders.filter(order => {
     switch(selectedFilter.value.toLowerCase()) {
       case 'принятые': return order.is_accepted;
       case 'отклоненные': return order.is_rejected;
@@ -313,7 +473,11 @@ const formatDate = (dateString) => {
 };
 
 const getFilterCount = (filter) => {
-  return orders.value.filter(order => {
+  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
+
+  if (filter === 'Все') return currentOrders.length;
+
+  return currentOrders.filter(order => {
     switch(filter.toLowerCase()) {
       case 'принятые': return order.is_accepted;
       case 'отклоненные': return order.is_rejected;
@@ -328,173 +492,10 @@ const getFilterCount = (filter) => {
 };
 
 const getSelectedAddress = () => {
-  const address = addresses.value.find(addr => addr.id === selectedAddress.value);
-  if (!address) {
-    console.error('Selected address not found');
-    return {
-      first_name: 'Not selected',
-      last_name: '',
-      address: '',
-      city: ''
-    };
-  }
-  return address;
+  return addresses.value.find(addr => addr.id === selectedAddress.value) || {};
 };
 
-// Order actions
-const fetchOrders = async () => {
-  try {
-    isLoading.value = true;
-    const token = localStorage.getItem('access_token');
-
-    if (!token) {
-      throw new Error('Authentication token not found');
-    }
-
-    const response = await axios.get(
-        'https://abuexpresslogisticscargo.com/api/order/',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Accept': 'application/json'
-          },
-          timeout: 10000
-        }
-    );
-
-    if (response.data && Array.isArray(response.data)) {
-      orders.value = response.data;
-    } else {
-      throw new Error('Invalid response format from server');
-    }
-  } catch (error) {
-    console.error('Order loading error:', {
-      message: error.message,
-      response: error.response?.data,
-      config: error.config
-    });
-
-    let errorMessage = 'Failed to load orders';
-    if (error.response) {
-      if (error.response.status === 401) {
-        errorMessage = 'Authentication failed. Please login again.';
-        router.push('/login');
-      } else if (error.response.data?.detail) {
-        errorMessage = error.response.data.detail;
-      }
-    } else if (error.request) {
-      errorMessage = 'No response from server. Check your connection.';
-    }
-
-    alert(errorMessage);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const submitOrder = async () => {
-  try {
-    isLoading.value = true;
-
-    // Validate all required fields
-    const isValid = parcels.value.every(parcel => {
-      return parcel.link?.trim() &&
-          parcel.name?.trim() &&
-          !isNaN(parcel.price) &&
-          !isNaN(parcel.quantity) &&
-          parcel.color?.trim() &&
-          parcel.size?.trim();
-    });
-
-    if (!isValid) {
-      alert('Пожалуйста, заполните все обязательные поля (помечены *) корректными значениями');
-      return;
-    }
-
-    if (!selectedAddress.value) {
-      alert('Пожалуйста, выберите адрес получателя');
-      return;
-    }
-
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      throw new Error('Authentication token not found');
-    }
-
-    // Verify the selected address exists
-    const address = addresses.value.find(addr => addr.id === selectedAddress.value);
-    if (!address) {
-      throw new Error('Selected address not found');
-    }
-
-    // Create orders for each product
-    const results = await Promise.all(
-        parcels.value.map(async (parcel) => {
-          const postData = {
-            url_product: parcel.link.trim(),
-            product_name: parcel.name.trim(),
-            product_price: Number(parcel.price),
-            product_quantity: Number(parcel.quantity),
-            product_color: parcel.color.trim(),
-            product_size: parcel.size.trim(),
-            is_accepted: false,
-            is_rejected: false,
-            is_shipped: false,
-            is_arrived: false,
-            is_delivered: false,
-            receiver_address: address.id, // Use the verified address ID
-            product_weight: 0,
-            invoice_id: null
-          };
-
-          if (parcel.comment?.trim()) {
-            postData.comment = parcel.comment.trim();
-          }
-
-          const response = await axios.post(
-              'https://abuexpresslogisticscargo.com/api/order/',
-              postData,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  'Content-Type': 'application/json'
-                }
-              }
-          );
-          return response.data;
-        })
-    );
-
-    await fetchOrders(); // Refresh the orders list
-    closePopup();
-    alert(`Успешно создано ${results.length} заказ(ов)!`);
-
-  } catch (error) {
-    console.error('Order submission error:', {
-      request: error.config?.data,
-      response: error.response?.data
-    });
-
-    let errorMessage = 'Ошибка при создании заказа';
-    if (error.response?.data) {
-      if (error.response.data.detail) {
-        errorMessage = error.response.data.detail;
-      } else if (typeof error.response.data === 'object') {
-        errorMessage = Object.entries(error.response.data)
-            .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
-            .join('; ');
-      }
-    } else if (error.message) {
-      errorMessage = error.message;
-    }
-
-    alert(errorMessage);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-// Popup actions
+// Popup methods
 const openPopup = () => {
   isPopupOpen.value = true;
   currentStep.value = 1;
@@ -505,6 +506,7 @@ const openPopup = () => {
     quantity: '',
     color: '',
     size: '',
+    weight: '',
     comment: ''
   }];
   selectedAddress.value = null;
@@ -514,6 +516,66 @@ const closePopup = () => {
   isPopupOpen.value = false;
 };
 
+const openOrderOwnPopup = () => {
+  isOrderOwnPopupOpen.value = true;
+  currentOrderOwnStep.value = 1;
+  orderOwn.value = {
+    track_number: '',
+    market_name: '',
+    url_product: '',
+    product_name: '',
+    product_price: '',
+    product_quantity: 1,
+    product_weight: null,
+    product_color: '',
+    product_size: '',
+    comment: '',
+    receiver_address: null
+  };
+  selectedAddress.value = null;
+};
+
+const closeOrderOwnPopup = () => {
+  isOrderOwnPopupOpen.value = false;
+};
+
+const nextStep = () => {
+  if (currentStep.value === 1) {
+    const isValid = parcels.value.every(parcel => {
+      return parcel.link?.trim() &&
+          parcel.name?.trim() &&
+          !isNaN(parcel.price) &&
+          !isNaN(parcel.quantity) &&
+          parcel.color?.trim() &&
+          parcel.size?.trim() &&
+          !isNaN(parcel.weight);
+    });
+
+    if (!isValid) {
+      showNotificationMessage('Пожалуйста, заполните все обязательные поля (помечены *) корректными значениями', 'error');
+      return;
+    }
+  }
+  currentStep.value < 3 && currentStep.value++;
+};
+
+const prevStep = () => currentStep.value > 1 && currentStep.value--;
+
+const nextOrderOwnStep = () => {
+  if (currentOrderOwnStep.value === 1) {
+    if (!orderOwn.value.track_number || !orderOwn.value.market_name ||
+        !orderOwn.value.product_name || isNaN(orderOwn.value.product_price) ||
+        isNaN(orderOwn.value.product_quantity) || !orderOwn.value.product_color ||
+        !orderOwn.value.product_size || isNaN(orderOwn.value.product_weight)) {
+      showNotificationMessage('Пожалуйста, заполните все обязательные поля', 'error');
+      return;
+    }
+  }
+  currentOrderOwnStep.value < 2 && currentOrderOwnStep.value++;
+};
+
+const prevOrderOwnStep = () => currentOrderOwnStep.value > 1 && currentOrderOwnStep.value--;
+
 const addParcel = () => {
   parcels.value.push({
     link: '',
@@ -522,60 +584,236 @@ const addParcel = () => {
     quantity: '',
     color: '',
     size: '',
+    weight: '',
     comment: ''
   });
 };
 
-const prevStep = () => currentStep.value > 1 && currentStep.value--;
-const nextStep = () => {
-  if (currentStep.value === 2 && !selectedAddress.value) {
-    alert('Пожалуйста, выберите адрес получателя');
-    return;
-  }
-  currentStep.value < 3 && currentStep.value++;
-};
-
-// Address actions
-const fetchAddresses = async () => {
-  try {
-    const token = localStorage.getItem('access_token');
-    const res = await axios.get(
-        'https://abuexpresslogisticscargo.com/api/addresses/',
-        { headers: { Authorization: `Bearer ${token}` } }
-    );
-    addresses.value = res.data;
-    console.log('Addresses loaded:', addresses.value);
-  } catch (err) {
-    console.error('Ошибка загрузки адресов:', err);
-  }
-};
-
 const selectAddress = (id) => {
-  const addressExists = addresses.value.some(addr => addr.id === id);
-  if (addressExists) {
-    selectedAddress.value = id;
-  } else {
-    console.error('Attempted to select non-existent address ID:', id);
-  }
+  selectedAddress.value = id;
 };
 
 const navigateToAddresses = () => {
   router.push('/address');
   closePopup();
+  closeOrderOwnPopup();
+};
+
+// API methods
+const fetchAddresses = async () => {
+  try {
+    const token = localStorage.getItem('access_token');
+    if (!token) throw new Error('Authentication token not found');
+
+    const response = await axios.get(
+        'https://abuexpresslogisticscargo.com/api/addresses/',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept': 'application/json'
+          }
+        }
+    );
+
+    addresses.value = response.data || [];
+  } catch (error) {
+    console.error('Address loading error:', error);
+    showNotificationMessage('Ошибка загрузки адресов: ' + (error.response?.data?.detail || error.message), 'error');
+  }
+};
+
+const fetchOrders = async () => {
+  try {
+    isLoading.value = true;
+    const token = localStorage.getItem('access_token');
+
+    if (!token) throw new Error('Authentication token not found');
+
+    const [ordersResponse, ownOrdersResponse] = await Promise.all([
+      axios.get('https://abuexpresslogisticscargo.com/api/order/', {
+        headers: { Authorization: `Bearer ${token}` }
+      }),
+      axios.get('https://abuexpresslogisticscargo.com/api/order-own/', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+    ]);
+
+    orders.value = ordersResponse.data || [];
+    ownOrders.value = ownOrdersResponse.data || [];
+  } catch (error) {
+    console.error('Order loading error:', error);
+    showNotificationMessage('Ошибка загрузки заказов: ' + (error.response?.data?.detail || error.message), 'error');
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const submitOrder = async () => {
+  try {
+    isLoading.value = true;
+    const token = localStorage.getItem('access_token');
+    if (!token) throw new Error('Authentication token not found');
+
+    if (!selectedAddress.value) {
+      throw new Error('Please select an address');
+    }
+
+    const orderData = {
+      parcels: parcels.value.map(parcel => ({
+        link: parcel.link,
+        name: parcel.name,
+        price: Number(parcel.price),
+        quantity: Number(parcel.quantity),
+        color: parcel.color,
+        size: parcel.size,
+        weight: Number(parcel.weight),
+        comment: parcel.comment
+      })),
+      receiver_address: selectedAddress.value
+    };
+
+    await axios.post(
+        'https://abuexpresslogisticscargo.com/api/order/',
+        orderData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+    );
+
+    await fetchOrders();
+    closePopup();
+    showNotificationMessage('Ваш заказ успешно отправлен!');
+  } catch (error) {
+    console.error('Order submission error:', error);
+    let errorMessage = 'Ошибка при создании заказа';
+    if (error.response?.data) {
+      errorMessage = Object.entries(error.response.data)
+          .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
+          .join('; ');
+    }
+    showNotificationMessage(errorMessage, 'error');
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const submitOrderOwn = async () => {
+  try {
+    isLoading.value = true;
+    const token = localStorage.getItem('access_token');
+    if (!token) throw new Error('Authentication token not found');
+
+    if (!selectedAddress.value) {
+      throw new Error('Please select an address');
+    }
+
+    const postData = {
+      ...orderOwn.value,
+      receiver_address: selectedAddress.value,
+      product_price: Number(orderOwn.value.product_price),
+      product_quantity: Number(orderOwn.value.product_quantity),
+      product_weight: Number(orderOwn.value.product_weight)
+    };
+
+    await axios.post(
+        'https://abuexpresslogisticscargo.com/api/order-own/',
+        postData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+    );
+
+    await fetchOrders();
+    closeOrderOwnPopup();
+    showNotificationMessage('Ваш заказ успешно добавлен!');
+  } catch (error) {
+    console.error('Order submission error:', error);
+    let errorMessage = 'Ошибка при создании заказа';
+    if (error.response?.data) {
+      errorMessage = Object.entries(error.response.data)
+          .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
+          .join('; ');
+    }
+    showNotificationMessage(errorMessage, 'error');
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 // Lifecycle hooks
 onMounted(async () => {
   try {
     await Promise.all([fetchAddresses(), fetchOrders()]);
+    // Set default filter to first available
+    if (currentFilters.value.length > 0) {
+      selectedFilter.value = currentFilters.value[0];
+    }
   } catch (error) {
     console.error('Initialization error:', error);
   }
 });
 </script>
-
-
 <style scoped>
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 400px;
+  width: 90%;
+  transform: translateX(150%);
+  transition: transform 0.3s ease;
+}
+
+.notification-container.show {
+  transform: translateX(0);
+}
+
+.notification {
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification.success {
+  background-color: #4CAF50;
+}
+
+.notification.error {
+  background-color: #F44336;
+}
+
+.notification button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+/* Responsive notification */
+@media (max-width: 480px) {
+  .notification-container {
+    top: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .notification {
+    padding: 12px 15px;
+  }
+}
 .parcel-page-wrapper{
   width: 100%;
 }
@@ -991,7 +1229,6 @@ onMounted(async () => {
   width: 100%;
   border: 3px solid #FFD700;
   border-radius: 25px;
-  margin-top: 40px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1030,7 +1267,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .parcels-add-progress-left{
   width: 86%;
@@ -1433,7 +1670,16 @@ onMounted(async () => {
     padding: 10px 10px;
     font-size: 14px;
   }
-
+.parcels-btn{
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.parcels-btn button {
+  margin: 0;
+  width: 100%;
+}
   .tabs {
     width: 100%;
     justify-content: space-between;
