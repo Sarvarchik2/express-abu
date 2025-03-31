@@ -344,7 +344,7 @@
 }
 
 .status-item.active {
-    background: #4caf50;
+    /*background: #4caf50;*/
     color: white;
     font-weight: bold;
 }

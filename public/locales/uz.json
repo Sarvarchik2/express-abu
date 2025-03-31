@@ -124,6 +124,36 @@
     "cancel": "Bekor qilish"
   },
 
+  "tracking": {
+    "search_placeholder": "Kuzatuv raqamini kiriting",
+    "departure_time": "Jo‘natilgan sana",
+    "arrival_time": "Kelish sanasi",
+    "received_time": "Qabul qilingan sana",
+    "pending": "Kutilmoqda",
+    "status": {
+      "waiting": {
+        "title": "Kutilmoqda",
+        "description": ""
+      },
+      "sent": {
+        "title": "Jo‘natildi",
+        "description": "Jo‘natildi"
+      },
+      "customs": {
+        "title": "Bojxona omborida",
+        "description": "O‘zbekistonda tekshiruvda"
+      },
+      "arrived": {
+        "title": "Keldi",
+        "description": "Posilka O‘zbekistonga keldi"
+      },
+      "delivered": {
+        "title": "Yetkazildi",
+        "description": "Qabul qiluvchiga yetkazildi"
+      }
+    }
+  },
+
   "profile": {
     "countries": {
       "usa": "AQSH",

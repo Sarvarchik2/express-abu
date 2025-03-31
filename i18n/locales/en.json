@@ -100,7 +100,38 @@
   "calculator_total": "Total:",
   "main": "Main",
   "services_air_sea_title": "Air and Sea Freight",
+
   "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo.",
+
+  "tracking": {
+    "search_placeholder": "Enter tracking number",
+    "departure_time": "Departure date",
+    "arrival_time": "Arrival date",
+    "received_time": "Received date",
+    "pending": "Pending",
+    "status": {
+      "waiting": {
+        "title": "Waiting",
+        "description": ""
+      },
+      "sent": {
+        "title": "Shipped",
+        "description": "Shipped "
+      },
+      "customs": {
+        "title": "At customs warehouse",
+        "description": "Under inspection in UZB"
+      },
+      "arrived": {
+        "title": "Arrived",
+        "description": "Parcel arrived in UZB"
+      },
+      "delivered": {
+        "title": "Delivered",
+        "description": "Delivered to recipient"
+      }
+    }
+  },
   "profile": {
     "countries": {
       "usa": "USA",
