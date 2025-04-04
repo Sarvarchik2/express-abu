@@ -209,6 +209,7 @@
 }
 
 @media (max-width: 769px) {
+
     .navbar-mobile {
         display: flex;
         flex-direction: column;
@@ -250,7 +251,8 @@
         flex-direction: column;
         width: 100%;
         justify-content: center;
-        align-items: center;
+        align-items: start;
+        padding: 20px;
         list-style: none;
         gap: 25px;
     }

@@ -5,6 +5,7 @@
   "about": "Biz haqimizda",
   "contact": "Kontaktlar",
   "help": "Yordam",
+  "deli": "Etkazipberish",
 
   "hero_title": "Oson buyurtma, qulay kuzatish, tez va ishonchli yetkazib berish",
   "hero_subtitle": "AQShdan onlayn buyurtma bering — biz hamma narsani hal qilamiz!",
@@ -123,7 +124,24 @@
     "confirm_delete": "Ha, o'chirish",
     "cancel": "Bekor qilish"
   },
-
+  "drawing": {
+    "clear": "Tozalash",
+    "reset": "qaytatan",
+    "color": "Rang",
+    "line_width": "Chiziq kengligi",
+    "submission_failed": "Hato",
+    "delivery_success": "Yetkazib berildi",
+    "shipment_id": "Yuk ID", // Добавлено
+    "confirm_delivery": "Yetkazib berishni tasdiqlash",
+    "delivered": "Yetkazib berildi",
+    "status_check_error": "Holatni tekshirishda xatolik",
+    "delivery_error": "Yetkazib berishda xatolik",
+    "signature_required": "Imzo talab qilinadi",
+    "auth_required": "Tizimga kirish talab qilinadi", // Добавлено
+    "unauthorized": "Ruxsat berilmagan",
+    "forbidden": "Taqiqlangan"
+  }
+,
   "tracking": {
     "search_placeholder": "Kuzatuv raqamini kiriting",
     "departure_time": "Jo‘natilgan sana",

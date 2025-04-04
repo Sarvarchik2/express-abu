@@ -6,7 +6,14 @@
         <img :src="Logo" alt="abu express logo">
       </div>
       <ul>
+        <li>
+          <NuxtLink v-if="userRole === 'delivery'" to="/deliver" class="delivery-btn">
+            {{ $t("deli") }}
+          </NuxtLink>
+        </li>
+
         <li><NuxtLink to="/">{{ $t("main") }}</NuxtLink></li>
+
         <li><NuxtLink to="/tarif">{{ $t("tarif") }}</NuxtLink></li>
         <li><NuxtLink to="/markets">{{ $t("markets") }}</NuxtLink></li>
         <li><NuxtLink to="/services">{{ $t("services") }}</NuxtLink></li>
@@ -29,6 +36,7 @@
           <li @click="changeLanguage('en')"><img :src="En" alt=""> </li>
         </ul>
       </div>
+
       <button class="navbar-lang-btn" @click="goToProfileOrRegister">
         <img :src="Profile" alt="profile">
       </button>
@@ -37,8 +45,10 @@
 
 <div class="navbar-mobile" :class="{ 'navbar-mobile-active': isMenuOpen }">
 
+
       <img class="navbar-mobile-img" :src="Exit" alt="exit" @click="closeMenu">
       <ul>
+
         <li><NuxtLink @click="closeMenu"  to="/">{{ $t("main") }}</NuxtLink></li>
 
         <li><NuxtLink @click="closeMenu" to="/tarif">{{ $t("tarif") }}</NuxtLink></li>
@@ -47,8 +57,12 @@
         <li><NuxtLink @click="closeMenu" to="/">{{ $t("about") }}</NuxtLink></li>
         <li><NuxtLink @click="closeMenu" to="/contact">{{ $t("contact") }}</NuxtLink></li>
         <li><NuxtLink @click="closeMenu" to="/help">{{ $t("help") }}</NuxtLink></li>
+
       </ul>
       <div class="navbar-link">
+          <NuxtLink v-if="userRole === 'delivery'" to="/deliver" class="delivery-btn">
+            {{ $t("deli") }}
+          </NuxtLink>
         <NuxtLink to="/registration">{{ $t("tarif_registration") }}</NuxtLink>
         <NuxtLink to="/login">{{ $t("tarif_login") }}</NuxtLink>
       </div>
@@ -133,8 +147,47 @@ import En from '../../assets/flag/united-states.png';
 import Uz from '../../assets/flag/uzbekistan.png';
 import Ru from '../../assets/flag/russia.png';
 
+
+
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+
 const router = useRouter()
+
+const userRole = ref('')
+const showCalculator = ref(false)
+const isMenuOpen = ref(false)
+
+
+
+// Функция для получения данных пользователя
+const fetchUserData = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    if (!token) return
+
+    const response = await axios.get('https://abuexpresslogisticscargo.com/api/get-me/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (response.data.success) {
+      userRole.value = response.data.data.role
+    }
+  } catch (error) {
+    console.error('Ошибка при получении данных пользователя:', error)
+  }
+}
+
+// Вызываем при загрузке компонента
+onMounted(() => {
+  if (process.client) {
+    fetchUserData()
+  }
+})
+
 
 const goToProfileOrRegister = () => {
   if (process.client) {
@@ -148,11 +201,7 @@ const goToProfileOrRegister = () => {
 }
 
 
-const showCalculator = ref(false);
-const isMenuOpen = ref(false);
 
-
-import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCookie } from '#app';
 
@@ -197,6 +246,12 @@ const calculatePrice = () => {
 
 <style scoped>
 @import 'navbar.css';
+.delivery-btn{
+  background: #FFEE00;
+  border-radius: 15px;
+  padding: 10px 15px;
+  color: #000!important;
+}
 
 .calculator-wrapper-item input {
   width: 100px;
