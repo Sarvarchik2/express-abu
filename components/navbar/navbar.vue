@@ -137,10 +137,10 @@
 
 <script setup>
 
-import Exit from "@/assets/exit.png";
+import Exit from "@/assets/exit.webp";
 import Logo from '../../assets/logo.png';
-import Calc from '../../assets/calc.png';
-import Lang from '../../assets/lang.png';
+import Calc from '../../assets/calc.webp';
+import Lang from '../../assets/lang.webp';
 import Menu from '../../assets/menu.png';
 import Profile from '../../assets/profile-user.png';
 import En from '../../assets/flag/united-states.png';

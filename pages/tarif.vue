@@ -44,7 +44,7 @@
 <script>
 import Traifleft from '@/assets/tarif/tarifleft.png';
 import Arrow from '@/assets/tarif/arrow.png';
-import Exit from '@/assets/exit.png';
+import Exit from '@/assets/exit.webp';
 import { useI18n } from "vue-i18n";
 
 export default {

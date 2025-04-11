@@ -98,10 +98,10 @@
 </template>
 <script>
 import { ref, computed } from "vue";
-import Search from "@/assets/searchb.png";
+import Search from "@/assets/searchb.webp";
 import Circle from "@/assets/circle.png";
-import Arrow from "@/assets/arrow.png";
-import Done from "@/assets/done.png";
+import Arrow from "@/assets/arrow.webp";
+import Done from "@/assets/done.webp";
 
 export default {
   setup() {

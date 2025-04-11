@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Search from '@/assets/search.png';
+import Search from '@/assets/search.webp';
 export default {
   name: "Markets",
   data() {

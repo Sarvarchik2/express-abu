@@ -659,8 +659,8 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 import empty from "@/assets/profile/empty.png";
-import close from '@/assets/exit.png';
-import left from "@/assets/left.png";
+import close from '@/assets/exit.webp';
+import left from "@/assets/left.webp";
 import right from "@/assets/right.png";
 
 const router = useRouter();

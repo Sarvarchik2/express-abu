@@ -96,7 +96,7 @@
     box-sizing: border-box;
     padding: 30px;
     overflow: hidden;
-    background: url("../../assets/howbg.png") no-repeat center center  ;
+    background: url("../../assets/howbg.webp") no-repeat center center  ;
     background-size: cover;
 
 }
@@ -188,7 +188,7 @@
 
 }
 .abu-express-statistic-item:nth-of-type(4){
-    background: url("../../assets/s4.png") no-repeat center center ;
+    background: url("../../assets/s4.webp") no-repeat center center ;
     background-size: cover;
 
 }
