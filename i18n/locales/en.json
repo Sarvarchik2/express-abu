@@ -104,6 +104,12 @@
 
   "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo.",
 
+  "meta": {
+    "title": "ABU Express – International Logistics & Cargo from Turkey, USA, and China to Uzbekistan",
+    "description": "ABU Express provides international logistics solutions and cargo delivery from Turkey, USA, and China to Uzbekistan. Fast, reliable, and cost-effective!",
+    "keywords": "Uzbekistan cargo delivery, international logistics, Turkey to Uzbekistan, USA to Uzbekistan, China to Uzbekistan, freight forwarding, cargo shipping, best rates"
+  }
+,
   "drawing": {
     "clear": "Clear",
     "color": "Color",

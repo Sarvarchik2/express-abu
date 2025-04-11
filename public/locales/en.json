@@ -113,6 +113,12 @@
     "delivery_error": "Delivery confirmation failed"
   }
 ,
+  "meta": {
+    "title": "ABU Express – International Logistics & Cargo from Turkey, USA, and China to Uzbekistan",
+    "description": "ABU Express provides international logistics solutions and cargo delivery from Turkey, USA, and China to Uzbekistan. Fast, reliable, and cost-effective!",
+    "keywords": "Uzbekistan cargo delivery, international logistics, Turkey to Uzbekistan, USA to Uzbekistan, China to Uzbekistan, freight forwarding, cargo shipping, best rates"
+  }
+,
   "tracking": {
     "search_placeholder": "Enter tracking number",
     "departure_time": "Departure date",

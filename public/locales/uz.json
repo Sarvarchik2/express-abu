@@ -14,7 +14,11 @@
   "hero_title2": "Oson buyurtma, qulay kuzatish, tez va ishonchli yetkazib berish",
   "hero_subtitle2": "Turkiyadan onlayn buyurtma bering — biz hamma narsani hal qilamiz!",
   "hero_button2": "Batafsil ma'lumot",
-
+  "meta": {
+    "title": "ABU Express — xalqaro logistika va Turkiya, AQSh, Xitoydan O'zbekistonga yuk tashish",
+    "description": "ABU Express — xalqaro logistika va yuk tashish kompaniyasi. Turkiyadan, AQShdan va Xitoydan O'zbekistonga tez va ishonchli yetkazib berish.",
+    "keywords": "yuk tashish, xalqaro logistika, Turkiyadan O'zbekistonga yuk, AQShdan O'zbekistonga yuk, Xitoydan O'zbekistonga yuk, kargo yetkazib berish, avia yuk tashish, tez yetkazib berish"
+  },
   "time_header": "Posilkalarni jo'natish vaqti",
   "time_subheader": "Tezroq yetkazib berish uchun buyurtma berishga ulguring",
   "days": "kun",
@@ -110,13 +114,13 @@
     "delivery_success": "Yetkazib berildi",
     "color": "Rang",
     "line_width": "Chiziq kengligi",
-    "shipment_id": "Yuk ID", // Добавлено
+    "shipment_id": "Yuk ID",
     "confirm_delivery": "Yetkazib berishni tasdiqlash",
     "delivered": "Yetkazib berildi",
     "status_check_error": "Holatni tekshirishda xatolik",
     "delivery_error": "Yetkazib berishda xatolik",
     "signature_required": "Imzo talab qilinadi",
-    "auth_required": "Tizimga kirish talab qilinadi", // Добавлено
+    "auth_required": "Tizimga kirish talab qilinadi",
     "unauthorized": "Ruxsat berilmagan",
     "forbidden": "Taqiqlangan"
   }

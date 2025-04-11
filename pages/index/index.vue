@@ -203,8 +203,9 @@ import S4 from "@/assets/ss4.webp";
 import Bgh from "@/assets/bgh.webp";
 import Time247 from '@/assets/24-7.webp'
 import Point from '@/assets/point.png'
+import { useHead } from '@unhead/vue'
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const banners = ref([]);
 const timers = ref([]);
@@ -253,7 +254,58 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(timerInterval);
 });
+
+
+
+useHead({
+  title: t('meta.title'),   // переводится по ключу в файлe локализации
+  meta: [
+    { name: 'description', content: t('meta.description') },
+    { name: 'keywords', content: t('meta.keywords') },
+    // Open Graph meta
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: `https://abuexpress.uz${ locale.value === 'en' ? '/en' : (locale.value === 'ru' ? '/ru' : '') }` },
+    { property: 'og:title', content: t('meta.title') },
+    { property: 'og:description', content: t('meta.description') },
+    { property: 'og:site_name', content: 'ABU Express' },
+    // (При наличии изображения)
+    { property: 'og:image', content: 'https://abuexpressgroup.com/_nuxt/logo2.wca1nOcZ.png' },
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: t('meta.title') },
+    { name: 'twitter:description', content: t('meta.description') },
+    { name: 'twitter:image', content: 'https://abuexpressgroup.com/_nuxt/logo2.wca1nOcZ.png' }
+  ],
+  link: [
+    { rel: 'canonical', href: `https://abuexpress.uz${ locale.value === 'en' ? '/en/' : (locale.value === 'ru' ? '/ru/' : '/') }` }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      json: {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ABU Express",
+        "url": "https://abuexpress.uz/",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+998959550555",
+          "contactType": "customer service",
+          "areaServed": "UZ"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Абу Сулеймана Банакоти 225A",
+          "addressLocality": "Tashkent",
+          "addressCountry": "UZ"
+        }
+      }
+    }
+  ]
+})
 </script>
+
+
 
 <style>
 @import "./index.css";
