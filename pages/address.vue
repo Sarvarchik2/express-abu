@@ -102,7 +102,7 @@
       <div v-for="addr in addresses" :key="addr.id" class="recipient-card">
         <div class="recipient-info">
           <h3><span>{{ addr.first_name }} {{ addr.last_name }}</span></h3>
-          <p>{{ $t('address.recipient.passport') }} <span>{{ addr.passport_number }}</span></p>
+          <p>{{ $t('address.recipient.country') }} <span>{{ addr.country }}</span></p>
           <p>{{ $t('address.recipient.phone') }} <span>{{ addr.phone_number }}</span></p>
           <p>{{ $t('address.recipient.email') }} <span>{{ addr.email }}</span></p>
           <p>{{ $t('address.recipient.address') }} <span>{{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>
@@ -121,21 +121,25 @@
           <div class="popup-overlay-item-wrapper">
             <div class="popup-overlay-item">
               <h4>{{ $t('address.popup.details') }}</h4>
-              <input type="text" :placeholder="$t('address.form.name')" v-model="form.name" required />
-              <input type="text" :placeholder="$t('address.form.surname')" v-model="form.surname" required />
-              <input type="text" :placeholder="$t('address.form.passport')" v-model="form.passport" required />
-              <input type="text" :placeholder="$t('address.form.phone')" v-model="form.phone" required />
-              <input type="text" :placeholder="$t('address.form.phone_second')" v-model="form.phone_second" />
+              <div class="input-row">
+                <input type="text" :placeholder="$t('address.form.name')" v-model="form.name" @input="form.name = form.name.replace(/[^a-zA-Z\s'\-]/g, '')" required />
+                <input type="text" :placeholder="$t('address.form.surname')" v-model="form.surname" @input="form.surname = form.surname.replace(/[^a-zA-Z\s'\-]/g, '')" required />
+              </div>
+              <input type="text" :placeholder="$t('address.form.phone')" v-model="form.phone" @input="form.phone = form.phone.replace(/[^\d+]/g, '')" required />
+              <input type="text" :placeholder="$t('address.form.phone_second')" v-model="form.phone_second" @input="form.phone_second = form.phone_second.replace(/[^\d+]/g, '')" />
               <input type="email" :placeholder="$t('address.form.email')" v-model="form.email" required />
+              <input type="text" :placeholder="$t('address.form.country') || 'Страна'" v-model="form.country" required />
             </div>
             <div class="popup-overlay-item">
               <h4>{{ $t('address.popup.address') }}</h4>
               <input type="text" :placeholder="$t('address.form.address')" v-model="form.address" required />
               <input type="text" :placeholder="$t('address.form.apartament')" v-model="form.apartament" required />
               <input type="text" :placeholder="$t('address.form.region')" v-model="form.region" required />
-              <input type="text" :placeholder="$t('address.form.city')" v-model="form.city" required />
+              <div class="input-row">
+                <input type="text" :placeholder="$t('address.form.city')" v-model="form.city" required />
+                <input type="text" :placeholder="$t('address.form.zip')" v-model="form.zip" required />
+              </div>
               <input type="text" :placeholder="$t('address.form.ofice')" v-model="form.ofice" />
-              <input type="text" :placeholder="$t('address.form.zip')" v-model="form.zip" required />
             </div>
           </div>
           <div class="popup-actions">
@@ -163,12 +167,12 @@ const { t } = useI18n();
 const form = ref({
   name: '',
   surname: '',
-  passport: '',
   phone: '',
   phone_second: '',
   email: '',
   address: '',
   apartament: '',
+  country: '',
   region: '',
   city: '',
   ofice: '',
@@ -207,12 +211,12 @@ const resetForm = () => {
   form.value = {
     name: '',
     surname: '',
-    passport: '',
     phone: '',
     phone_second: '',
     email: '',
     address: '',
     apartament: '',
+    country: '',
     region: '',
     city: '',
     ofice: '',
@@ -239,12 +243,12 @@ const editRecipient = (addr) => {
   form.value = {
     name: addr.first_name,
     surname: addr.last_name,
-    passport: addr.passport_number,
     phone: addr.phone_number,
     phone_second: addr.phone_number2,
     email: addr.email,
     address: addr.address,
     apartament: addr.apartment,
+    country: addr.country,
     region: addr.district,
     city: addr.city,
     ofice: addr.office_number,
@@ -288,13 +292,12 @@ const deleteRecipient = async (id) => {
 const buildPayload = () => ({
   first_name: form.value.name,
   last_name: form.value.surname,
-  passport_number: form.value.passport,
   phone_number: form.value.phone,
   phone_number2: form.value.phone_second || null,
   email: form.value.email,
   apartment: form.value.apartament,
   address: form.value.address,
-  country: 'Uzbekistan',
+  country: form.value.country,
   city: form.value.city,
   district: form.value.region,
   office_number: form.value.ofice || null,
@@ -458,6 +461,16 @@ onMounted(fetchAddresses);
 
 .form-group {
   margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+.input-row > input {
+  flex: 1;
+  min-width: 0;
 }
 
 .form-group label {

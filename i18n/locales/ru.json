@@ -265,8 +265,8 @@
     },
     "own_order": {
       "title": "Добавить свой заказ",
-      "track_number": "Трек-номер*",
-      "market_name": "Название магазина*",
+      "track_number": "Трек-номер",
+      "market_name": "Название магазина",
       "product_link": "Ссылка на товар",
       "product_name": "Название товара*",
       "product_price": "Цена $*",
@@ -274,7 +274,11 @@
       "product_weight": "Вес (кг)*",
       "product_color": "Цвет*",
       "product_size": "Размер*",
-      "comment": "Комментарий"
+      "comment": "Комментарий",
+      "location": "Склад",
+      "select_location": "Выберите склад (страну)",
+      "invoice_number": "Номер инвойса",
+      "invoice_id": "Invoice ID"
     },
     "errors": {
       "create": "Ошибка при создании адреса",
@@ -309,7 +313,8 @@
       "phone": "Номер:",
       "email": "Email:",
       "address": "Адрес:",
-      "zip": "ZIP-код:"
+      "zip": "ZIP-код:",
+      "country": "Страна"
     },
     "actions": {
       "edit": "Изменить",
@@ -336,7 +341,8 @@
       "region": "Регион",
       "city": "Город",
       "ofice": "Офис",
-      "zip": "ZIP-код"
+      "zip": "ZIP-код",
+      "country": "Страна"
     },
     "errors": {
       "create": "Ошибка при создании адреса",

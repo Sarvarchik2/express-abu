@@ -273,8 +273,8 @@
     },
     "own_order": {
       "title": "O'z buyurtmangizni qo'shing",
-      "track_number": "Trek-raqam*",
-      "market_name": "Do'kon nomi*",
+      "track_number": "Trek raqami",
+      "market_name": "Do'kon nomi",
       "product_link": "Mahsulot havolasi",
       "product_name": "Mahsulot nomi*",
       "product_price": "Narx $*",
@@ -282,7 +282,11 @@
       "product_weight": "Og'irlik (kg)*",
       "product_color": "Rang*",
       "product_size": "O'lcham*",
-      "comment": "Izoh"
+      "comment": "Izoh",
+      "location": "Ombor",
+      "select_location": "Omborni tanlang (mamlakat)",
+      "invoice_number": "Invoys raqami",
+      "invoice_id": "Invoice ID"
     },
     "errors": {
       "create": "Manzil yaratishda xatolik",
@@ -317,7 +321,8 @@
       "phone": "Telefon:",
       "email": "Email:",
       "address": "Manzil:",
-      "zip": "ZIP kod:"
+      "zip": "ZIP kod:",
+      "country": "Mamlakat"
     },
     "actions": {
       "edit": "O'zgartirish",
@@ -344,7 +349,8 @@
       "region": "Hudud",
       "city": "Shahar",
       "ofice": "Ofis",
-      "zip": "ZIP kod"
+      "zip": "ZIP kod",
+      "country": "Mamlakat"
     },
     "errors": {
       "create": "Manzil yaratishda xatolik",

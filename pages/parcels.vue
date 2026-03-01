@@ -375,14 +375,22 @@
             </span>
           </div>
           <div class="order-details">
-            <p>{{ $t('parcels.product_details.price') }}: ${{ order.product_price || order.price }}</p>
-            <p>{{ $t('parcels.product_details.quantity') }}: {{ order.product_quantity || order.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
-            <p v-if="order.product_weight || order.weight">{{ $t('parcels.product_details.weight') }}: {{ order.product_weight || order.weight }} kg</p>
-            <p v-if="order.product_color || order.color">{{ $t('parcels.product_details.color') }}: {{ order.product_color || order.color }}</p>
-            <p v-if="order.product_size || order.size">{{ $t('parcels.product_details.size') }}: {{ order.product_size || order.size }}</p>
-            <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">
-              {{ $t('parcels.product_details.product_link') }}
-            </a>
+            <p v-if="order.location"><strong>{{ $t('parcels.own_order.location') || 'Склад' }}:</strong>&nbsp;{{ order.location }}</p>
+            <p v-if="order.track_number"><strong>{{ $t('parcels.own_order.track_number') || 'Трек-номер' }}:</strong>&nbsp;{{ order.track_number }}</p>
+            <p v-if="order.invoice_number"><strong>{{ $t('parcels.own_order.invoice_number') || 'Номер инвойса' }}:</strong>&nbsp;{{ order.invoice_number }}</p>
+            <p v-if="order.market_name"><strong>{{ $t('parcels.own_order.market_name') || 'Магазин' }}:</strong>&nbsp;{{ order.market_name }}</p>
+            <p><strong>{{ $t('parcels.product_details.price') }}:</strong>&nbsp;${{ order.product_price || order.price }}</p>
+            <p><strong>{{ $t('parcels.product_details.quantity') }}:</strong>&nbsp;{{ order.product_quantity || order.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
+            <p v-if="order.product_weight || order.weight"><strong>{{ $t('parcels.product_details.weight') }}:</strong>&nbsp;{{ order.product_weight || order.weight }} kg</p>
+            <p v-if="order.product_color || order.color"><strong>{{ $t('parcels.product_details.color') }}:</strong>&nbsp;{{ order.product_color || order.color }}</p>
+            <p v-if="order.product_size || order.size"><strong>{{ $t('parcels.product_details.size') }}:</strong>&nbsp;{{ order.product_size || order.size }}</p>
+            <p v-if="order.departure_date"><strong>Departure:</strong>&nbsp;{{ formatDate(order.departure_date) }}</p>
+            <p v-if="order.arrival_date"><strong>Arrival:</strong>&nbsp;{{ formatDate(order.arrival_date) }}</p>
+            <div class="product-links" style="display: flex; gap: 10px; margin-top: 10px;">
+              <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">
+                {{ $t('parcels.product_details.product_link') }}
+              </a>
+            </div>
           </div>
           <div class="order-footer">
             <small>{{ $t('parcels.product_details.creation_date') }}: {{ formatDate(order.created_at) }}</small>
@@ -391,150 +399,7 @@
       </div>
     </div>
 
-    <!-- Popup for purchase help -->
-    <div v-if="isPopupOpen" class="parcels-add">
-      <div class="parcels-add-wrapper">
-        <div class="parcels-add-title">
-          <h2>{{ getPopupTitle() }}</h2>
-          <img :src="close" alt="close" @click="closePopup">
-        </div>
 
-        <div class="parcels-add-progress">
-          <div class="parcels-add-progress-left">
-            <h3 class="active">1</h3>
-            <h3 :class="{ active: currentStep >= 2 }">2</h3>
-            <h3 :class="{ active: currentStep >= 3 }">3</h3>
-            <span></span>
-          </div>
-
-          <div class="parcels-add-progress-right">
-            <img v-if="currentStep > 1" :src="left" alt="left" @click="prevStep">
-            <img v-if="currentStep < 3" :src="right" alt="right" @click="nextStep">
-          </div>
-        </div>
-
-        <!-- Step 1: Product information -->
-        <div v-if="currentStep === 1" class="parcels-add-progress-declaration">
-          <div class="parcels-add-text">
-            <h2>{{ $t('parcels.steps.product_info') }}</h2>
-            <p>{{ $t('parcels.product_info') }}</p>
-          </div>
-
-          <div
-              v-for="(parcel, index) in parcels"
-              :key="index"
-              class="parcels-add-progress-declaration-wrapper"
-          >
-            <h4>{{ $t('parcels.form.declaration') }} {{ index + 1 }}</h4>
-            <input type="text" v-model="parcel.link" :placeholder="$t('parcels.form.product_link')" required>
-            <div class="input-group">
-              <input type="text" v-model="parcel.name" :placeholder="$t('parcels.form.product_name')" required>
-              <input type="number" v-model="parcel.price" :placeholder="$t('parcels.form.price')" required>
-              <input type="number" v-model="parcel.quantity" :placeholder="$t('parcels.form.quantity')" required>
-            </div>
-            <div class="input-group">
-              <input type="text" v-model="parcel.color" :placeholder="$t('parcels.form.color')" required>
-              <input type="text" v-model="parcel.size" :placeholder="$t('parcels.form.size')" required>
-              <input type="number" v-model="parcel.weight" :placeholder="$t('parcels.form.weight')" required step="0.01">
-            </div>
-            <textarea v-model="parcel.comment" :placeholder="$t('parcels.form.comment')"></textarea>
-          </div>
-
-          <div class="parcels-add-progress-declaration-total">
-            <h2>{{ $t('parcels.form.total') }}: {{ totalPrice }}$</h2>
-            <button @click="addParcel">{{ $t('parcels.form.add_product') }}</button>
-          </div>
-
-          <div class="parcels-add-btn-wrapper">
-            <button class="parcels-add-btn" @click="nextStep">{{ $t('parcels.form.continue') }}</button>
-          </div>
-        </div>
-
-        <!-- Step 2: Address selection -->
-        <div v-if="currentStep === 2" class="parcels-add-address">
-          <div class="parcels-add-text">
-            <h2>{{ $t('parcels.steps.recipient_selection') }}</h2>
-            <p>{{ $t('parcels.select_recipient') }}</p>
-          </div>
-
-          <div class="parcels-add-address-content">
-            <h2>{{ $t('parcels.address.title') }}</h2>
-
-            <div v-if="addresses.length === 0" class="empty-address">
-              <p>{{ $t('parcels.address.no_address') }}</p>
-              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
-            </div>
-
-            <div v-else class="parcel-address-list">
-              <div
-                  v-for="addr in addresses"
-                  :key="addr.id"
-                  class="parcel-address-list-item"
-                  :class="{ selected: selectedAddress === addr.id }"
-                  @click="selectAddress(addr.id)"
-              >
-                <div class="parcel-address-list-item-left">
-                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
-                  <h3>{{ addr.address }}, {{ addr.city }}</h3>
-                </div>
-                <div class="parcel-address-list-item-right">
-                  <h2>{{ addr.phone_number }}</h2>
-                  <h3>{{ $t('parcels.address.passport') }}: {{ addr.passport_number }}</h3>
-                </div>
-              </div>
-              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
-            </div>
-          </div>
-
-          <div class="parcels-add-btn-wrapper">
-            <button
-                class="parcels-add-btn"
-                @click="nextStep"
-                :disabled="!selectedAddress"
-            >
-              {{ $t('parcels.form.continue') }}
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 3: Confirmation -->
-        <div v-if="currentStep === 3" class="parcels-add-confirmation">
-          <div class="parcels-add-text">
-            <h2>{{ $t('parcels.steps.confirmation') }}</h2>
-            <p>{{ $t('parcels.order_confirmation') }}</p>
-          </div>
-
-          <div class="confirmation-content">
-            <div v-for="(parcel, index) in parcels" :key="index" class="confirmation-item">
-              <h3>{{ $t('parcels.form.product') }} {{ index + 1 }}</h3>
-              <p>{{ $t('parcels.form.product_link') }}: {{ parcel.link }}</p>
-              <p>{{ $t('parcels.form.product_name') }}: {{ parcel.name }}</p>
-              <p>{{ $t('parcels.form.price') }}: {{ parcel.price }}$</p>
-              <p>{{ $t('parcels.form.quantity') }}: {{ parcel.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
-              <p>{{ $t('parcels.product_details.weight') }}: {{ parcel.weight }} kg</p>
-              <p>{{ $t('parcels.product_details.color') }}: {{ parcel.color }}</p>
-              <p>{{ $t('parcels.product_details.size') }}: {{ parcel.size }}</p>
-            </div>
-
-            <div v-if="selectedAddress" class="selected-address">
-              <h3>{{ $t('parcels.address.delivery_address') }}:</h3>
-              <p>{{ getSelectedAddress().first_name }} {{ getSelectedAddress().last_name }}</p>
-              <p>{{ getSelectedAddress().address }}, {{ getSelectedAddress().city }}</p>
-            </div>
-          </div>
-
-          <div class="parcels-add-btn-wrapper">
-            <button
-                class="parcels-add-btn"
-                @click="submitOrder"
-                :disabled="isLoading"
-            >
-              {{ isLoading ? $t('parcels.form.submitting') : $t('parcels.form.submit_order') }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Popup for adding own order -->
     <div v-if="isOrderOwnPopupOpen" class="parcels-add">
@@ -565,9 +430,20 @@
           </div>
 
           <div class="parcels-add-progress-declaration-wrapper">
+            <select v-model="orderOwn.location" required class="full-width-select" style="width: 100%; padding: 10px; border: 1px solid #fff; border-radius: 20px; color: #fff; background: transparent; outline: none; margin-bottom: 10px;">
+              <option value="" disabled selected>{{ $t('parcels.own_order.select_location') || 'Выберите склад' }}</option>
+              <option v-for="loc in availableLocations" :key="loc" :value="loc" style="color:#000;">{{ loc }}</option>
+            </select>
             <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required>
-            <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
-            <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
+            <div class="input-group">
+              <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
+              <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
+            </div>
+            
+            <div class="input-group">
+              <input type="number" v-model="orderOwn.invoice_number" :placeholder="$t('parcels.own_order.invoice_number') || 'Номер инвойса (если есть)'">
+              <input type="text" v-model="orderOwn.invoice_id" :placeholder="$t('parcels.own_order.invoice_id') || 'Invoice ID (если есть)'">
+            </div>
 
             <div class="input-group">
               <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required>
@@ -576,12 +452,12 @@
 
             <div class="input-group">
               <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required>
-              <input type="number" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" required step="0.01">
+              <input type="number" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" step="0.01">
             </div>
 
             <div class="input-group">
               <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required>
-              <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')" required>
+              <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')">
             </div>
 
             <textarea v-model="orderOwn.comment" :placeholder="$t('parcels.own_order.comment')"></textarea>
@@ -617,11 +493,10 @@
               >
                 <div class="parcel-address-list-item-left">
                   <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
-                  <h3>{{ addr.address }}, {{ addr.city }}</h3>
+                  <h3>{{ addr.country }}, {{ addr.city }}, {{ addr.address }}</h3>
                 </div>
                 <div class="parcel-address-list-item-right">
                   <h2>{{ addr.phone_number }}</h2>
-                  <h3>{{ $t('parcels.address.passport') }}: {{ addr.passport_number }}</h3>
                 </div>
               </div>
               <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
@@ -670,8 +545,8 @@ const isLoading = ref(false);
 
 
 const addresses = ref([]);
-const orders = ref([]);
 const ownOrders = ref([]);
+const availableLocations = ref([]);
 
 
 import { useI18n } from 'vue-i18n';
@@ -679,7 +554,7 @@ import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
 const getFilterCount = (filter) => {
-  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
+  const currentOrders = ownOrders.value;
 
   if (filter === 'all') return currentOrders.length;
 
@@ -707,9 +582,12 @@ const parcels = ref([{
 }]);
 
 const orderOwn = ref({
+  location: '',
   track_number: '',
   market_name: '',
   url_product: '',
+  invoice_number: null,
+  invoice_id: '',
   product_name: '',
   product_price: '',
   product_quantity: 1,
@@ -749,7 +627,7 @@ const getStatusClass = (order) => {
   return 'pending';
 };
 const filteredOrders = computed(() => {
-  const currentOrders = selectedTab.value === 'parcels' ? orders.value : ownOrders.value;
+  const currentOrders = ownOrders.value;
 
   if (!selectedFilter.value || selectedFilter.value === 'all') return currentOrders;
 
@@ -838,9 +716,12 @@ const openOrderOwnPopup = () => {
   isOrderOwnPopupOpen.value = true;
   currentOrderOwnStep.value = 1;
   orderOwn.value = {
+    location: '',
     track_number: '',
     market_name: '',
     url_product: '',
+    invoice_number: null,
+    invoice_id: '',
     product_name: '',
     product_price: '',
     product_quantity: 1,
@@ -881,11 +762,11 @@ const prevStep = () => currentStep.value > 1 && currentStep.value--;
 
 const nextOrderOwnStep = () => {
   if (currentOrderOwnStep.value === 1) {
-    if (!orderOwn.value.track_number || !orderOwn.value.market_name ||
+    if (!orderOwn.value.location || !orderOwn.value.track_number || !orderOwn.value.market_name ||
         !orderOwn.value.product_name || isNaN(orderOwn.value.product_price) ||
         isNaN(orderOwn.value.product_quantity) || !orderOwn.value.product_color ||
-        !orderOwn.value.product_size || isNaN(orderOwn.value.product_weight)) {
-      showNotificationMessage('Пожалуйста, заполните все обязательные поля', 'error');
+        !orderOwn.value.product_size) {
+      showNotificationMessage('Пожалуйста, заполните все обязательные поля (*)', 'error');
       return;
     }
   }
@@ -947,16 +828,10 @@ const fetchOrders = async () => {
 
     if (!token) throw new Error('Authentication token not found');
 
-    const [ordersResponse, ownOrdersResponse] = await Promise.all([
-      axios.get('https://abuexpresslogisticscargo.com/api/order/', {
-        headers: { Authorization: `Bearer ${token}` }
-      }),
-      axios.get('https://abuexpresslogisticscargo.com/api/order-own/', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-    ]);
+    const ownOrdersResponse = await axios.get('https://abuexpresslogisticscargo.com/api/order-own/', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-    orders.value = ordersResponse.data || [];
     ownOrders.value = ownOrdersResponse.data || [];
   } catch (error) {
     console.error('Order loading error:', error);
@@ -1052,7 +927,8 @@ const submitOrderOwn = async () => {
       receiver_address: selectedAddress.value,
       product_price: Number(orderOwn.value.product_price),
       product_quantity: Number(orderOwn.value.product_quantity),
-      product_weight: Number(orderOwn.value.product_weight)
+      product_weight: orderOwn.value.product_weight ? Number(orderOwn.value.product_weight) : null,
+      invoice_number: orderOwn.value.invoice_number ? Number(orderOwn.value.invoice_number) : null
     };
 
     await axios.post(
@@ -1083,9 +959,22 @@ const submitOrderOwn = async () => {
   }
 };
 
+const fetchLocations = async () => {
+  try {
+    const res = await axios.get('https://abuexpresslogisticscargo.com/api/office-address/');
+    if (res.data && Array.isArray(res.data)) {
+      const locs = res.data.map(item => item.location);
+      availableLocations.value = [...new Set(locs)];
+    }
+  } catch(e) {
+    console.warn("Failed to fetch office address for locations", e);
+  }
+}
+
 // Lifecycle hooks
 onMounted(async () => {
   try {
+    await fetchLocations();
     await Promise.all([fetchAddresses(), fetchOrders()]);
     // Set default filter to first available
     if (currentFilters.value.length > 0) {

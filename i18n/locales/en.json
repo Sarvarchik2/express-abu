@@ -265,8 +265,8 @@
     },
     "own_order": {
       "title": "Add your own order",
-      "track_number": "Track number*",
-      "market_name": "Store name*",
+      "track_number": "Track number",
+      "market_name": "Market name",
       "product_link": "Product link",
       "product_name": "Product name*",
       "product_price": "Price $*",
@@ -274,7 +274,11 @@
       "product_weight": "Weight (kg)*",
       "product_color": "Color*",
       "product_size": "Size*",
-      "comment": "Comment"
+      "comment": "Comment",
+      "location": "Warehouse",
+      "select_location": "Select warehouse (country)",
+      "invoice_number": "Invoice number",
+      "invoice_id": "Invoice ID"
     },
     "errors": {
       "fill_required_fields": "Please fill in all required fields (marked with *) with valid values",
@@ -309,7 +313,8 @@
       "phone": "Phone:",
       "email": "Email:",
       "address": "Address:",
-      "zip": "ZIP code:"
+      "zip": "ZIP code:",
+      "country": "Country"
     },
     "actions": {
       "edit": "Edit",
@@ -336,7 +341,8 @@
       "region": "Region",
       "city": "City",
       "ofice": "Office",
-      "zip": "ZIP code"
+      "zip": "ZIP code",
+      "country": "Country"
     },
     "errors": {
       "create": "Error creating address",
