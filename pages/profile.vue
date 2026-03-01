@@ -212,6 +212,9 @@
         <h2>
           {{ fullName }}
           <p>{{ $t('profile.recipient') }}</p>
+          <p v-if="userId" style="margin-top: 5px; font-weight: bold; color: #ffee00;">
+            {{ $t('profile.personal_id') }}: {{ userId }}
+          </p>
         </h2>
         <button @click="copyToClipboard(country.name2)">
           <img :src="copy" :alt="$t('profile.copy_alt')" />
@@ -269,6 +272,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useI18n } from 'vue-i18n';
+import axios from 'axios';
 import copy from "@/assets/profile/copy.png";
 
 // Флаги стран
@@ -278,10 +282,31 @@ import chinaFlag from "@/assets/profile/china.png";
 
 const { t } = useI18n();
 const fullName = ref('')
+const userId = ref('')
 
-onMounted(() => {
+onMounted(async () => {
   if (process.client) {
     fullName.value = localStorage.getItem('full_name') || t('profile.no_name')
+    userId.value = localStorage.getItem('user_id') || ''
+
+    // Fetch up-to-date user data
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      try {
+        const response = await axios.get('https://abuexpresslogisticscargo.com/api/get-me/', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+        if (response.data?.success) {
+          const user = response.data.data
+          userId.value = user.id
+          fullName.value = user.full_name || fullName.value
+          localStorage.setItem('user_id', user.id)
+          localStorage.setItem('full_name', fullName.value)
+        }
+      } catch (e) {
+        console.error('Ошибка при загрузке профиля', e)
+      }
+    }
   }
 })
 

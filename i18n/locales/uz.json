@@ -198,7 +198,8 @@
       "register_order_answer": "Mahsulotlarni tanlang va buyurtma berish bo'limiga o'ting.",
       "tax_free_state": "Soliqsiz shtatda ombor bo'ladimi?",
       "tax_free_state_answer": "Ha, Delaver (DE) soliqsiz shtatida ombor mavjud."
-    }
+    },
+    "personal_id": "Sizning shaxsiy ID"
   },
   "parcels": {
     "title": "Posilkalar",

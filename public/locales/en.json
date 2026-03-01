@@ -168,7 +168,8 @@
       "register_order_answer": "Select products and proceed to checkout.",
       "tax_free_state": "Will there be a warehouse in a tax-free state?",
       "tax_free_state_answer": "Yes, there is a warehouse in the tax-free state of Delaware (DE)."
-    }
+    },
+    "personal_id": "Your personal ID"
   },
   "profileedit": {
     "title": "Edit Profile",
