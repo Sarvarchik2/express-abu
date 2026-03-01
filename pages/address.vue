@@ -107,39 +107,46 @@
           <p>{{ $t('address.recipient.email') }} <span>{{ addr.email }}</span></p>
           <p>{{ $t('address.recipient.address') }} <span>{{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>
           <p>{{ $t('address.recipient.zip') }} <span>{{ addr.postal_code }}</span></p>
-          <button @click="editRecipient(addr)">{{ $t('address.actions.edit') }}</button>
-          <button @click="deleteRecipient(addr.id)">{{ $t('address.actions.delete') }}</button>
+          <div class="recipient-info-actions">
+            <button @click="editRecipient(addr)">{{ $t('address.actions.edit') }}</button>
+            <button @click="deleteRecipient(addr.id)">{{ $t('address.actions.delete') }}</button>
+          </div>
         </div>
       </div>
       <button class="recipient-list-btn" @click="openAddForm">{{ $t('address.actions.add_more') }}</button>
     </div>
 
-    <div v-if="showPopup" class="popup-overlay">
+    <div v-if="showPopup" class="popup-overlay" @click.self="closePopup">
       <div class="popup">
-        <h2>{{ $t(isEditing ? 'address.popup.edit' : 'address.popup.add') }}</h2>
+        <div class="popup-header">
+          <h2>{{ $t(isEditing ? 'address.popup.edit' : 'address.popup.add') }}</h2>
+          <img :src="close" alt="close" class="close-icon" @click="closePopup">
+        </div>
         <form @submit.prevent="isEditing ? updateRecipient() : addRecipient()">
-          <div class="popup-overlay-item-wrapper">
-            <div class="popup-overlay-item">
-              <h4>{{ $t('address.popup.details') }}</h4>
-              <div class="input-row">
-                <input type="text" :placeholder="$t('address.form.name')" v-model="form.name" @input="form.name = form.name.replace(/[^a-zA-Z\s'\-]/g, '')" required />
-                <input type="text" :placeholder="$t('address.form.surname')" v-model="form.surname" @input="form.surname = form.surname.replace(/[^a-zA-Z\s'\-]/g, '')" required />
+          <div class="popup-scroll-content">
+            <div class="popup-overlay-item-wrapper">
+              <div class="popup-overlay-item">
+                <h4>{{ $t('address.popup.details') }}</h4>
+                <div class="input-row">
+                  <input type="text" :placeholder="$t('address.form.name')" v-model="form.name" @input="form.name = form.name.replace(/[^a-zA-Z\s'\-]/g, '')" required />
+                  <input type="text" :placeholder="$t('address.form.surname')" v-model="form.surname" @input="form.surname = form.surname.replace(/[^a-zA-Z\s'\-]/g, '')" required />
+                </div>
+                <input type="text" :placeholder="$t('address.form.phone')" v-model="form.phone" @input="form.phone = form.phone.replace(/[^\d+]/g, '')" required />
+                <input type="text" :placeholder="$t('address.form.phone_second')" v-model="form.phone_second" @input="form.phone_second = form.phone_second.replace(/[^\d+]/g, '')" />
+                <input type="email" :placeholder="$t('address.form.email')" v-model="form.email" required />
+                <input type="text" :placeholder="$t('address.form.country') || 'Страна'" v-model="form.country" required />
               </div>
-              <input type="text" :placeholder="$t('address.form.phone')" v-model="form.phone" @input="form.phone = form.phone.replace(/[^\d+]/g, '')" required />
-              <input type="text" :placeholder="$t('address.form.phone_second')" v-model="form.phone_second" @input="form.phone_second = form.phone_second.replace(/[^\d+]/g, '')" />
-              <input type="email" :placeholder="$t('address.form.email')" v-model="form.email" required />
-              <input type="text" :placeholder="$t('address.form.country') || 'Страна'" v-model="form.country" required />
-            </div>
-            <div class="popup-overlay-item">
-              <h4>{{ $t('address.popup.address') }}</h4>
-              <input type="text" :placeholder="$t('address.form.address')" v-model="form.address" required />
-              <input type="text" :placeholder="$t('address.form.apartament')" v-model="form.apartament" required />
-              <input type="text" :placeholder="$t('address.form.region')" v-model="form.region" required />
-              <div class="input-row">
-                <input type="text" :placeholder="$t('address.form.city')" v-model="form.city" required />
-                <input type="text" :placeholder="$t('address.form.zip')" v-model="form.zip" required />
+              <div class="popup-overlay-item">
+                <h4>{{ $t('address.popup.address') }}</h4>
+                <input type="text" :placeholder="$t('address.form.address')" v-model="form.address" required />
+                <input type="text" :placeholder="$t('address.form.apartament')" v-model="form.apartament" required />
+                <input type="text" :placeholder="$t('address.form.region')" v-model="form.region" required />
+                <div class="input-row">
+                  <input type="text" :placeholder="$t('address.form.city')" v-model="form.city" required />
+                  <input type="text" :placeholder="$t('address.form.zip')" v-model="form.zip" required />
+                </div>
+                <input type="text" :placeholder="$t('address.form.ofice')" v-model="form.ofice" />
               </div>
-              <input type="text" :placeholder="$t('address.form.ofice')" v-model="form.ofice" />
             </div>
           </div>
           <div class="popup-actions">
@@ -155,6 +162,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import empty from '@/assets/profile/empty2.png';
+import close from '@/assets/exit.webp';
 
 const addresses = ref([]);
 const showPopup = ref(false);
@@ -374,7 +382,8 @@ onMounted(fetchAddresses);
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 50%;
+  flex: 1;
+  min-width: 300px;
 }
 .sub-tabs {
   width: 100%;
@@ -386,13 +395,13 @@ onMounted(fetchAddresses);
 }
 .popup-overlay-item h4{
   font-size: 20px;
-  margin-bottom: 10px;
-
+  margin-bottom: 5px;
+  color: #FFEE00;
 }
 .popup h2{
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin: 0;
 }
 .empty-state {
   display: flex;
@@ -433,30 +442,84 @@ onMounted(fetchAddresses);
 .popup-overlay-item-wrapper{
   width: 100%;
   display: flex;
-  gap: 15px;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 .popup-overlay {
   position: fixed;
   top: 0;
-  backdrop-filter: blur(10px);
-  z-index: 99;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .popup {
   background: #0A0A0A;
-  padding: 33px;
-  border-radius: 30px;
-  width: 770px;
+  padding: 30px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
   color: white;
   display: flex;
   flex-direction: column;
+  border: 1px solid #333;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.popup form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.close-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  background: rgba(255,255,255,0.05);
+}
+
+.close-icon:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.1);
+}
+
+.popup-scroll-content {
+  overflow-y: auto;
+  padding-right: 5px;
+  flex: 1;
+}
+
+/* Custom scrollbar */
+.popup-scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+.popup-scroll-content::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
 }
 
 .form-group {
@@ -478,25 +541,20 @@ onMounted(fetchAddresses);
   font-weight: bold;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 25px;
-  border: 1px solid #fff;
-  background: black;
-  color: white;
-}
-
 .popup-actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .popup-actions button {
-  padding: 10px 15px;
-  border-radius: 25px;
+  padding: 12px 30px;
+  border-radius: 30px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 .popup-overlay-item img{
   width: 60px;
@@ -504,20 +562,28 @@ onMounted(fetchAddresses);
 
 }
 .popup-overlay-item input{
-  background: transparent;
-  padding: 10px;
-  border-radius: 25px;
-  border: 1px solid #fff;
+  background: #111;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #333;
   color: #fff;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .popup-overlay-item input:focus{
-  outline: 1px solid #FFEE00;
-
+  outline: none;
+  border-color: #FFEE00;
+  background: #161616;
 }
 .popup-actions button:first-child {
   background: transparent;
-  border: 1px solid #FFEE00;
-  color: #FFD700;
+  border: 1px solid #333;
+  color: #ccc;
+}
+.popup-actions button:first-child:hover {
+  border-color: #555;
+  color: #fff;
 }
 
 .popup-actions button:last-child {
@@ -525,49 +591,116 @@ onMounted(fetchAddresses);
   color: black;
   border: none;
 }
-.recipient-info{
-  width: 580px;
+.popup-actions button:last-child:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .popup-overlay-item {
+    min-width: 100%;
+    gap: 10px;
+  }
+  .popup-overlay-item-wrapper {
+    gap: 10px;
+  }
+  .popup {
+    padding: 20px 15px;
+    max-height: 85vh;
+  }
+  .input-row {
+     flex-direction: column;
+     gap: 10px;
+  }
+  .popup-header {
+    margin-bottom: 15px;
+  }
+  .popup-actions {
+    margin-top: 15px;
+  }
+  .popup-overlay-item input {
+    padding: 10px 15px;
+  }
+  .popup-overlay-item h4 {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+}
+.recipient-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.recipient-info {
+  width: 100%;
   padding: 25px;
   display: flex;
   flex-direction: column;
-  border: 3px solid #FFEE00;
-  gap: 20px;
-  border-radius: 30px;
-
+  border: 1px solid #333;
+  background: #111;
+  gap: 15px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
-.recipient-info p{
+
+.recipient-info:hover {
+  border-color: #FFEE00;
+  box-shadow: 0 4px 15px rgba(255, 238, 0, 0.1);
+}
+
+.recipient-info p {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   color: #BAAFAF;
-  font-size: 20px;
+  font-size: 14px;
+  gap: 4px;
 }
-.recipient-info p span{
+
+.recipient-info p span {
   color: #fff;
+  font-size: 16px;
+  word-break: break-word;
 }
-.recipient-info button{
+
+.recipient-info-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.recipient-info-actions button {
   background: transparent;
-  border: 1px solid #FFD700;
+  border: 1px solid #333;
   border-radius: 30px;
   width: 100%;
   color: #fff;
   height: 40px;
-  transition: all 300ms;
+  transition: all 0.3s ease;
+  font-size: 14px;
 }
-.recipient-info button:hover{
-  background: #FFD700;
+
+.recipient-info-actions button:hover {
+  background: #FFEE00;
+  border-color: #FFEE00;
   cursor: pointer;
   color: #000;
 }
-.recipient-card h3{
-    width: 100%;
+
+.recipient-card h3 {
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 22px;
 }
-@media (max-width:769px) {
-  .recipient-info{
-    width: 500px;
+
+@media (max-width: 600px) {
+  .recipient-list {
+    grid-template-columns: 1fr;
   }
-}
-@media(max-width: 600px) {
   .tabs button {
     padding: 10px 10px;
     font-size: 14px;
@@ -576,20 +709,14 @@ onMounted(fetchAddresses);
     width: 100%;
     justify-content: space-between;
   }
-  .recipient-card{
-    width: 100%;
+  .recipient-info p {
+    font-size: 13px;
   }
-  .recipient-list{
-    width: 100%;
-  }
-  .recipient-info{
-    width: 100%;
-  }
-  .recipient-info p{
-    font-size: 16px;
+  .recipient-info p span {
+    font-size: 15px;
   }
 }
-@media(max-width: 375px) {
+@media (max-width: 375px) {
   .tabs button {
     padding: 9px 6px;
   }
