@@ -1,332 +1,5 @@
 
 
-<!--<template>-->
-<!--  &lt;!&ndash; Notification Component &ndash;&gt;-->
-<!--  <div class="notification-container" :class="{ 'show': showNotification }">-->
-<!--    <div class="notification" :class="notificationType">-->
-<!--      <span>{{ notificationMessage }}</span>-->
-<!--      <button @click="hideNotification">&times;</button>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="parcels-page">-->
-<!--    <div class="tabs">-->
-<!--      <button-->
-<!--          v-for="(tab, index) in tabs"-->
-<!--          :key="index"-->
-<!--          :class="{ active: selectedTab === tab.key }"-->
-<!--          @click="selectedTab = tab.key"-->
-<!--      >-->
-<!--        {{ tab.label }}-->
-<!--      </button>-->
-<!--    </div>-->
-
-<!--    <div class="divider"></div>-->
-
-<!--    <div class="sub-tabs">-->
-<!--      <button-->
-<!--          v-for="(filter, index) in currentFilters"-->
-<!--          :key="index"-->
-<!--          class="sub-tab"-->
-<!--          :class="{ active: selectedFilter === filter }"-->
-<!--          @click="selectedFilter = filter"-->
-<!--      >-->
-<!--        {{ filter }} <span class="count">{{ getFilterCount(filter) }}</span>-->
-<!--      </button>-->
-<!--    </div>-->
-
-<!--    <div class="parcels-btn">-->
-<!--      <button @click="openPopup">+ Добавить заказ (выкуп)</button>-->
-<!--      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ Добавить свой заказ</button>-->
-<!--    </div>-->
-
-<!--    <div v-if="isLoading" class="loading-indicator">-->
-<!--      Загрузка данных...-->
-<!--    </div>-->
-
-<!--    <div class="parcel-page-wrapper" v-else>-->
-<!--      <div v-if="filteredOrders.length === 0" class="empty-state">-->
-<!--        <img :src="empty" alt="Нет заказов" class="empty-image" />-->
-<!--        <p class="empty-text">Заказов не найдено</p>-->
-<!--      </div>-->
-
-<!--      <div v-else class="orders-list">-->
-<!--        <div v-for="order in filteredOrders" :key="order.id" class="order-item">-->
-<!--          <div class="order-header">-->
-<!--            <h3>{{ order.product_name || order.name }}</h3>-->
-<!--            <span class="order-status" :class="getStatusClass(order)">-->
-<!--              {{ getStatusText(order) }}-->
-<!--            </span>-->
-<!--          </div>-->
-<!--          <div class="order-details">-->
-<!--            <p>Цена: ${{ order.product_price || order.price }}</p>-->
-<!--            <p>Количество: {{ order.product_quantity || order.quantity }} шт</p>-->
-<!--            <p v-if="order.product_weight || order.weight">Вес: {{ order.product_weight || order.weight }} кг</p>-->
-<!--            <p v-if="order.product_color || order.color">Цвет: {{ order.product_color || order.color }}</p>-->
-<!--            <p v-if="order.product_size || order.size">Размер: {{ order.product_size || order.size }}</p>-->
-<!--            <a v-if="order.url_product || order.link" :href="order.url_product || order.link" target="_blank" class="product-link">-->
-<!--              Ссылка на товар-->
-<!--            </a>-->
-<!--          </div>-->
-<!--          <div class="order-footer">-->
-<!--            <small>Дата создания: {{ formatDate(order.created_at) }}</small>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Popup for purchase help &ndash;&gt;-->
-<!--    <div v-if="isPopupOpen" class="parcels-add">-->
-<!--      <div class="parcels-add-wrapper">-->
-<!--        <div class="parcels-add-title">-->
-<!--          <h2>{{ getPopupTitle() }}</h2>-->
-<!--          <img :src="close" alt="close" @click="closePopup">-->
-<!--        </div>-->
-
-<!--        <div class="parcels-add-progress">-->
-<!--          <div class="parcels-add-progress-left">-->
-<!--            <h3 class="active">1</h3>-->
-<!--            <h3 :class="{ active: currentStep >= 2 }">2</h3>-->
-<!--            <h3 :class="{ active: currentStep >= 3 }">3</h3>-->
-<!--            <span></span>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-progress-right">-->
-<!--            <img v-if="currentStep > 1" :src="left" alt="left" @click="prevStep">-->
-<!--            <img v-if="currentStep < 3" :src="right" alt="right" @click="nextStep">-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Step 1: Product information &ndash;&gt;-->
-<!--        <div v-if="currentStep === 1" class="parcels-add-progress-declaration">-->
-<!--          <div class="parcels-add-text">-->
-<!--            <h2>Товары для покупки</h2>-->
-<!--            <p>Введите данные товаров, которые хотите купить.</p>-->
-<!--          </div>-->
-
-<!--          <div-->
-<!--              v-for="(parcel, index) in parcels"-->
-<!--              :key="index"-->
-<!--              class="parcels-add-progress-declaration-wrapper"-->
-<!--          >-->
-<!--            <h4>Декларация {{ index + 1 }}</h4>-->
-<!--            <input type="text" v-model="parcel.link" placeholder="Ссылка на товар*" required>-->
-<!--            <div class="input-group">-->
-<!--              <input type="text" v-model="parcel.name" placeholder="Название товара*" required>-->
-<!--              <input type="number" v-model="parcel.price" placeholder="Цена за ед $*" required>-->
-<!--              <input type="number" v-model="parcel.quantity" placeholder="Количество* шт" required>-->
-<!--            </div>-->
-<!--            <div class="input-group">-->
-<!--              <input type="text" v-model="parcel.color" placeholder="Цвет*" required>-->
-<!--              <input type="text" v-model="parcel.size" placeholder="Размер*" required>-->
-<!--              <input type="number" v-model="parcel.weight" placeholder="Вес (кг)*" required step="0.01">-->
-<!--            </div>-->
-<!--            <textarea v-model="parcel.comment" placeholder="Комментарий для оператора"></textarea>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-progress-declaration-total">-->
-<!--            <h2>Итого: {{ totalPrice }}$</h2>-->
-<!--            <button @click="addParcel">+ Добавить товар</button>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-btn-wrapper">-->
-<!--            <button class="parcels-add-btn" @click="nextStep">Продолжить</button>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Step 2: Address selection &ndash;&gt;-->
-<!--        <div v-if="currentStep === 2" class="parcels-add-address">-->
-<!--          <div class="parcels-add-text">-->
-<!--            <h2>Выбор получателя</h2>-->
-<!--            <p>Выберите сохраненный адрес или добавьте новый.</p>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-address-content">-->
-<!--            <h2>Список адресов</h2>-->
-
-<!--            <div v-if="addresses.length === 0" class="empty-address">-->
-<!--              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>-->
-<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
-<!--            </div>-->
-
-<!--            <div v-else class="parcel-address-list">-->
-<!--              <div-->
-<!--                  v-for="addr in addresses"-->
-<!--                  :key="addr.id"-->
-<!--                  class="parcel-address-list-item"-->
-<!--                  :class="{ selected: selectedAddress === addr.id }"-->
-<!--                  @click="selectAddress(addr.id)"-->
-<!--              >-->
-<!--                <div class="parcel-address-list-item-left">-->
-<!--                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>-->
-<!--                  <h3>{{ addr.address }}, {{ addr.city }}</h3>-->
-<!--                </div>-->
-<!--                <div class="parcel-address-list-item-right">-->
-<!--                  <h2>{{ addr.phone_number }}</h2>-->
-<!--                  <h3>Паспорт: {{ addr.passport_number }}</h3>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-btn-wrapper">-->
-<!--            <button-->
-<!--                class="parcels-add-btn"-->
-<!--                @click="nextStep"-->
-<!--                :disabled="!selectedAddress"-->
-<!--            >-->
-<!--              Продолжить-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Step 3: Confirmation &ndash;&gt;-->
-<!--        <div v-if="currentStep === 3" class="parcels-add-confirmation">-->
-<!--          <div class="parcels-add-text">-->
-<!--            <h2>Подтверждение заказа</h2>-->
-<!--            <p>Проверьте все данные перед отправкой.</p>-->
-<!--          </div>-->
-
-<!--          <div class="confirmation-content">-->
-<!--            <div v-for="(parcel, index) in parcels" :key="index" class="confirmation-item">-->
-<!--              <h3>Товар {{ index + 1 }}</h3>-->
-<!--              <p>Ссылка: {{ parcel.link }}</p>-->
-<!--              <p>Название: {{ parcel.name }}</p>-->
-<!--              <p>Цена: {{ parcel.price }}$</p>-->
-<!--              <p>Количество: {{ parcel.quantity }} шт</p>-->
-<!--              <p>Вес: {{ parcel.weight }} кг</p>-->
-<!--              <p>Цвет: {{ parcel.color }}</p>-->
-<!--              <p>Размер: {{ parcel.size }}</p>-->
-<!--            </div>-->
-
-<!--            <div v-if="selectedAddress" class="selected-address">-->
-<!--              <h3>Адрес доставки:</h3>-->
-<!--              <p>{{ getSelectedAddress().first_name }} {{ getSelectedAddress().last_name }}</p>-->
-<!--              <p>{{ getSelectedAddress().address }}, {{ getSelectedAddress().city }}</p>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-btn-wrapper">-->
-<!--            <button-->
-<!--                class="parcels-add-btn"-->
-<!--                @click="submitOrder"-->
-<!--                :disabled="isLoading"-->
-<!--            >-->
-<!--              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Popup for adding own order &ndash;&gt;-->
-<!--    <div v-if="isOrderOwnPopupOpen" class="parcels-add">-->
-<!--      <div class="parcels-add-wrapper">-->
-<!--        <div class="parcels-add-title">-->
-<!--          <h2>Добавить свой заказ</h2>-->
-<!--          <img :src="close" alt="close" @click="closeOrderOwnPopup">-->
-<!--        </div>-->
-
-<!--        <div class="parcels-add-progress">-->
-<!--          <div class="parcels-add-progress-left">-->
-<!--            <h3 class="active">1</h3>-->
-<!--            <h3 :class="{ active: currentOrderOwnStep >= 2 }">2</h3>-->
-<!--            <span></span>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-progress-right">-->
-<!--            <img v-if="currentOrderOwnStep > 1" :src="left" alt="left" @click="prevOrderOwnStep">-->
-<!--            <img v-if="currentOrderOwnStep < 2" :src="right" alt="right" @click="nextOrderOwnStep">-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Step 1: Order information &ndash;&gt;-->
-<!--        <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">-->
-<!--          <div class="parcels-add-text">-->
-<!--            <h2>Информация о заказе</h2>-->
-<!--            <p>Введите данные о вашем заказе.</p>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-progress-declaration-wrapper">-->
-<!--            <input type="text" v-model="orderOwn.track_number" placeholder="Трек-номер*" required>-->
-<!--            <input type="text" v-model="orderOwn.market_name" placeholder="Название магазина*" required>-->
-<!--            <input type="text" v-model="orderOwn.url_product" placeholder="Ссылка на товар">-->
-
-<!--            <div class="input-group">-->
-<!--              <input type="text" v-model="orderOwn.product_name" placeholder="Название товара*" required>-->
-<!--              <input type="number" v-model="orderOwn.product_price" placeholder="Цена $*" required>-->
-<!--            </div>-->
-
-<!--            <div class="input-group">-->
-<!--              <input type="number" v-model="orderOwn.product_quantity" placeholder="Количество*" required>-->
-<!--              <input type="number" v-model="orderOwn.product_weight" placeholder="Вес (кг)*" required step="0.01">-->
-<!--            </div>-->
-
-<!--            <div class="input-group">-->
-<!--              <input type="text" v-model="orderOwn.product_color" placeholder="Цвет*" required>-->
-<!--              <input type="text" v-model="orderOwn.product_size" placeholder="Размер*" required>-->
-<!--            </div>-->
-
-<!--            <textarea v-model="orderOwn.comment" placeholder="Комментарий"></textarea>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-btn-wrapper">-->
-<!--            <button class="parcels-add-btn" @click="nextOrderOwnStep">Продолжить</button>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        &lt;!&ndash; Step 2: Address selection &ndash;&gt;-->
-<!--        <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">-->
-<!--          <div class="parcels-add-text">-->
-<!--            <h2>Выбор получателя</h2>-->
-<!--            <p>Выберите сохраненный адрес доставки.</p>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-address-content">-->
-<!--            <h2>Список адресов</h2>-->
-
-<!--            <div v-if="addresses.length === 0" class="empty-address">-->
-<!--              <p>Нет сохраненных адресов. Пожалуйста, добавьте адрес получателя.</p>-->
-<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
-<!--            </div>-->
-
-<!--            <div v-else class="parcel-address-list">-->
-<!--              <div-->
-<!--                  v-for="addr in addresses"-->
-<!--                  :key="addr.id"-->
-<!--                  class="parcel-address-list-item"-->
-<!--                  :class="{ selected: selectedAddress === addr.id }"-->
-<!--                  @click="selectAddress(addr.id)"-->
-<!--              >-->
-<!--                <div class="parcel-address-list-item-left">-->
-<!--                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>-->
-<!--                  <h3>{{ addr.address }}, {{ addr.city }}</h3>-->
-<!--                </div>-->
-<!--                <div class="parcel-address-list-item-right">-->
-<!--                  <h2>{{ addr.phone_number }}</h2>-->
-<!--                  <h3>Паспорт: {{ addr.passport_number }}</h3>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <button @click="navigateToAddresses">+ Добавить адрес</button>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="parcels-add-btn-wrapper">-->
-<!--            <button-->
-<!--                class="parcels-add-btn"-->
-<!--                @click="submitOrderOwn"-->
-<!--                :disabled="!selectedAddress || isLoading"-->
-<!--            >-->
-<!--              {{ isLoading ? 'Отправка...' : 'Отправить заказ' }}-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</template>-->
-
 <template>
   <div class="notification-container" :class="{ 'show': showNotification }">
     <div class="notification" :class="notificationType">
@@ -402,115 +75,118 @@
 
 
     <!-- Popup for adding own order -->
-    <div v-if="isOrderOwnPopupOpen" class="parcels-add">
-      <div class="parcels-add-wrapper">
-        <div class="parcels-add-title">
+    <div v-if="isOrderOwnPopupOpen" class="popup-overlay" @click.self="closeOrderOwnPopup">
+      <div class="popup parcels-add-popup">
+        <div class="popup-header">
           <h2>{{ $t('parcels.own_order.title') }}</h2>
-          <img :src="close" alt="close" @click="closeOrderOwnPopup">
+          <svg @click="closeOrderOwnPopup" class="close-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
 
-        <div class="parcels-add-progress">
-          <div class="parcels-add-progress-left">
-            <h3 class="active">1</h3>
-            <h3 :class="{ active: currentOrderOwnStep >= 2 }">2</h3>
-            <span></span>
-          </div>
-
-          <div class="parcels-add-progress-right">
-            <img v-if="currentOrderOwnStep > 1" :src="left" alt="left" @click="prevOrderOwnStep">
-            <img v-if="currentOrderOwnStep < 2" :src="right" alt="right" @click="nextOrderOwnStep">
-          </div>
-        </div>
-
-        <!-- Step 1: Order information -->
-        <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">
-          <div class="parcels-add-text">
-            <h2>{{ $t('parcels.steps.product_info') }}</h2>
-            <p>{{ $t('parcels.product_info') }}</p>
-          </div>
-
-          <div class="parcels-add-progress-declaration-wrapper">
-            <select v-model="orderOwn.location" required class="full-width-select" style="width: 100%; padding: 10px; border: 1px solid #fff; border-radius: 20px; color: #fff; background: transparent; outline: none; margin-bottom: 10px;">
-              <option value="" disabled selected>{{ $t('parcels.own_order.select_location') || 'Выберите склад' }}</option>
-              <option v-for="loc in availableLocations" :key="loc" :value="loc" style="color:#000;">{{ loc }}</option>
-            </select>
-            <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required>
-            <div class="input-group">
-              <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
-              <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
-            </div>
-            
-            <div class="input-group">
-              <input type="number" v-model="orderOwn.invoice_number" :placeholder="$t('parcels.own_order.invoice_number') || 'Номер инвойса (если есть)'">
-              <input type="text" v-model="orderOwn.invoice_id" :placeholder="$t('parcels.own_order.invoice_id') || 'Invoice ID (если есть)'">
+        <div class="popup-scroll-content">
+          <div class="parcels-add-progress">
+            <div class="parcels-add-progress-left">
+              <h3 class="active">1</h3>
+              <h3 :class="{ active: currentOrderOwnStep >= 2 }">2</h3>
+              <span></span>
             </div>
 
-            <div class="input-group">
-              <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required>
-              <input type="number" v-model="orderOwn.product_price" :placeholder="$t('parcels.own_order.product_price')" required>
+            <div class="parcels-add-progress-right">
+              <svg v-if="currentOrderOwnStep > 1" @click="prevOrderOwnStep" class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg v-if="currentOrderOwnStep < 2" @click="nextOrderOwnStep" class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
-
-            <div class="input-group">
-              <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required>
-              <input type="number" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" step="0.01">
-            </div>
-
-            <div class="input-group">
-              <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required>
-              <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')">
-            </div>
-
-            <textarea v-model="orderOwn.comment" :placeholder="$t('parcels.own_order.comment')"></textarea>
           </div>
 
-          <div class="parcels-add-btn-wrapper">
-            <button class="parcels-add-btn" @click="nextOrderOwnStep">{{ $t('parcels.form.continue') }}</button>
-          </div>
-        </div>
-
-        <!-- Step 2: Address selection -->
-        <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">
-          <div class="parcels-add-text">
-            <h2>{{ $t('parcels.steps.recipient_selection') }}</h2>
-            <p>{{ $t('parcels.select_recipient') }}</p>
-          </div>
-
-          <div class="parcels-add-address-content">
-            <h2>{{ $t('parcels.address.title') }}</h2>
-
-            <div v-if="addresses.length === 0" class="empty-address">
-              <p>{{ $t('parcels.address.no_address') }}</p>
-              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
+          <!-- Step 1: Order information -->
+          <div v-if="currentOrderOwnStep === 1" class="parcels-add-progress-declaration">
+            <div class="parcels-add-text">
+              <h2>{{ $t('parcels.steps.product_info') }}</h2>
             </div>
 
-            <div v-else class="parcel-address-list">
-              <div
-                  v-for="addr in addresses"
-                  :key="addr.id"
-                  class="parcel-address-list-item"
-                  :class="{ selected: selectedAddress === addr.id }"
-                  @click="selectAddress(addr.id)"
-              >
-                <div class="parcel-address-list-item-left">
-                  <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
-                  <h3>{{ addr.country }}, {{ addr.city }}, {{ addr.address }}</h3>
-                </div>
-                <div class="parcel-address-list-item-right">
-                  <h2>{{ addr.phone_number }}</h2>
-                </div>
+            <div class="parcels-add-progress-declaration-wrapper modernized-form">
+              <select v-model="orderOwn.location" required class="modern-select">
+                <option value="" disabled selected>{{ $t('parcels.own_order.select_location') || 'Выберите склад' }}</option>
+                <option v-for="loc in availableLocations" :key="loc" :value="loc">{{ loc }}</option>
+              </select>
+              
+              <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required>
+              
+              <div class="input-row">
+                <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
+                <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
               </div>
-              <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
+              
+              <!-- Invoice fields removed per user request -->
+
+              <div class="input-row">
+                <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required>
+                <input type="text" v-model="orderOwn.product_price" :placeholder="$t('parcels.own_order.product_price')" inputmode="decimal" required>
+              </div>
+
+              <div class="input-row">
+                <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required>
+                <input type="text" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" inputmode="decimal">
+              </div>
+
+              <div class="input-row">
+                <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required>
+                <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')">
+              </div>
+
+              <textarea v-model="orderOwn.comment" :placeholder="$t('parcels.own_order.comment')"></textarea>
+            </div>
+
+            <div class="parcels-add-btn-wrapper">
+              <button class="parcels-add-btn primary" @click="nextOrderOwnStep">{{ $t('parcels.form.continue') }}</button>
             </div>
           </div>
 
-          <div class="parcels-add-btn-wrapper">
-            <button
-                class="parcels-add-btn"
-                @click="submitOrderOwn"
-                :disabled="!selectedAddress || isLoading"
-            >
-              {{ isLoading ? $t('parcels.form.submitting') : $t('parcels.form.submit_order') }}
-            </button>
+          <!-- Step 2: Address selection -->
+          <div v-if="currentOrderOwnStep === 2" class="parcels-add-address">
+            <div class="parcels-add-text">
+              <h2>{{ $t('parcels.steps.recipient_selection') }}</h2>
+            </div>
+
+            <div class="parcels-add-address-content">
+              <div v-if="addresses.length === 0" class="empty-address">
+                <p>{{ $t('parcels.address.no_address') }}</p>
+                <button @click="navigateToAddresses">{{ $t('parcels.address.add_address') }}</button>
+              </div>
+
+              <div v-else class="parcel-address-list">
+                <div
+                    v-for="addr in addresses"
+                    :key="addr.id"
+                    class="parcel-address-list-item"
+                    :class="{ selected: selectedAddress === addr.id }"
+                    @click="selectAddress(addr.id)"
+                >
+                  <div class="parcel-address-list-item-left">
+                    <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
+                    <h3>{{ addr.country }}, {{ addr.city }}, {{ addr.address }}</h3>
+                  </div>
+                  <div class="parcel-address-list-item-right">
+                    <h2>{{ addr.phone_number }}</h2>
+                  </div>
+                </div>
+                <button @click="navigateToAddresses" class="add-address-minor">{{ $t('parcels.address.add_address') }}</button>
+              </div>
+            </div>
+
+            <div class="parcels-add-btn-wrapper">
+              <button
+                  class="parcels-add-btn primary"
+                  @click="submitOrderOwn"
+                  :disabled="isLoading || !selectedAddress"
+              >
+                {{ isLoading ? $t('parcels.form.submitting') : $t('parcels.form.submit_order') }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -762,10 +438,12 @@ const prevStep = () => currentStep.value > 1 && currentStep.value--;
 
 const nextOrderOwnStep = () => {
   if (currentOrderOwnStep.value === 1) {
+    const priceStr = String(orderOwn.value.product_price || '').replace(',', '.');
+    const quantityStr = String(orderOwn.value.product_quantity || '');
+    
     if (!orderOwn.value.location || !orderOwn.value.track_number || !orderOwn.value.market_name ||
-        !orderOwn.value.product_name || isNaN(orderOwn.value.product_price) ||
-        isNaN(orderOwn.value.product_quantity) || !orderOwn.value.product_color ||
-        !orderOwn.value.product_size) {
+        !orderOwn.value.product_name || !priceStr || isNaN(Number(priceStr)) ||
+        !quantityStr || isNaN(Number(quantityStr)) || !orderOwn.value.product_color) {
       showNotificationMessage('Пожалуйста, заполните все обязательные поля (*)', 'error');
       return;
     }
@@ -925,9 +603,9 @@ const submitOrderOwn = async () => {
     const postData = {
       ...orderOwn.value,
       receiver_address: selectedAddress.value,
-      product_price: Number(orderOwn.value.product_price),
+      product_price: orderOwn.value.product_price ? Number(String(orderOwn.value.product_price).replace(',', '.')) : 0,
       product_quantity: Number(orderOwn.value.product_quantity),
-      product_weight: orderOwn.value.product_weight ? Number(orderOwn.value.product_weight) : null,
+      product_weight: orderOwn.value.product_weight ? Number(String(orderOwn.value.product_weight).replace(',', '.')) : null,
       invoice_number: orderOwn.value.invoice_number ? Number(orderOwn.value.invoice_number) : null
     };
 
@@ -1453,13 +1131,156 @@ onMounted(async () => {
 }
 .parcels-add-progress-declaration-wrapper{
   width: 100%;
-  border: 3px solid #FFD700;
-  border-radius: 25px;
-  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  background: #111;
+  gap: 15px;
+  box-sizing: border-box;
 }
+
+.modern-select {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  color: #fff;
+  background: #0A0A0A;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.modern-select:focus {
+  border-color: #FFEE00;
+}
+
+.modernized-form input {
+  background: #0A0A0A;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modernized-form input:focus {
+  border-color: #FFEE00;
+  outline: none;
+}
+
+.modernized-form textarea {
+  background: #0A0A0A;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.modernized-form textarea:focus {
+  border-color: #FFEE00;
+  outline: none;
+}
+
+.input-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+.input-row input {
+  flex: 1;
+}
+
+.parcels-add-btn.primary {
+  background: #FFEE00;
+  color: #000;
+  border: none;
+  font-weight: 600;
+}
+
+.parcels-add-btn.primary:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.parcels-add-btn.primary:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.close-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+.close-icon:hover {
+  background: rgba(255, 238, 0, 0.1);
+  color: #FFEE00;
+  transform: rotate(90deg);
+}
+
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon:hover {
+  opacity: 1;
+  color: #FFEE00;
+  transform: scale(1.1);
+}
+
+.add-address-minor {
+  margin-top: 15px;
+  background: transparent;
+  border: 1px dashed #333;
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.add-address-minor:hover {
+  border-color: #FFEE00;
+  color: #FFEE00;
+}
+
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
 .parcels-add-progress-declaration-wrapper input{
   border: 1px solid #BAAFAF;
   border-radius: 30px;
@@ -1487,77 +1308,128 @@ onMounted(async () => {
   color: #BAAFAF;
   height: 70px;
 }
-.parcels-add-progress{
 
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-.parcels-add-progress-left{
-  width: 86%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-}
-.parcels-add-progress-left h3{
-  width: 35px;
-  height: 35px;
-  line-height:14px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  border-radius: 50%;
-  background: #FFD700;
-  font-size: 16px;
-}
-.parcels-add-progress-left span{
-  width: 100%;
-  position: absolute;
-  height: 2px;
-  background: #fff;
-}
-.parcels-add-progress-right{
-  width: 10%;
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  justify-content: end;
-}
-.parcels-add-progress-right img{
-  cursor: pointer;
-  height: 25px;
-}
-.parcels-add-title{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.parcels-add{
-  width: 100%;
-  height: 100vh;
-  background: rgba(10, 10, 10, 0.18);
-  backdrop-filter: blur(8px);
-  z-index: 991;
+/* NEW MODAL SYSTEM */
+.popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
-.parcels-add-wrapper {
-  background: #000;
-  width: 800px;
-  height: 800px;
+
+.popup {
+  background: #0A0A0A;
   padding: 30px;
-  border-radius: 30px;
-  overflow-y: scroll;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.popup-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Custom scrollbar for popup */
+.popup-scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+.popup-scroll-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.popup-scroll-content::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+.parcels-add-progress {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  background: #161616;
+  padding: 15px;
+  border-radius: 12px;
+}
+.parcels-add-progress-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  gap: 40px;
+}
+.parcels-add-progress-left h3 {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 14px;
+  z-index: 2;
+  transition: all 0.3s;
+}
+.parcels-add-progress-left h3.active {
+  background: #FFEE00;
+  border-color: #FFEE00;
+  color: #000;
+  font-weight: bold;
+}
+.parcels-add-progress-left span {
+  width: 60px;
+  position: absolute;
+  height: 1px;
+  background: #333;
+  left: 32px;
+  top: 50%;
+  z-index: 1;
+}
+.parcels-add-progress-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: end;
+}
+.parcels-add-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 .parcels-page {
   overflow-x: hidden;
