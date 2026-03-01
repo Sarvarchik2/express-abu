@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <template v-if="!authRoutes.includes(route.path)">
+    <template v-if="!isAuthRoute">
       <Navbar />
     </template>
 
@@ -13,7 +13,7 @@
       </div>
     </NuxtLayout>
 
-    <template v-if="!authRoutes.includes(route.path)">
+    <template v-if="!isAuthRoute">
       <Footer />
     </template>
   </div>
@@ -32,14 +32,21 @@ const route = useRoute();
 const sidebarRoutes = ['/profile', '/parcels', '/address', '/balance', '/claims', '/settings'];
 const authRoutes = ['/login', '/registration'];
 
-const showSidebar = computed(() => sidebarRoutes.includes(route.path));
+const showSidebar = computed(() => {
+  return sidebarRoutes.some(path => route.path === path || route.path.endsWith(path));
+});
+
+const isAuthRoute = computed(() => {
+  return authRoutes.some(path => route.path === path || route.path.endsWith(path));
+});
 
 onMounted(() => {
   watch(
       () => route.path,
       (newPath) => {
         if (process.client) {
-          if (authRoutes.includes(newPath)) {
+          const isAuth = authRoutes.some(path => newPath === path || newPath.endsWith(path));
+          if (isAuth) {
             document.body.style.overflow = 'hidden';
           } else {
             document.body.style.overflow = '';

@@ -6,22 +6,22 @@
     </div>
 
     <form class="login-wrapper" @submit.prevent="handleLogin">
-      <h2>Войти</h2>
-      <p>Войти чтобы использовать все возможности системы</p>
+      <h2>{{ $t('login.title') }}</h2>
+      <p>{{ $t('login.subtitle') }}</p>
 
       <input v-model="form.email" type="email" placeholder="Gmail" required />
       <input v-model="form.password" type="password" placeholder="Password" required />
 
       <div class="login-wrapper-btn">
-        <button type="button">Забыли пароль?</button>
-        <button type="submit">Войти</button>
+        <button type="button">{{ $t('login.forgot_password') }}</button>
+        <button type="submit">{{ $t('login.submit_btn') }}</button>
       </div>
 
       <p v-if="message" class="message">{{ message }}</p>
     </form>
 
-    <NuxtLink to="/registration">
-      У вас еще нет аккаунта? Зарегистрируйтесь!
+    <NuxtLink :to="localePath('/registration')">
+      {{ $t('login.no_account') }}
     </NuxtLink>
   </div>
 </template>
@@ -31,6 +31,9 @@ import logo from '@/assets/logo2.png'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const form = ref({
   email: '',
@@ -39,6 +42,7 @@ const form = ref({
 
 const message = ref('')
 const router = useRouter()
+const localePath = useLocalePath()
 
 const handleLogin = async () => {
   try {
@@ -55,10 +59,10 @@ const handleLogin = async () => {
     localStorage.setItem('full_name', name)
 
     message.value = ''
-    router.push('/profile')
+    router.push(localePath('/profile'))
   } catch (error) {
     console.error('Ошибка логина:', error.response?.data || error)
-    message.value = 'Неверный email или пароль'
+    message.value = t('login.error_wrong_credentials')
   }
 }
 </script>

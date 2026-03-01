@@ -7,23 +7,25 @@
 
     <transition name="fade">
       <form v-if="!otpSent" class="register-wrapper" @submit.prevent="handleSubmit">
-        <h2>Регистрация</h2>
-        <p>Заполните данные для регистрации</p>
+        <h2>{{ $t('registration.title') }}</h2>
+        <input v-model="form.email" type="email" :placeholder="$t('registration.email_placeholder')" required />
+        <input v-model="form.first_name" type="text" :placeholder="$t('registration.first_name_placeholder')" @input="form.first_name = form.first_name.replace(/[^a-zA-Z\s\-']/g, '')" required />
+        <input v-model="form.last_name" type="text" :placeholder="$t('registration.last_name_placeholder')" @input="form.last_name = form.last_name.replace(/[^a-zA-Z\s\-']/g, '')" required />
+        <input v-model="form.phone_number" type="tel" :placeholder="$t('registration.phone_placeholder')" @input="form.phone_number = form.phone_number.replace(/[^0-9+]/g, '')" required />
+        <input v-model="form.date_of_birth" type="date" :placeholder="$t('registration.dob_placeholder')" required />
+        <input v-model="form.card_number" type="text" :placeholder="$t('registration.card_placeholder')" @input="formatPassport" required />
+        <input v-model="form.personal_number" type="text" :placeholder="$t('registration.pinfl_placeholder')" @input="form.personal_number = form.personal_number.replace(/[^0-9]/g, '')" maxlength="14" required />
+        <input v-model="form.password" type="password" :placeholder="$t('registration.password_placeholder')" minlength="6" required />
 
-        <input v-model="form.email" type="email" placeholder="Email" required />
-        <input v-model="form.full_name" type="text" placeholder="ФИО" required />
-        <input v-model="form.phone_number" type="text" placeholder="Телефон" required />
-        <input v-model="form.password" type="password" placeholder="Пароль" required />
-
-        <button type="submit">Отправить код</button>
+        <button type="submit">{{ $t('registration.submit_btn') }}</button>
         <p v-if="message" class="message">{{ message }}</p>
       </form>
     </transition>
 
     <transition name="fade">
       <div v-if="otpSent && !otpVerified" class="register-wrapper">
-        <h2>Подтверждение Email</h2>
-        <p>Мы отправили код на <b>{{ form.email }}</b></p>
+        <h2>{{ $t('registration.otp_title') }}</h2>
+        <p>{{ $t('registration.otp_subtitle') }} <b>{{ form.email }}</b></p>
 
         <div class="otp-inputs">
           <input
@@ -35,19 +37,19 @@
           />
         </div>
 
-        <button @click="verifyOtp">Подтвердить</button>
+        <button @click="verifyOtp">{{ $t('registration.otp_confirm_btn') }}</button>
         <p v-if="message" class="message">{{ message }}</p>
       </div>
     </transition>
 
     <transition name="fade">
       <div v-if="otpVerified" class="register-wrapper">
-        <h2>Успешно!</h2>
-        <p>Вы успешно зарегистрированы 🎉</p>
+        <h2>{{ $t('registration.success_title') }}</h2>
+        <p>{{ $t('registration.success_subtitle') }}</p>
       </div>
     </transition>
-    <NuxtLink to="/login">
-      У вас уже есть аккаунта? Войдите!
+    <NuxtLink :to="localePath('/login')">
+      {{ $t('registration.already_have_account') }}
     </NuxtLink>
   </div>
 </template>
@@ -56,11 +58,22 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import logo from '@/assets/logo2.png'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const router = useRouter()
+const localePath = useLocalePath()
 
 const form = ref({
   email: '',
   full_name: '',
+  first_name: '',
+  last_name: '',
   phone_number: '',
+  date_of_birth: '',
+  card_number: '',
+  personal_number: '',
   password: ''
 })
 
@@ -69,41 +82,38 @@ const otpVerified = ref(false)
 const message = ref('')
 const otpArray = ref(['', '', '', '', '', ''])
 
-const checkIfEmailExists = async () => {
-  try {
-    const res = await axios.post('https://abuexpresslogisticscargo.com/api/check-email/', {
-      email: form.value.email
-    })
-    return res.data.exists
-  } catch (e) {
-    return false
-  }
-}
-
-
 const handleSubmit = async () => {
   try {
+    // Generate full_name from first_name and last_name
+    form.value.full_name = `${form.value.first_name} ${form.value.last_name}`.trim()
+
+    // Additional validations
+    if (!form.value.first_name || !form.value.last_name || !form.value.phone_number || !form.value.password || !form.value.card_number || !form.value.personal_number) {
+      message.value = 'Пожалуйста, заполните все обязательные поля'
+      return
+    }
+
+    if (form.value.password.length < 6) {
+      message.value = 'Пароль должен содержать минимум 6 символов'
+      return
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(form.value.email)) {
-      message.value = 'Некорректный формат email'
+      message.value = t('registration.invalid_email')
       return
     }
 
     const res = await axios.post('https://abuexpresslogisticscargo.com/api/send-otp/', {
       email: form.value.email
     })
-    const exists = await checkIfEmailExists()
-    if (exists) {
-      message.value = 'Этот email уже зарегистрирован'
-      return
-    }
 
     if (res.status === 200) {
       otpSent.value = true
-      message.value = 'Код отправлен на ваш email!'
+      message.value = t('registration.code_sent')
     }
   } catch (error) {
-    message.value = error.response?.data?.error || 'Ошибка отправки OTP'
+    message.value = error.response?.data?.error || t('registration.otp_send_error')
   }
 }
 
@@ -114,10 +124,12 @@ const focusNext = (index, event) => {
   }
 }
 
-
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+const formatPassport = () => {
+  let val = form.value.card_number.toUpperCase()
+  let series = val.slice(0, 2).replace(/[^A-ZА-ЯЁ]/g, '') // Поддержка латиницы и кириллицы
+  let number = val.slice(series.length).replace(/[^0-9]/g, '').slice(0, 7) // Только цифры, макс 7
+  form.value.card_number = series + number
+}
 
 const verifyOtp = async () => {
   try {
@@ -128,30 +140,57 @@ const verifyOtp = async () => {
       otp: code
     })
 
-    message.value = 'OTP подтвержден! Завершаем регистрацию...'
+    message.value = t('registration.otp_confirmed')
 
-    form.value.otp = code
-
-
-
-
-    const registerRes = await axios.post('https://abuexpresslogisticscargo.com/api/register/', form.value)
-
-    const tokenRes = await axios.post('https://abuexpresslogisticscargo.com/api/token/', {
+    const payload = {
       email: form.value.email,
-      password: form.value.password
-    })
+      full_name: form.value.full_name,
+      first_name: form.value.first_name,
+      last_name: form.value.last_name,
+      phone_number: form.value.phone_number,
+      date_of_birth: form.value.date_of_birth,
+      card_number: form.value.card_number,
+      personal_number: form.value.personal_number,
+      password: form.value.password,
+    }
 
-    localStorage.setItem('access_token', tokenRes.data.access)
-    localStorage.setItem('refresh_token', tokenRes.data.refresh)
-    localStorage.setItem('full_name', form.value.full_name)
+    const registerRes = await axios.post('https://abuexpresslogisticscargo.com/api/register/', payload)
 
-    otpVerified.value = true
-    message.value = ''
-    router.push('/profile')
+    const regData = registerRes.data?.data
+    if (regData && regData.access) {
+      localStorage.setItem('access_token', regData.access)
+      localStorage.setItem('refresh_token', regData.refresh)
+      localStorage.setItem('full_name', regData.full_name || form.value.full_name)
+
+      otpVerified.value = true
+      message.value = ''
+      router.push(localePath('/profile'))
+    } else {
+      otpVerified.value = true
+      message.value = ''
+      router.push(localePath('/login'))
+    }
   } catch (error) {
     console.error('Ошибка:', error.response?.data || error)
-    message.value = error.response?.data?.error || 'Ошибка подтверждения или регистрации'
+    const errData = error.response?.data
+    let errMsg = t('registration.otp_verify_error')
+
+    if (errData && Object.keys(errData).length === 0 && error.response.status === 400) {
+      errMsg = 'Недействительный или просроченный код'
+    } else if (errData) {
+      const errStr = JSON.stringify(errData).toLowerCase()
+      if (errStr.includes('already exists') || errStr.includes('уже существует')) {
+        errMsg = t('registration.email_exists')
+      } else if (errData.detail) {
+        errMsg = errData.detail
+      } else if (typeof errData.error === 'string' && !errData.error.includes('exists')) {
+        errMsg = errData.error
+      } else if (errData.message && typeof errData.message === 'string') {
+        errMsg = errData.message
+      }
+    }
+
+    message.value = errMsg
   }
 }
 
@@ -161,7 +200,7 @@ const verifyOtp = async () => {
 .register {
   width: 100%;
   height: 100vh;
-  background: #0a0a0a;
+  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;

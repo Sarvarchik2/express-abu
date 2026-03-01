@@ -6,11 +6,9 @@
   "contact": "Kontaktlar",
   "help": "Yordam",
   "deli": "Etkazipberish",
-
   "hero_title": "Oson buyurtma, qulay kuzatish, tez va ishonchli yetkazib berish",
   "hero_subtitle": "AQShdan onlayn buyurtma bering — biz hamma narsani hal qilamiz!",
   "hero_button": "Batafsil ma'lumot",
-
   "hero_title2": "Oson buyurtma, qulay kuzatish, tez va ishonchli yetkazib berish",
   "hero_subtitle2": "Turkiyadan onlayn buyurtma bering — biz hamma narsani hal qilamiz!",
   "hero_button2": "Batafsil ma'lumot",
@@ -26,17 +24,14 @@
   "minutes": "daqiqa",
   "seconds": "soniya",
   "time_send": "Posilkani jo'natish",
-
   "how_title": "Qanday ishlaydi?",
   "how_step1": "1. Ro'yxatdan o'ting va bizning manzilimizni oling",
   "how_step2": "2. Istalgan do'kondan buyurtma qiling va bizning manzilimizni kiriting.",
   "how_step3": "3. Posilkangizni atigi 7-10 kun ichida oling!",
   "how_button": "Xarid qiling, biz yetkazib beramiz! 🚀",
-
   "help_title": "Yordam kerakmi?",
   "help_desc": "Onlayn xarid qilishda qiyinchiliklar bormi?\nDo'kon sizning kartangizni qabul qilmayaptimi?\nBuyurtmani rasmiylashtirishda yordam kerakmi?\nBiz barcha muammolaringizni hal qilamiz!\nMijozlarga xizmat ko'rsatish markazimiz 24/7 ishlaydi va sizga ro'yxatdan o'tish, buyurtma berish va to'lov qilishda yordam beradi. Istalgan vaqtda biz bilan bog'laning, biz sizning xaridlaringizni O'zbekiston bo'ylab tez va ishonchli yetkazib beramiz!\nAbu Express — O'zbekistonda ishonchli yetkazib berish xizmatingiz!\n",
   "help_btn": "O'tish",
-
   "why_title": "Nima uchun Abu Express?",
   "tax_free": "0% savdo solig'i",
   "tax_free_desc": "AQShning soliq olinmaydigan hududida joylashgan omborimiz tufayli xaridlaringizda 10% gacha tejang.",
@@ -50,11 +45,9 @@
   "security_desc2": "Bizning qo'llab-quvvatlash xizmati 24/7 ishlaydi va har qanday vaziyatda sizga yordam berishga tayyor.",
   "security3": "Posilkangiz xavfsizligi",
   "security_desc3": "Mahsulotlaringizni ishonchli qadoqlaymiz va ehtiyotkorlik bilan yetkazib beramiz.",
-
   "about_title": "Biz haqimizda",
   "about_desc": "Abu Express – O'zbekistonga ishonchli bepul yetkazib berish xizmati!\n5 yildan buyon biz sizning posilkalarni tez, xavfsiz va ortiqcha muammolarsiz olishga yordam beramiz. Tajriba va ishonchli hamkorlarimiz tufayli butun O'zbekiston bo'ylab qulay va foydali yetkazib berish yechimlarini taklif qilamiz.\n🔹 Havo va transport orqali yetkazib berish\n🔹 \"Eshikdan eshikkacha\" yetkazib berish\n🔹 Optimal narx va muddatlar\nAbu Express'ni tanlang — biz sizning buyurtmangizni muammosiz yetkazib beramiz!\n",
   "about_btn": "Batafsil ma'lumot",
-
   "statistic_title": "Statistika",
   "stat1_count": "29845+",
   "stat1_text": "Mamnun mijozlar",
@@ -64,7 +57,6 @@
   "stat3_text": "Xodimlar",
   "stat4_count": "8++",
   "stat4_text": "Filiallar",
-
   "final_help_title": "Xarid qilishda yordam kerakmi?",
   "final_help_desc": "Onlayn xarid qilishda qiyinchiliklar bormi?\nDo'kon sizning kartangizni qabul qilmayaptimi?\nBuyurtmani rasmiylashtirishda yordam kerakmi?\nBiz barcha muammolaringizni hal qilamiz!\nMijozlarga xizmat ko'rsatish markazimiz 24/7 ishlaydi va sizga ro'yxatdan o'tish, buyurtma berish va to'lov qilishda yordam beradi. Istalgan vaqtda biz bilan bog'laning, biz sizning xaridlaringizni O'zbekiston bo'ylab tez va ishonchli yetkazib beramiz.\nAbu Express bilan cheklovlarsiz xarid qiling!",
   "final_help_btn": "Xizmat haqida batafsil",
@@ -106,25 +98,6 @@
   "main": "Bosh sahifa",
   "services_air_sea_title": "Havo va dengiz yuk tashish xizmati",
   "services_air_sea_desc": "Abuexpress kompaniyasi mijozlar va biznes uchun maxsus mo'ljallangan ishonchli havo va dengiz yuk tashish xizmatlarini taklif qiladi. Havo transporti orqali yetkazib berish muddati 7-10 kun bo'lib, O'zbekistonga tezkor posilka jo'natishni istagan mijozlar uchun eng yaxshi variant hisoblanadi. Shu bilan birga, dengiz yuk tashish 45 kungacha davom etishi mumkin, lekin bu yirik va og'ir tijorat yuklarini yetkazib berish uchun iqtisodiy jihatdan samarali yechim hisoblanadi.",
-
-  "drawing": {
-    "reset": "qaytatan",
-    "clear": "Tozalash",
-    "submission_failed": "Hato",
-    "delivery_success": "Yetkazib berildi",
-    "color": "Rang",
-    "line_width": "Chiziq kengligi",
-    "shipment_id": "Yuk ID",
-    "confirm_delivery": "Yetkazib berishni tasdiqlash",
-    "delivered": "Yetkazib berildi",
-    "status_check_error": "Holatni tekshirishda xatolik",
-    "delivery_error": "Yetkazib berishda xatolik",
-    "signature_required": "Imzo talab qilinadi",
-    "auth_required": "Tizimga kirish talab qilinadi",
-    "unauthorized": "Ruxsat berilmagan",
-    "forbidden": "Taqiqlangan"
-  }
-,
   "profileedit": {
     "title": "Profilni tahrirlash",
     "full_name": "To'liq ism",
@@ -147,7 +120,23 @@
     "confirm_delete": "Ha, o'chirish",
     "cancel": "Bekor qilish"
   },
-
+  "drawing": {
+    "clear": "Tozalash",
+    "reset": "qaytatan",
+    "color": "Rang",
+    "line_width": "Chiziq kengligi",
+    "submission_failed": "Hato",
+    "delivery_success": "Yetkazib berildi",
+    "shipment_id": "Yuk ID",
+    "confirm_delivery": "Yetkazib berishni tasdiqlash",
+    "delivered": "Yetkazib berildi",
+    "status_check_error": "Holatni tekshirishda xatolik",
+    "delivery_error": "Yetkazib berishda xatolik",
+    "signature_required": "Imzo talab qilinadi",
+    "auth_required": "Tizimga kirish talab qilinadi",
+    "unauthorized": "Ruxsat berilmagan",
+    "forbidden": "Taqiqlangan"
+  },
   "tracking": {
     "search_placeholder": "Kuzatuv raqamini kiriting",
     "departure_time": "Jo‘natilgan sana",
@@ -177,7 +166,6 @@
       }
     }
   },
-
   "profile": {
     "countries": {
       "usa": "AQSH",
@@ -212,7 +200,6 @@
       "tax_free_state_answer": "Ha, Delaver (DE) soliqsiz shtatida ombor mavjud."
     }
   },
-
   "parcels": {
     "title": "Posilkalar",
     "add_order": "Buyurtma qo'shish (sotib olish)",
@@ -303,7 +290,6 @@
       "order_success": "Buyurtma yuborildi!",
       "order_own_success": "Buyurtma yuborildi!"
     }
-
   },
   "sidebar": {
     "mobile_menu": "Profil navigatsiyasi",
@@ -361,7 +347,44 @@
       "create": "Manzil yaratishda xatolik",
       "update": "Manzilni yangilashda xatolik",
       "delete": "Manzilni o'chirib bo'lmadi"
+    },
+    "notifications": {
+      "order_success": "Buyurtma yuborildi!",
+      "order_own_success": "Buyurtma yuborildi!"
     }
-
+  },
+  "registration": {
+    "title": "Ro'yxatdan o'tish",
+    "subtitle": "Ro'yxatdan o'tish uchun ma'lumotlarni to'ldiring",
+    "email_placeholder": "Email *",
+    "full_name_placeholder": "To'liq Ism *",
+    "first_name_placeholder": "Ism *",
+    "last_name_placeholder": "Familiya *",
+    "phone_placeholder": "Telefon *",
+    "dob_placeholder": "Tug'ilgan sana *",
+    "card_placeholder": "Pasport seriyasi va raqami / ID karta *",
+    "pinfl_placeholder": "JShShIR / Shaxsiy raqam *",
+    "password_placeholder": "Parol *",
+    "submit_btn": "Kodni yuborish",
+    "otp_title": "Emailni tasdiqlash",
+    "otp_subtitle": "Biz kodni quyidagi manzilga yubordik",
+    "otp_confirm_btn": "Tasdiqlash",
+    "success_title": "Muvaffaqiyatli!",
+    "success_subtitle": "Siz muvaffaqiyatli ro'yxatdan o'tdingiz 🎉",
+    "already_have_account": "Allaqachon hisobingiz bormi? Tizimga kiring!",
+    "invalid_email": "Email formati noto'g'ri",
+    "email_exists": "Ushbu email allaqachon ro'yxatdan o'tgan",
+    "code_sent": "Kod emailingizga yuborildi!",
+    "otp_send_error": "OTP yuborishda xatolik",
+    "otp_confirmed": "OTP tasdiqlandi! Ro'yxatdan o'tishni yakunlaymiz...",
+    "otp_verify_error": "Tasdiqlash yoki ro'yxatdan o'tishda xatolik"
+  },
+  "login": {
+    "title": "Tizimga kirish",
+    "subtitle": "Tizimning barcha imkoniyatlaridan foydalanish uchun kiring",
+    "forgot_password": "Parolni unutdingizmi?",
+    "submit_btn": "Tizimga kirish",
+    "no_account": "Hali hisobingiz yo'qmi? Ro'yxatdan o'ting!",
+    "error_wrong_credentials": "Email yoki parol noto'g'ri"
   }
 }

@@ -6,15 +6,12 @@
   "contact": "Contacts",
   "help": "Help",
   "deli": "Delivery",
-
   "hero_title": "Easy ordering, convenient tracking, fast and reliable delivery",
   "hero_subtitle": "Order online from the USA — we take care of everything else!",
   "hero_button": "Learn more",
-
   "hero_title2": "Easy ordering, convenient tracking, fast and reliable delivery",
   "hero_subtitle2": "Order online from Turkey — we take care of everything else!",
   "hero_button2": "Learn more",
-
   "time_header": "Time until parcel shipment",
   "time_subheader": "Place your order before our shipment deadline for faster delivery",
   "days": "day",
@@ -22,17 +19,14 @@
   "minutes": "minutes",
   "seconds": "seconds",
   "time_send": "Send parcel",
-
   "how_title": "How does it work?",
   "how_step1": "1. Sign up and receive our address",
   "how_step2": "2. Place an order at any store, using our address.",
   "how_step3": "3. Receive your parcel within 7-10 days quickly and hassle-free!",
   "how_button": "Shop, and we'll deliver! 🚀",
-
   "help_title": "Need help?",
   "help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe'll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we'll ensure fast and reliable delivery of your purchases across Uzbekistan.\nAbu Express — your reliable delivery partner in Uzbekistan!",
   "help_btn": "Go to Help",
-
   "why_title": "Why Abu Express?",
   "tax_free": "0% sales tax",
   "tax_free_desc": "Save up to 10% on purchases thanks to our warehouse in a tax-free US state.",
@@ -46,11 +40,9 @@
   "security_desc2": "Our support team is available 24/7 to answer your questions and assist you in any situation.",
   "security3": "Parcel safety",
   "security_desc3": "We ensure secure packaging and careful transportation, guaranteeing the safety of your items.",
-
   "about_title": "About Us",
   "about_desc": "Abu Express – Reliable and free delivery across Uzbekistan!\nFor 5 years, we have been helping you receive parcels quickly, safely, and hassle-free. Thanks to our experience and trusted partners, we offer convenient and cost-effective delivery solutions across Uzbekistan.\n🔹 Air and ground delivery\n🔹 Door-to-door shipping\n🔹 Optimal delivery times and rates\nChoose Abu Express – and we'll deliver your order with ease!",
   "about_btn": "Learn more",
-
   "statistic_title": "Statistics",
   "stat1_count": "29845+",
   "stat1_text": "Happy customers",
@@ -60,7 +52,6 @@
   "stat3_text": "Employees",
   "stat4_count": "8++",
   "stat4_text": "Branches",
-
   "final_help_title": "Need help shopping?",
   "final_help_desc": "Having trouble shopping online?\nIs the store not accepting your card?\nNeed help placing an order?\nWe'll solve all your problems!\nOur customer support team works 24/7 and is ready to help you with registration, order processing, and payment. Contact us anytime, and we'll ensure fast and reliable delivery of your purchases across Uzbekistan.\nShop without borders with Abu Express!",
   "final_help_btn": "Learn more about the service",
@@ -101,15 +92,12 @@
   "calculator_total": "Total:",
   "main": "Main",
   "services_air_sea_title": "Air and Sea Freight",
-
   "services_air_sea_desc": "Abuexpress provides reliable air and sea freight services tailored for customers and businesses. Air delivery with a 7-10 day shipping time is the best option for customers wishing to send parcels to Uzbekistan. Meanwhile, sea freight can take up to 45 days but offers a more cost-effective solution for shipping larger and heavier commercial cargo.",
-
   "meta": {
     "title": "ABU Express – International Logistics & Cargo from Turkey, USA, and China to Uzbekistan",
     "description": "ABU Express provides international logistics solutions and cargo delivery from Turkey, USA, and China to Uzbekistan. Fast, reliable, and cost-effective!",
     "keywords": "Uzbekistan cargo delivery, international logistics, Turkey to Uzbekistan, USA to Uzbekistan, China to Uzbekistan, freight forwarding, cargo shipping, best rates"
-  }
-,
+  },
   "drawing": {
     "clear": "Clear",
     "color": "Color",
@@ -119,7 +107,6 @@
     "status_check_error": "Error checking delivery status",
     "delivery_error": "Delivery confirmation failed"
   },
-
   "tracking": {
     "search_placeholder": "Enter tracking number",
     "departure_time": "Departure date",
@@ -353,5 +340,39 @@
       "update": "Error updating address",
       "delete": "Failed to delete address"
     }
+  },
+  "registration": {
+    "title": "Registration",
+    "subtitle": "Fill in the details for registration",
+    "email_placeholder": "Email *",
+    "full_name_placeholder": "Full Name *",
+    "first_name_placeholder": "First Name *",
+    "last_name_placeholder": "Last Name *",
+    "phone_placeholder": "Phone *",
+    "dob_placeholder": "Date of Birth *",
+    "card_placeholder": "Passport Series and Number / ID Card *",
+    "pinfl_placeholder": "PINFL / Personal Number *",
+    "password_placeholder": "Password *",
+    "submit_btn": "Send Code",
+    "otp_title": "Email Confirmation",
+    "otp_subtitle": "We sent a code to",
+    "otp_confirm_btn": "Confirm",
+    "success_title": "Success!",
+    "success_subtitle": "You have successfully registered 🎉",
+    "already_have_account": "Already have an account? Sign in!",
+    "invalid_email": "Invalid email format",
+    "email_exists": "This email is already registered",
+    "code_sent": "Code sent to your email!",
+    "otp_send_error": "Error sending OTP",
+    "otp_confirmed": "OTP confirmed! Completing registration...",
+    "otp_verify_error": "Confirmation or registration error"
+  },
+  "login": {
+    "title": "Sign In",
+    "subtitle": "Sign in to use all system features",
+    "forgot_password": "Forgot password?",
+    "submit_btn": "Sign In",
+    "no_account": "Don't have an account yet? Register!",
+    "error_wrong_credentials": "Invalid email or password"
   }
 }

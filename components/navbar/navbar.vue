@@ -60,11 +60,11 @@
 
       </ul>
       <div class="navbar-link">
-          <NuxtLink v-if="userRole === 'delivery'" to="/deliver" class="delivery-btn">
+          <NuxtLink v-if="userRole === 'delivery'" :to="localePath('/deliver')" class="delivery-btn">
             {{ $t("deli") }}
           </NuxtLink>
-        <NuxtLink to="/registration">{{ $t("tarif_registration") }}</NuxtLink>
-        <NuxtLink to="/login">{{ $t("tarif_login") }}</NuxtLink>
+        <NuxtLink :to="localePath('/registration')">{{ $t("tarif_registration") }}</NuxtLink>
+        <NuxtLink :to="localePath('/login')">{{ $t("tarif_login") }}</NuxtLink>
       </div>
     </div> 
 
@@ -154,6 +154,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const router = useRouter()
+const localePath = useLocalePath()
 
 const userRole = ref('')
 const showCalculator = ref(false)
@@ -193,9 +194,9 @@ const goToProfileOrRegister = () => {
   if (process.client) {
     const token = localStorage.getItem('access_token')
     if (token) {
-      router.push('/profile')
+      router.push(localePath('/profile'))
     } else {
-      router.push('/registration')
+      router.push(localePath('/registration'))
     }
   }
 }
@@ -205,20 +206,17 @@ const goToProfileOrRegister = () => {
 import { useI18n } from 'vue-i18n';
 import { useCookie } from '#app';
 
-const { locale, setLocaleMessage } = useI18n();
+const { locale, setLocale } = useI18n();
 const langCookie = useCookie('i18n_redirected');
 const showDropdown = ref(false);
 
 const changeLanguage = async (lang) => {
-  // Загружаем JSON-файл перевода
-  const response = await fetch(`/locales/${lang}.json`);
-  const messages = await response.json();
-  setLocaleMessage(lang, messages);
-
-  // Меняем язык и сохраняем в куки
-  locale.value = lang;
-  langCookie.value = lang;
-
+  if (setLocale) {
+    await setLocale(lang);
+  } else {
+    locale.value = lang;
+    langCookie.value = lang;
+  }
   showDropdown.value = false;
 };
 
