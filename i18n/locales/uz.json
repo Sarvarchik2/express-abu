@@ -170,7 +170,8 @@
     "countries": {
       "usa": "AQSH",
       "turkey": "Turkiya",
-      "china": "Xitoy"
+      "china": "Xitoy",
+      "germany": "Germaniya"
     },
     "flag_alt": "Bayroq",
     "copy_alt": "Nusxa olish",
@@ -199,7 +200,8 @@
       "tax_free_state": "Soliqsiz shtatda ombor bo'ladimi?",
       "tax_free_state_answer": "Ha, Delaver (DE) soliqsiz shtatida ombor mavjud."
     },
-    "personal_id": "Sizning shaxsiy ID"
+    "personal_id": "Sizning shaxsiy ID",
+    "office": "Ofis"
   },
   "parcels": {
     "title": "Posilkalar",

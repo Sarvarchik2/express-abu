@@ -44,28 +44,34 @@
         </button>
       </div>
 
-      <span class="profile-bottom-span"></span>
-      <div class="profile-bottom-address">
-        <ul>
-          <li v-for="(field, idx) in country.addressFields" :key="idx">
-            <h2>{{ $t(`profile.address_fields.${field.label}`) }}</h2>
-            <p>{{ field.value }}</p>
-            <button class="copy-btn" @click="copyToClipboard(field.value)">
-              <img :src="copy" :alt="$t('profile.copy_alt')" />
-            </button>
-          </li>
-        </ul>
-      </div>
+      <template v-for="(office, oIdx) in country.offices" :key="oIdx">
+        <h3 v-if="country.offices.length > 1" style="color: #ffee00; text-align: center; margin: 20px 0;">{{ $t('profile.office') }} {{ oIdx + 1 }}</h3>
+        <span class="profile-bottom-span" v-if="oIdx > 0"></span>
+        <div class="profile-bottom-address">
+          <ul>
+            <li v-for="(field, idx) in office.addressFields" :key="idx">
+              <h2>{{ $t(`profile.address_fields.${field.label}`) }}</h2>
+              <p>{{ field.value }}</p>
+              <button class="copy-btn" @click="copyToClipboard(field.value)">
+                <img :src="copy" :alt="$t('profile.copy_alt')" />
+              </button>
+            </li>
+          </ul>
+        </div>
 
-      <span class="profile-bottom-span"></span>
-      <div class="profile-bottom-chart">
-        <h2>{{ $t('profile.work_schedule') }}</h2>
-        <h3>
-          <p>{{ $t('profile.weekdays_schedule') }}</p>
-          <p>{{ $t('profile.saturday_schedule') }}</p>
-        </h3>
-      </div>
-      <span class="profile-bottom-span"></span>
+        <span class="profile-bottom-span"></span>
+        <div class="profile-bottom-chart">
+          <h2>{{ $t('profile.work_schedule') }}</h2>
+          <h3>
+            <p v-if="office.working_hours">{{ office.working_hours }}</p>
+            <template v-else>
+              <p>{{ $t('profile.weekdays_schedule') }}</p>
+              <p>{{ $t('profile.saturday_schedule') }}</p>
+            </template>
+          </h3>
+        </div>
+        <span class="profile-bottom-span"></span>
+      </template>
       <div class="accordion-container">
         <div
             class="accordion-item"
@@ -102,10 +108,40 @@ import copy from "@/assets/profile/copy.png";
 import usaFlag from "@/assets/profile/profile.png";
 import turkeyFlag from "@/assets/profile/turkey.png";
 import chinaFlag from "@/assets/profile/china.png";
+import germanyFlag from "@/assets/profile/germany.png";
 
 const { t } = useI18n();
 const fullName = ref('')
 const userId = ref('')
+
+const countries = ref([
+  {
+    name: "usa",
+    name2: "USA",
+    flag: usaFlag,
+    offices: [
+      {
+        working_hours: "",
+        addressFields: [
+          { label: "address1", value: "606 Interchange Blvd" },
+          { label: "city", value: "Newark" },
+          { label: "state", value: "DE" },
+          { label: "zip", value: "19711" },
+          { label: "country", value: "USA" },
+          { label: "phone", value: "+1 (929) 244-0000" },
+        ]
+      }
+    ]
+  }
+]);
+
+const mapLocationToFlag = (location) => {
+  const loc = location.toLowerCase();
+  if (loc.includes('turkey')) return turkeyFlag;
+  if (loc.includes('china')) return chinaFlag;
+  if (loc.includes('germany') || loc.includes('герман') || loc.includes('german')) return germanyFlag;
+  return usaFlag; // default fallback
+};
 
 onMounted(async () => {
   if (process.client) {
@@ -130,53 +166,48 @@ onMounted(async () => {
         console.error('Ошибка при загрузке профиля', e)
       }
     }
+
+    // Fetch office addresses
+    try {
+      const officeRes = await axios.get('https://abuexpresslogisticscargo.com/api/office-address/')
+      if (officeRes.data && Array.isArray(officeRes.data) && officeRes.data.length > 0) {
+        const locMap = {};
+
+        officeRes.data.forEach(item => {
+          const locName = item.location.toLowerCase();
+          if (!locMap[locName]) {
+            locMap[locName] = {
+              name: locName,
+              name2: item.location,
+              flag: mapLocationToFlag(item.location),
+              offices: []
+            };
+          }
+          locMap[locName].offices.push({
+            working_hours: item.working_hours,
+            addressFields: [
+              { label: "address1", value: item.address },
+              { label: "state", value: item.state },
+              { label: "zip", value: item.zip },
+              { label: "country", value: item.location },
+              { label: "phone", value: item.phone_number }
+            ]
+          });
+        });
+
+        const mappedCountries = Object.values(locMap);
+
+        if (mappedCountries.length > 0) {
+          countries.value = mappedCountries;
+          selectedCountry.value = mappedCountries[0].name;
+          selectedCountryFlag.value = mappedCountries[0].flag;
+        }
+      }
+    } catch (err) {
+      console.error('Ошибка при загрузке адресов', err);
+    }
   }
 })
-
-const countries = ref([
-  {
-    name: "usa",
-    name2: "USA",
-    flag: usaFlag,
-    addressFields: [
-      { label: "address1", value: "606 Interchange Blvd" },
-      { label: "address2", value: "ID 19046" },
-      { label: "city", value: "Newark" },
-      { label: "state", value: "DE" },
-      { label: "zip", value: "19711" },
-      { label: "country", value: "USA" },
-      { label: "phone", value: "+1 (929) 244-0000" },
-    ],
-  },
-  {
-    name: "turkey",
-    name2: "Turkey",
-    flag: turkeyFlag,
-    addressFields: [
-      { label: "address1", value: "Taksim Square, Istiklal St. 12" },
-      { label: "address2", value: "ID 45789" },
-      { label: "city", value: "Istanbul" },
-      { label: "state", value: "Marmara" },
-      { label: "zip", value: "34435" },
-      { label: "country", value: "Turkey" },
-      { label: "phone", value: "+90 (532) 456-7890" },
-    ],
-  },
-  {
-    name: "china",
-    name2: "China",
-    flag: chinaFlag,
-    addressFields: [
-      { label: "address1", value: "123 Beijing Road" },
-      { label: "address2", value: "ID 78542" },
-      { label: "city", value: "Beijing" },
-      { label: "state", value: "Beijing Municipality" },
-      { label: "zip", value: "100000" },
-      { label: "country", value: "China" },
-      { label: "phone", value: "+86 (10) 8765-4321" },
-    ],
-  },
-]);
 
 const accordionItems = ref([
   { question: "create_account", answer: "create_account_answer" },

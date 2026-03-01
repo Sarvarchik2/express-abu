@@ -338,18 +338,7 @@
   <!-- Language Switcher -->
 
   <div class="parcels-page">
-    <div class="tabs">
-      <button
-          v-for="(tab, index) in tabs"
-          :key="index"
-          :class="{ active: selectedTab === tab.key }"
-          @click="selectedTab = tab.key"
-      >
-        {{ $t(`parcels.tabs.${tab.key}`) }}
-      </button>
-    </div>
 
-    <div class="divider"></div>
 
     <div class="sub-tabs">
       <button
@@ -364,8 +353,7 @@
     </div>
 
     <div class="parcels-btn">
-      <button @click="openPopup">+ {{ $t('parcels.add_order') }}</button>
-      <button @click="openOrderOwnPopup" style="margin-left: 10px;">+ {{ $t('parcels.add_own_order') }}</button>
+      <button @click="openOrderOwnPopup">+ {{ $t('parcels.add_own_order') }}</button>
     </div>
 
     <div v-if="isLoading" class="loading-indicator">
@@ -738,12 +726,7 @@ const tabs = ref([
     key: "parcels",
     label: "parcels",
     filters: ["all", "accepted", "rejected", "shipped", "arrived", "delivered"]
-  },
-  {
-    key: "purchase_help",
-    label: "purchase_help",
-    filters: ["all", "accepted", "rejected", "shipped", "arrived", "delivered"]
-  },
+  }
 ]);
 
 // Methods

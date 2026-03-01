@@ -140,7 +140,8 @@
     "countries": {
       "usa": "USA",
       "turkey": "Turkey",
-      "china": "China"
+      "china": "China",
+      "germany": "Germany"
     },
     "flag_alt": "Flag",
     "copy_alt": "Copy",
@@ -157,9 +158,9 @@
       "address2": "Address 2",
       "city": "City",
       "state": "State",
-      "zip": "ZIP code",
+      "zip": "Zip Code",
       "country": "Country",
-      "phone": "Phone number"
+      "phone": "Phone"
     },
     "faq": {
       "create_account": "How to create an account?",
@@ -169,7 +170,8 @@
       "tax_free_state": "Will there be a warehouse in a tax-free state?",
       "tax_free_state_answer": "Yes, there is a warehouse in the tax-free state of Delaware (DE)."
     },
-    "personal_id": "Your personal ID"
+    "personal_id": "Your personal ID",
+    "office": "Office"
   },
   "profileedit": {
     "title": "Edit Profile",
