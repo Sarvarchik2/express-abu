@@ -50,7 +50,7 @@
             <h5>{{ timer.minutes }} <span>{{ $t("minutes") }}</span></h5>
             <h5>{{ timer.seconds }} <span>{{ $t("seconds") }}</span></h5>
           </div>
-          <router-link to="/">{{ $t("time_send") }}</router-link>
+          <NuxtLink :to="localePath('/')">{{ $t("time_send") }}</NuxtLink>
         </swiper-slide>
       </swiper>
     </section>
@@ -91,7 +91,7 @@
       <div class="abu-express-help-text">
         <h2>{{ $t("help_title") }}</h2>
         <p>{{ $t("help_desc") }}</p>
-        <NuxtLink to="/help">{{ $t("help_btn") }}</NuxtLink>
+        <NuxtLink :to="localePath('/help')">{{ $t("help_btn") }}</NuxtLink>
 
       </div>
     </section>
@@ -172,7 +172,7 @@
       <div class="abu-express-help-text">
         <h2>{{ $t("final_help_title") }}</h2>
         <p>{{ $t("final_help_desc") }}</p>
-        <NuxtLink to="/help">{{ $t("final_help_btn") }}</NuxtLink>
+        <NuxtLink :to="localePath('/help')">{{ $t("final_help_btn") }}</NuxtLink>
       </div>
     </section>
   </div>
@@ -206,6 +206,7 @@ import Point from '@/assets/point.png'
 import { useHead } from '@unhead/vue'
 
 const { t, locale } = useI18n();
+const localePath = useLocalePath();
 
 const banners = ref([]);
 const timers = ref([]);

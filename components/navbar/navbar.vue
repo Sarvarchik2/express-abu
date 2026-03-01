@@ -7,19 +7,19 @@
       </div>
       <ul>
         <li>
-          <NuxtLink v-if="userRole === 'delivery'" to="/deliver" class="delivery-btn">
+          <NuxtLink v-if="userRole === 'delivery'" :to="localePath('/deliver')" class="delivery-btn">
             {{ $t("deli") }}
           </NuxtLink>
         </li>
 
-        <li><NuxtLink to="/">{{ $t("main") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/')">{{ $t("main") }}</NuxtLink></li>
 
-        <li><NuxtLink to="/tarif">{{ $t("tarif") }}</NuxtLink></li>
-        <li><NuxtLink to="/markets">{{ $t("markets") }}</NuxtLink></li>
-        <li><NuxtLink to="/services">{{ $t("services") }}</NuxtLink></li>
-        <li><NuxtLink to="/">{{ $t("about") }}</NuxtLink></li>
-        <li><NuxtLink to="/contact">{{ $t("contact") }}</NuxtLink></li>
-        <li><NuxtLink to="/help">{{ $t("help") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/tarif')">{{ $t("tarif") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/markets')">{{ $t("markets") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/services')">{{ $t("services") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/')">{{ $t("about") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/contact')">{{ $t("contact") }}</NuxtLink></li>
+        <li><NuxtLink :to="localePath('/help')">{{ $t("help") }}</NuxtLink></li>
       </ul>
     </div>
 
@@ -49,14 +49,14 @@
       <img class="navbar-mobile-img" :src="Exit" alt="exit" @click="closeMenu">
       <ul>
 
-        <li><NuxtLink @click="closeMenu"  to="/">{{ $t("main") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/')">{{ $t("main") }}</NuxtLink></li>
 
-        <li><NuxtLink @click="closeMenu" to="/tarif">{{ $t("tarif") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" to="/markets">{{ $t("markets") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" to="/services">{{ $t("services") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" to="/">{{ $t("about") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" to="/contact">{{ $t("contact") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" to="/help">{{ $t("help") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/tarif')">{{ $t("tarif") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/markets')">{{ $t("markets") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/services')">{{ $t("services") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/')">{{ $t("about") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/contact')">{{ $t("contact") }}</NuxtLink></li>
+        <li><NuxtLink @click="closeMenu" :to="localePath('/help')">{{ $t("help") }}</NuxtLink></li>
 
       </ul>
       <div class="navbar-link">

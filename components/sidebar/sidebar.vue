@@ -14,21 +14,21 @@
     <div class="sidebar" :class="{ 'mobile-open': isOpen }">
       <ul class="menu">
         <li>
-          <NuxtLink to="/profile" active-class="active" @click="handleMobileClick">
+          <NuxtLink :to="localePath('/profile')" active-class="active" @click="handleMobileClick">
             <User class="icon" />
             {{ $t('sidebar.profile') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
         <li>
-          <NuxtLink to="/parcels" active-class="active" @click="handleMobileClick">
+          <NuxtLink :to="localePath('/parcels')" active-class="active" @click="handleMobileClick">
             <Package class="icon" />
             {{ $t('sidebar.parcels') }}
           </NuxtLink>
         </li>
         <span class="divider"></span>
         <li>
-          <NuxtLink to="/address" active-class="active" @click="handleMobileClick">
+          <NuxtLink :to="localePath('/address')" active-class="active" @click="handleMobileClick">
             <MapPin class="icon" />
             {{ $t('sidebar.addresses') }}
           </NuxtLink>
@@ -39,7 +39,7 @@
       <!-- Bottom menu section -->
       <ul class="menu">
         <li>
-          <NuxtLink to="/settings" active-class="active" @click="handleMobileClick">
+          <NuxtLink :to="localePath('/settings')" active-class="active" @click="handleMobileClick">
             <Settings class="icon" />
             {{ $t('sidebar.settings') }}
           </NuxtLink>
@@ -62,6 +62,7 @@ import { useRouter } from 'vue-router'
 import { User, Package, MapPin, Settings, LogOut } from 'lucide-vue-next'
 
 const router = useRouter()
+const localePath = useLocalePath()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
@@ -90,7 +91,7 @@ const logout = () => {
     localStorage.removeItem('full_name')
   }
   handleMobileClick()
-  router.push('/registration')
+  router.push(localePath('/registration'))
 }
 
 // Resize handlers
