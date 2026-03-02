@@ -17,7 +17,7 @@
         <li><NuxtLink :to="localePath('/tarif')">{{ $t("tarif") }}</NuxtLink></li>
         <li><NuxtLink :to="localePath('/markets')">{{ $t("markets") }}</NuxtLink></li>
         <li><NuxtLink :to="localePath('/services')">{{ $t("services") }}</NuxtLink></li>
-        <li><NuxtLink :to="localePath('/')">{{ $t("about") }}</NuxtLink></li>
+
         <li><NuxtLink :to="localePath('/contact')">{{ $t("contact") }}</NuxtLink></li>
         <li><NuxtLink :to="localePath('/help')">{{ $t("help") }}</NuxtLink></li>
       </ul>
@@ -54,7 +54,7 @@
         <li><NuxtLink @click="closeMenu" :to="localePath('/tarif')">{{ $t("tarif") }}</NuxtLink></li>
         <li><NuxtLink @click="closeMenu" :to="localePath('/markets')">{{ $t("markets") }}</NuxtLink></li>
         <li><NuxtLink @click="closeMenu" :to="localePath('/services')">{{ $t("services") }}</NuxtLink></li>
-        <li><NuxtLink @click="closeMenu" :to="localePath('/')">{{ $t("about") }}</NuxtLink></li>
+
         <li><NuxtLink @click="closeMenu" :to="localePath('/contact')">{{ $t("contact") }}</NuxtLink></li>
         <li><NuxtLink @click="closeMenu" :to="localePath('/help')">{{ $t("help") }}</NuxtLink></li>
 
