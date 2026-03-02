@@ -109,33 +109,33 @@
             </div>
 
             <div class="parcels-add-progress-declaration-wrapper modernized-form">
-              <select v-model="orderOwn.location" required class="modern-select">
+              <select v-model="orderOwn.location" required class="modern-select" :class="{ 'invalid-field': orderOwnErrors.location }">
                 <option value="" disabled selected>{{ $t('parcels.own_order.select_location') || 'Выберите склад' }}</option>
-                <option v-for="loc in availableLocations" :key="loc" :value="loc">{{ loc }}</option>
+                <option v-for="loc in availableLocations" :key="loc.id" :value="loc.location">{{ loc.location }}</option>
               </select>
               
-              <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required>
+              <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required :class="{ 'invalid-field': orderOwnErrors.track_number }">
               
               <div class="input-row">
-                <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required>
+                <input type="text" v-model="orderOwn.market_name" :placeholder="$t('parcels.own_order.market_name')" required :class="{ 'invalid-field': orderOwnErrors.market_name }">
                 <input type="text" v-model="orderOwn.url_product" :placeholder="$t('parcels.own_order.product_link')">
               </div>
               
               <!-- Invoice fields removed per user request -->
 
               <div class="input-row">
-                <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required>
-                <input type="text" v-model="orderOwn.product_price" :placeholder="$t('parcels.own_order.product_price')" inputmode="decimal" required>
+                <input type="text" v-model="orderOwn.product_name" :placeholder="$t('parcels.own_order.product_name')" required :class="{ 'invalid-field': orderOwnErrors.product_name }">
+                <input type="text" v-model="orderOwn.product_price" :placeholder="$t('parcels.own_order.product_price')" inputmode="decimal" required :class="{ 'invalid-field': orderOwnErrors.product_price }">
               </div>
 
               <div class="input-row">
-                <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required>
-                <input type="text" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" inputmode="decimal">
+                <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required :class="{ 'invalid-field': orderOwnErrors.product_quantity }">
+                <input type="text" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" inputmode="decimal" :class="{ 'invalid-field': orderOwnErrors.product_weight }">
               </div>
 
               <div class="input-row">
-                <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required>
-                <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')">
+                <input type="text" v-model="orderOwn.product_color" :placeholder="$t('parcels.own_order.product_color')" required :class="{ 'invalid-field': orderOwnErrors.product_color }">
+                <input type="text" v-model="orderOwn.product_size" :placeholder="$t('parcels.own_order.product_size')" :class="{ 'invalid-field': orderOwnErrors.product_size }">
               </div>
 
               <textarea v-model="orderOwn.comment" :placeholder="$t('parcels.own_order.comment')"></textarea>
@@ -162,19 +162,39 @@
                 <div
                     v-for="addr in addresses"
                     :key="addr.id"
-                    class="parcel-address-list-item"
+                    class="parcel-address-card"
                     :class="{ selected: selectedAddress === addr.id }"
                     @click="selectAddress(addr.id)"
                 >
-                  <div class="parcel-address-list-item-left">
-                    <h2>{{ addr.first_name }} {{ addr.last_name }}</h2>
-                    <h3>{{ addr.country }}, {{ addr.city }}, {{ addr.address }}</h3>
+                  <div class="address-card-header">
+                    <div class="address-card-name">
+                      <h3>{{ addr.first_name }} {{ addr.last_name }}</h3>
+                    </div>
+                    <div class="address-card-phone">
+                      <span>{{ addr.phone_number }}</span>
+                    </div>
+                    <div class="selection-indicator">
+                      <svg v-if="selectedAddress === addr.id" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="check-icon">
+                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
                   </div>
-                  <div class="parcel-address-list-item-right">
-                    <h2>{{ addr.phone_number }}</h2>
+                  <div class="address-card-body">
+                    <div class="address-detail">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="detail-icon">
+                        <path d="M12 21C16 17 20 13.4183 20 9C20 4.58172 16.4183 1 12 1C7.58172 1 4 4.58172 4 9C4 13.4183 8 17 12 21Z" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="2"/>
+                      </svg>
+                      <p>{{ addr.country }}, {{ addr.city }}, {{ addr.address }}</p>
+                    </div>
                   </div>
                 </div>
-                <button @click="navigateToAddresses" class="add-address-minor">{{ $t('parcels.address.add_address') }}</button>
+                <button @click="navigateToAddresses" class="add-address-minor">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="btn-icon">
+                    <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {{ $t('parcels.address.add_address') }}
+                </button>
               </div>
             </div>
 
@@ -218,6 +238,7 @@ const selectedTab = ref("parcels");
 const selectedFilter = ref("all");
 const selectedAddress = ref(null);
 const isLoading = ref(false);
+const orderOwnErrors = ref({});
 
 
 const addresses = ref([]);
@@ -438,12 +459,22 @@ const prevStep = () => currentStep.value > 1 && currentStep.value--;
 
 const nextOrderOwnStep = () => {
   if (currentOrderOwnStep.value === 1) {
+    orderOwnErrors.value = {};
     const priceStr = String(orderOwn.value.product_price || '').replace(',', '.');
     const quantityStr = String(orderOwn.value.product_quantity || '');
-    
-    if (!orderOwn.value.location || !orderOwn.value.track_number || !orderOwn.value.market_name ||
-        !orderOwn.value.product_name || !priceStr || isNaN(Number(priceStr)) ||
-        !quantityStr || isNaN(Number(quantityStr)) || !orderOwn.value.product_color) {
+    const weightStr = String(orderOwn.value.product_weight || '').replace(',', '.');
+
+    if (!orderOwn.value.location) orderOwnErrors.value.location = true;
+    if (!orderOwn.value.track_number) orderOwnErrors.value.track_number = true;
+    if (!orderOwn.value.market_name) orderOwnErrors.value.market_name = true;
+    if (!orderOwn.value.product_name) orderOwnErrors.value.product_name = true;
+    if (!priceStr || isNaN(Number(priceStr))) orderOwnErrors.value.product_price = true;
+    if (!quantityStr || isNaN(Number(quantityStr))) orderOwnErrors.value.product_quantity = true;
+    if (!weightStr || isNaN(Number(weightStr))) orderOwnErrors.value.product_weight = true;
+    if (!orderOwn.value.product_color) orderOwnErrors.value.product_color = true;
+    if (!orderOwn.value.product_size) orderOwnErrors.value.product_size = true;
+
+    if (Object.keys(orderOwnErrors.value).length > 0) {
       showNotificationMessage('Пожалуйста, заполните все обязательные поля (*)', 'error');
       return;
     }
@@ -602,6 +633,7 @@ const submitOrderOwn = async () => {
 
     const postData = {
       ...orderOwn.value,
+      location: orderOwn.value.location ? orderOwn.value.location.trim().toUpperCase() : '',
       receiver_address: selectedAddress.value,
       product_price: orderOwn.value.product_price ? Number(String(orderOwn.value.product_price).replace(',', '.')) : 0,
       product_quantity: Number(orderOwn.value.product_quantity),
@@ -641,8 +673,7 @@ const fetchLocations = async () => {
   try {
     const res = await axios.get('https://abuexpresslogisticscargo.com/api/office-address/');
     if (res.data && Array.isArray(res.data)) {
-      const locs = res.data.map(item => item.location);
-      availableLocations.value = [...new Set(locs)];
+      availableLocations.value = res.data;
     }
   } catch(e) {
     console.warn("Failed to fetch office address for locations", e);
@@ -668,7 +699,7 @@ onMounted(async () => {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 10000;
   max-width: 400px;
   width: 90%;
   transform: translateX(150%);
@@ -1034,44 +1065,125 @@ onMounted(async () => {
   border-radius: 25px;
   cursor: pointer;
 }
-.parcel-address-list-item {
+.parcel-address-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.parcel-address-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.parcel-address-card.selected {
+  border-color: #FFEE00;
+  background: rgba(255, 238, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(255, 238, 0, 0.08);
+}
+
+.address-card-header {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  margin: 10px 0;
-  border: 2px solid #333;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.3s;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-.parcel-address-list-item:hover {
-  border-color: #FFD700;
-}
-
-.parcel-address-list-item.selected {
-  border-color: #FFD700;
-  background: rgba(255, 238, 0, 0.1);
-}
-
-.parcel-address-list-item-left h2 {
+.address-card-name h3 {
   font-size: 16px;
-  margin-bottom: 5px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
 }
 
-.parcel-address-list-item-left h3 {
-  color: #BAAFAF;
+.address-card-phone span {
   font-size: 14px;
-}
-
-.parcel-address-list-item-right h2 {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.parcel-address-list-item-right h3 {
   color: #BAAFAF;
-  font-size: 12px;
+}
+
+.selection-indicator {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.parcel-address-card.selected .selection-indicator {
+  background: #FFEE00;
+  border-color: #FFEE00;
+  color: #000;
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.address-card-body {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
+}
+
+.address-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #BAAFAF;
+}
+
+.detail-icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.address-detail p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.add-address-minor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.add-address-minor:hover {
+  border-color: #FFEE00;
+  color: #FFEE00;
+  background: rgba(255, 238, 0, 0.02);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
 }
 .parcels-add-text{
   width: 100%;
@@ -1408,6 +1520,15 @@ onMounted(async () => {
   border-color: #FFEE00;
   color: #000;
   font-weight: bold;
+}
+
+.invalid-field {
+  border-color: #F44336 !important;
+  background: rgba(244, 67, 54, 0.05) !important;
+}
+
+.invalid-field:focus {
+  box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2) !important;
 }
 .parcels-add-progress-left span {
   width: 60px;
