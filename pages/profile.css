@@ -13,6 +13,14 @@
     background: #0A0A0A;
     padding: 5px;
     border-radius: 30px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 5px;
+}
+
+.profile-top::-webkit-scrollbar {
+    display: none;
 }
 
 .profile-top button {
@@ -20,7 +28,9 @@
     border-radius: 30px;
     height: 50px;
     border: none;
-    width: 33.999%;
+    padding: 0 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
     cursor: pointer;
     font-weight: bold;
     color: #fff;

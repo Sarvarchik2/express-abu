@@ -109,6 +109,11 @@ import usaFlag from "@/assets/profile/profile.png";
 import turkeyFlag from "@/assets/profile/turkey.png";
 import chinaFlag from "@/assets/profile/china.png";
 import germanyFlag from "@/assets/profile/germany.png";
+import koreaFlag from "@/assets/profile/korea.png";
+import polshaFlag from "@/assets/profile/polsha.png";
+import ukFlag from "@/assets/profile/uk.png";
+import australiaFlag from "@/assets/profile/avstralya.png";
+import italyFlag from "@/assets/profile/italiya.png";
 
 const { t } = useI18n();
 const fullName = ref('')
@@ -137,9 +142,14 @@ const countries = ref([
 
 const mapLocationToFlag = (location) => {
   const loc = location.toLowerCase();
-  if (loc.includes('turkey')) return turkeyFlag;
-  if (loc.includes('china')) return chinaFlag;
-  if (loc.includes('germany') || loc.includes('герман') || loc.includes('german')) return germanyFlag;
+  if (loc.includes('turk') || loc.includes('турц')) return turkeyFlag;
+  if (loc.includes('chin') || loc.includes('xitoy') || loc.includes('китай')) return chinaFlag;
+  if (loc.includes('german') || loc.includes('герман')) return germanyFlag;
+  if (loc.includes('korea') || loc.includes('корея')) return koreaFlag;
+  if (loc.includes('polsh') || loc.includes('poland') || loc.includes('польш')) return polshaFlag;
+  if (loc.includes('uk') || loc.includes('england') || loc.includes('великоб')) return ukFlag;
+  if (loc.includes('avstral') || loc.includes('austral') || loc.includes('австрал')) return australiaFlag;
+  if (loc.includes('ital') || loc.includes('итал')) return italyFlag;
   return usaFlag; // default fallback
 };
 

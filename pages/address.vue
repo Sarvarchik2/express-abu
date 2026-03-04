@@ -102,7 +102,7 @@
       <div v-for="addr in addresses" :key="addr.id" class="recipient-card">
         <div class="recipient-info">
           <h3><span>{{ addr.first_name }} {{ addr.last_name }}</span></h3>
-          <p>{{ $t('address.recipient.country') }} <span>{{ addr.country }}</span></p>
+          <p>{{ $t('address.recipient.country') }} <span>{{ $te(`profile.countries.${addr.country.toLowerCase()}`) ? $t(`profile.countries.${addr.country.toLowerCase()}`) : addr.country }}</span></p>
           <p>{{ $t('address.recipient.phone') }} <span>{{ addr.phone_number }}</span></p>
           <p>{{ $t('address.recipient.email') }} <span>{{ addr.email }}</span></p>
           <p>{{ $t('address.recipient.address') }} <span>{{ addr.address }}, {{ addr.apartment }}, {{ addr.district }}, {{ addr.city }}</span></p>

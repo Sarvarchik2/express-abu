@@ -48,7 +48,7 @@
             </span>
           </div>
           <div class="order-details">
-            <p v-if="order.location"><strong>{{ $t('parcels.own_order.location') || 'Склад' }}:</strong>&nbsp;{{ order.location }}</p>
+            <p v-if="order.location"><strong>{{ $t('parcels.own_order.location') || 'Склад' }}:</strong>&nbsp;{{ $te(`profile.countries.${order.location.toLowerCase()}`) ? $t(`profile.countries.${order.location.toLowerCase()}`) : order.location }}</p>
             <p v-if="order.track_number"><strong>{{ $t('parcels.own_order.track_number') || 'Трек-номер' }}:</strong>&nbsp;{{ order.track_number }}</p>
             <p v-if="order.invoice_number"><strong>{{ $t('parcels.own_order.invoice_number') || 'Номер инвойса' }}:</strong>&nbsp;{{ order.invoice_number }}</p>
             <p v-if="order.market_name"><strong>{{ $t('parcels.own_order.market_name') || 'Магазин' }}:</strong>&nbsp;{{ order.market_name }}</p>
@@ -111,7 +111,7 @@
             <div class="parcels-add-progress-declaration-wrapper modernized-form">
               <select v-model="orderOwn.location" required class="modern-select" :class="{ 'invalid-field': orderOwnErrors.location }">
                 <option value="" disabled selected>{{ $t('parcels.own_order.select_location') || 'Выберите склад' }}</option>
-                <option v-for="loc in availableLocations" :key="loc.id" :value="loc.location">{{ loc.location }}</option>
+                <option v-for="loc in availableLocations" :key="loc.id" :value="loc.location">{{ $te(`profile.countries.${loc.location.toLowerCase()}`) ? $t(`profile.countries.${loc.location.toLowerCase()}`) : loc.location }}</option>
               </select>
               
               <input type="text" v-model="orderOwn.track_number" :placeholder="$t('parcels.own_order.track_number')" required :class="{ 'invalid-field': orderOwnErrors.track_number }">
