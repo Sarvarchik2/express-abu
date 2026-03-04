@@ -141,7 +141,14 @@
       "usa": "USA",
       "turkey": "Turkey",
       "china": "China",
-      "germany": "Germany"
+      "germany": "Germany",
+      "uk": "UK",
+      "xitoy (avia)": "China (avia)",
+      "xitoy (fura)": "China (fura)",
+      "avstralya": "Australia",
+      "italiya": "Italy",
+      "polsha": "Poland",
+      "korea": "Korea"
     },
     "flag_alt": "Flag",
     "copy_alt": "Copy",
