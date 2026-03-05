@@ -28,22 +28,6 @@
             >
           </div>
 
-          <!-- Password -->
-          <div class="form-group">
-            <label class="input-label">{{ $t('profileedit.password') }}</label>
-            <div class="password-wrapper">
-              <input
-                  :type="showPassword ? 'text' : 'password'"
-                  v-model="formData.password"
-                  :placeholder="$t('profileedit.password_placeholder')"
-                  class="form-input"
-                  minlength="8"
-              >
-              <button type="button" class="toggle-password" @click="showPassword = !showPassword">
-                <i :class="showPassword ? 'far fa-eye-slash' : 'far fa-eye'"></i>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div class="form-actions">
@@ -106,13 +90,11 @@ export default {
 
     const formData = ref({
       email: '',
-      full_name: '',
-      password: ''
+      full_name: ''
     });
 
     const isLoading = ref(false);
     const showDeleteModal = ref(false);
-    const showPassword = ref(false);
     const notification = ref({
       show: false,
       type: '',
@@ -120,13 +102,31 @@ export default {
       icon: ''
     });
 
-    // Fetch user data from localStorage
-    const fetchUserData = () => {
+    // Fetch user data from backend
+    const fetchUserData = async () => {
+      // Set temporary values from local storage
       formData.value = {
         email: localStorage.getItem('email') || '',
-        full_name: localStorage.getItem('full_name') || '',
-        password: ''
+        full_name: localStorage.getItem('full_name') || ''
       };
+      
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const response = await axios.get('https://abuexpresslogisticscargo.com/api/get-me/', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (response.data?.success) {
+            const user = response.data.data;
+            formData.value.email = user.email || formData.value.email;
+            formData.value.full_name = user.full_name || formData.value.full_name;
+            localStorage.setItem('email', user.email);
+            localStorage.setItem('full_name', user.full_name);
+          }
+        } catch (e) {
+          console.error('Ошибка при загрузке профиля с сервера', e);
+        }
+      }
     };
 
     // Update profile
@@ -136,8 +136,7 @@ export default {
         const token = localStorage.getItem('access_token');
 
         const requestData = {
-          full_name: formData.value.full_name,
-          password: formData.value.password || undefined
+          full_name: formData.value.full_name
         };
 
         const response = await axios.patch(
@@ -224,7 +223,6 @@ export default {
       formData,
       isLoading,
       showDeleteModal,
-      showPassword,
       notification,
       submitForm,
       confirmDelete,

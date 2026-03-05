@@ -30,7 +30,7 @@ const route = useRoute();
 
 // Страницы, где показывать Sidebar
 const sidebarRoutes = ['/profile', '/parcels', '/address', '/balance', '/claims', '/settings'];
-const authRoutes = ['/login', '/registration'];
+const authRoutes = ['/login', '/registration', '/forgot-password'];
 
 const showSidebar = computed(() => {
   return sidebarRoutes.some(path => route.path === path || route.path.endsWith(path));

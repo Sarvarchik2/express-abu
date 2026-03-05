@@ -1,4 +1,0 @@
-const help_vue_vue_type_style_index_0_scoped_0a50630f_lang = ".help[data-v-0a50630f]{background-color:#000;color:#fff;padding:20px;width:100%}.help-title[data-v-0a50630f]{font-size:24px;margin-bottom:20px;text-align:center}.faq[data-v-0a50630f]{margin:0 auto;width:100%}.faq-item[data-v-0a50630f]{background:#0a0a0a;cursor:pointer;margin-bottom:10px;overflow:hidden;padding:15px;transition:.3s;width:100%}.faq-item[data-v-0a50630f],.faq-item iframe[data-v-0a50630f]{border-right:30px}.faq-question[data-v-0a50630f]{align-items:center;display:flex;font-weight:700;justify-content:space-between}.faq-toggle[data-v-0a50630f]{color:#fe0;font-size:24px}.faq-answer[data-v-0a50630f]{font-size:14px;margin-top:10px}iframe[data-v-0a50630f]{border-radius:8px;height:250px;margin-top:10px;width:100%}";
-
-export { help_vue_vue_type_style_index_0_scoped_0a50630f_lang as h };
-//# sourceMappingURL=help-styles-1.mjs.mjs.map
