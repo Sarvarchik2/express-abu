@@ -394,5 +394,28 @@
     "submit_btn": "Войти",
     "no_account": "У вас еще нет аккаунта? Зарегистрируйтесь!",
     "error_wrong_credentials": "Неверный email или пароль"
+  },
+  "forgot_password": {
+    "title": "Восстановление пароля",
+    "subtitle": "Введите свой email для получения кода сброса",
+    "email_placeholder": "Электронная почта",
+    "submit_btn": "Отправить код",
+    "otp_title": "Введите код сброса",
+    "otp_subtitle": "Мы отправили код на",
+    "otp_confirm_btn": "Подтвердить код",
+    "new_password": "Новый пароль",
+    "new_password_placeholder": "Введите новый пароль",
+    "success_title": "Успех!",
+    "success_subtitle": "Ваш пароль был успешно изменен 🎉",
+    "back_to_login": "Вернуться к входу",
+    "new_pass_title": "Изменение пароля",
+    "new_pass_subtitle": "Введите ваш новый пароль ниже",
+    "reset_btn": "Сбросить пароль",
+    "error_otp": "Неверный код сброса"
+  },
+  "delete_account": {
+    "btn": "Удалить аккаунт",
+    "confirm": "Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо.",
+    "success": "Аккаунт успешно удален"
   }
 }

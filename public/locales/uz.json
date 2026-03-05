@@ -402,5 +402,28 @@
     "submit_btn": "Tizimga kirish",
     "no_account": "Hali hisobingiz yo'qmi? Ro'yxatdan o'ting!",
     "error_wrong_credentials": "Email yoki parol noto'g'ri"
+  },
+  "forgot_password": {
+    "title": "Parolni tiklash",
+    "subtitle": "Tiklash kodini olish uchun elektron pochtangizni kiriting",
+    "email_placeholder": "Elektron pochta",
+    "submit_btn": "Kodni yuborish",
+    "otp_title": "Tiklash kodini kiriting",
+    "otp_subtitle": "Biz kodni quyidagi manzilga yubordik:",
+    "otp_confirm_btn": "Kodni tasdiqlash",
+    "new_password": "Yangi parol",
+    "new_password_placeholder": "Yangi parolingizni kiriting",
+    "success_title": "Muvaffaqiyat!",
+    "success_subtitle": "Parolingiz muvaffaqiyatli o'zgartirildi 🎉",
+    "back_to_login": "Tizimga qaytish",
+    "new_pass_title": "Parolni o'zgartirish",
+    "new_pass_subtitle": "Yangi parolingizni quyida kiriting",
+    "reset_btn": "Parolni tiklash",
+    "error_otp": "Noto'g'ri tiklash kodi"
+  },
+  "delete_account": {
+    "btn": "Hisobni o'chirish",
+    "confirm": "Hisobingizni o'chirishni xohlaysizmi? Bu amalni ortga qaytarib bo'lmaydi.",
+    "success": "Hisob muvaffaqiyatli o'chirildi"
   }
 }

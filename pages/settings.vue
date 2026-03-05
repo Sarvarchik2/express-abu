@@ -176,7 +176,7 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         await axios.delete(
-            'https://abuexpresslogisticscargo.com/api/edit/',
+            'https://abuexpresslogisticscargo.com/api/delete/',
             {
               headers: {
                 'Authorization': `Bearer ${token}`

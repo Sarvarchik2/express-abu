@@ -1,0 +1,1 @@
+import{_ as e,c as a,a as n,o as c}from"./BtK04-rg.js";const o={},t={class:"navbar"};function r(d,s){return c(),a("nav",t,s[0]||(s[0]=[n("h2",null,"dsfsdfsdfsfd",-1)]))}const _=e(o,[["render",r]]);export{_ as default};

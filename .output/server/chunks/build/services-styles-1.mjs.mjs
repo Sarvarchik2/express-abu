@@ -1,0 +1,4 @@
+const services_vue_vue_type_style_index_0_lang = ".services{padding:0 20px}.services,.services-item{display:flex;flex-direction:column;width:100%}.services-item{background:url(" + __buildAssetsURL("servicebh.D_pyVDG5.png") + ") no-repeat 50%;background-size:cover;border-radius:20px;gap:30px;padding:30px}.services-item h2{font-size:28px}.services-item p{font-size:20px;width:60%}.services-item a{background:transparent;border:1px solid #fe0;border-radius:40px;color:#fff;font-size:20px;line-height:18px;margin-top:20px;padding:15px 40px;width:-moz-max-content;width:max-content}@media (max-width:600px){.services-item h2{font-size:24px}.services-item p{font-size:16px;width:100%}.services-item a{text-align:center;width:100%}.services-item{padding:0}}";
+
+export { services_vue_vue_type_style_index_0_lang as s };
+//# sourceMappingURL=services-styles-1.mjs.mjs.map

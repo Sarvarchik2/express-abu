@@ -13,7 +13,9 @@
       <input v-model="form.password" type="password" placeholder="Password" required />
 
       <div class="login-wrapper-btn">
-        <button type="button">{{ $t('login.forgot_password') }}</button>
+        <NuxtLink :to="localePath('/forgot-password')" class="forgot-pass-btn">
+          <button type="button">{{ $t('login.forgot_password') }}</button>
+        </NuxtLink>
         <button type="submit">{{ $t('login.submit_btn') }}</button>
       </div>
 
@@ -120,6 +122,13 @@ const handleLogin = async () => {
   display: flex;
   gap: 20px;
 }
+.login-wrapper-btn a.forgot-pass-btn{
+  width: 49%;
+  display: block;
+}
+.login-wrapper-btn a.forgot-pass-btn button{
+  width: 100%;
+}
 .login-wrapper button{
   width: 49%;
   background: transparent;
@@ -127,9 +136,8 @@ const handleLogin = async () => {
   border-radius: 30px;
   border: 1px solid #FFEE00;
   color: #fff;
-
 }
-.login-wrapper button:nth-child(2){
+.login-wrapper > .login-wrapper-btn > button:last-child {
   background: #FFEE00;
   color: #000;
 }

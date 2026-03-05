@@ -390,5 +390,28 @@
     "submit_btn": "Sign In",
     "no_account": "Don't have an account yet? Register!",
     "error_wrong_credentials": "Invalid email or password"
+  },
+  "forgot_password": {
+    "title": "Reset Password",
+    "subtitle": "Enter your email to receive a password reset code",
+    "email_placeholder": "Email",
+    "submit_btn": "Send Code",
+    "otp_title": "Enter Reset Code",
+    "otp_subtitle": "We sent a code to",
+    "otp_confirm_btn": "Verify Code",
+    "new_password": "New Password",
+    "new_password_placeholder": "Enter your new password",
+    "success_title": "Success!",
+    "success_subtitle": "Your password has been successfully reset 🎉",
+    "back_to_login": "Back to Login",
+    "new_pass_title": "Change Password",
+    "new_pass_subtitle": "Enter your new password below",
+    "reset_btn": "Reset Password",
+    "error_otp": "Invalid reset code"
+  },
+  "delete_account": {
+    "btn": "Delete Account",
+    "confirm": "Are you sure you want to delete your account? This action cannot be undone.",
+    "success": "Account successfully deleted"
   }
 }
