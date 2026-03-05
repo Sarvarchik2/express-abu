@@ -72,7 +72,7 @@
         </div>
         <span class="profile-bottom-span"></span>
       </template>
-      <div class="accordion-container">
+      <!-- <div class="accordion-container">
         <div
             class="accordion-item"
             v-for="(item, index) in accordionItems"
@@ -89,7 +89,7 @@
             <p>{{ $t(`profile.faq.${item.answer}`) }}</p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <transition name="fade">
