@@ -54,7 +54,7 @@
             <p v-if="order.market_name"><strong>{{ $t('parcels.own_order.market_name') || 'Магазин' }}:</strong>&nbsp;{{ order.market_name }}</p>
             <p><strong>{{ $t('parcels.product_details.price') }}:</strong>&nbsp;${{ order.product_price || order.price }}</p>
             <p><strong>{{ $t('parcels.product_details.quantity') }}:</strong>&nbsp;{{ order.product_quantity || order.quantity }} {{ $t('parcels.product_details.pcs') }}</p>
-            <p v-if="order.product_weight || order.weight"><strong>{{ $t('parcels.product_details.weight') }}:</strong>&nbsp;{{ order.product_weight || order.weight }} kg</p>
+            <!-- <p v-if="order.product_weight || order.weight"><strong>{{ $t('parcels.product_details.weight') }}:</strong>&nbsp;{{ order.product_weight || order.weight }} kg</p> -->
             <p v-if="order.product_color || order.color"><strong>{{ $t('parcels.product_details.color') }}:</strong>&nbsp;{{ order.product_color || order.color }}</p>
             <p v-if="order.product_size || order.size"><strong>{{ $t('parcels.product_details.size') }}:</strong>&nbsp;{{ order.product_size || order.size }}</p>
             <p v-if="order.departure_date"><strong>Departure:</strong>&nbsp;{{ formatDate(order.departure_date) }}</p>
@@ -130,7 +130,7 @@
 
               <div class="input-row">
                 <input type="number" v-model="orderOwn.product_quantity" :placeholder="$t('parcels.own_order.product_quantity')" required :class="{ 'invalid-field': orderOwnErrors.product_quantity }">
-                <input type="text" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" inputmode="decimal" :class="{ 'invalid-field': orderOwnErrors.product_weight }">
+                <!-- <input type="text" v-model="orderOwn.product_weight" :placeholder="$t('parcels.own_order.product_weight')" inputmode="decimal" :class="{ 'invalid-field': orderOwnErrors.product_weight }"> -->
               </div>
 
               <div class="input-row">
@@ -443,8 +443,7 @@ const nextStep = () => {
           !isNaN(parcel.price) &&
           !isNaN(parcel.quantity) &&
           parcel.color?.trim() &&
-          parcel.size?.trim() &&
-          !isNaN(parcel.weight);
+          parcel.size?.trim();
     });
 
     if (!isValid) {
@@ -470,7 +469,6 @@ const nextOrderOwnStep = () => {
     if (!orderOwn.value.product_name) orderOwnErrors.value.product_name = true;
     if (!priceStr || isNaN(Number(priceStr))) orderOwnErrors.value.product_price = true;
     if (!quantityStr || isNaN(Number(quantityStr))) orderOwnErrors.value.product_quantity = true;
-    if (!weightStr || isNaN(Number(weightStr))) orderOwnErrors.value.product_weight = true;
     if (!orderOwn.value.product_color) orderOwnErrors.value.product_color = true;
     if (!orderOwn.value.product_size) orderOwnErrors.value.product_size = true;
 
